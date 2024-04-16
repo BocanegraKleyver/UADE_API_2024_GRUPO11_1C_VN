@@ -36,3 +36,117 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  background-color:chocolate;
+}
+
+aside{
+  padding: 2rem;
+  color:wheat;
+  position: sticky;
+  top:0;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo{
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+.boton-menu{
+  background-color: transparent;
+  border: 0;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  font-weight: 600;
+  padding: 1rem;
+}
+
+.menu{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+boton-menu.active{
+  background-color: beige;
+  color: chocolate;
+}
+
+.texto-footer{
+  color:green;
+  font-size: .85rem;
+}
+
+main{
+  background-color: white;
+  margin:1rem;
+  margin-left: 0;
+  border-radius: 2rem;
+  padding: 3rem;
+}
+
+.titulo-principal{
+  color:blue;
+}
+
+.contenedor-productos{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:1rem;
+}
+
+.producto-imagen{
+  max-width: 100%;
+  border-radius: 1rem;
+}
+
+.producto-detalles{
+  background-color: aqua;
+  padding: .5rem;
+  border-radius: 1rem;
+  margin-top: -2rem;
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  gap:.25rem;
+}
+
+.producto-titulo{
+  font-size: 1rem;
+}
+
+.producto-agregar{
+  border:0;
+  background-color: white;
+  padding: .25rem;
+  text-transform: uppercase;
+  border-radius: .5rem;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.producto-agregar:hover{
+  background-color: violet;
+  color:white;
+}
+
+/*Carrito*/
+
+.carrito-vacio{
+  color:purple;
+}
+
+.carrito-producto{
+  display:flex;
+  flex-direction: column;
+  gap: 1rem;
+}
