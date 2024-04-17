@@ -26,7 +26,7 @@ function carrito() {
                   <div class="carrito-producto">
 
                     <div class="acrrito-producto">
-                        <img src="./img/comedor/sillacomedor1.jpg" alt=""></img>
+                        <img class="carrito-producto-imagen" src="./img/comedor/sillacomedor1.jpg" alt=""></img>
                         <div class="carrito-producto-titulo">
                             <small>Titulo</small>
                             <h3>sillacomedor1</h3>
@@ -47,6 +47,18 @@ function carrito() {
                     </div>
 
                   </div>
+                </div>
+                <div class="carrito-acciones">
+                    <div class="carrito-acciones-izquierda">
+                        <button class="carrito-acciones-vaciar">Vaciar Carrito</button>
+                    </div>
+                    <div class="carrito-acciones-derecha">
+                        <div class="carrito-acciones-total">
+                            <p>Total</p>
+                            <p id="total">$1000</p>
+                        </div>
+                        <button class="carrito-acciones-comprar">Comprar Ahora</button>
+                    </div>
                 </div>
             </main>
         </div>
