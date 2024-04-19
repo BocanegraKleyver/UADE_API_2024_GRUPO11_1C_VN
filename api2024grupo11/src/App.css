@@ -58,6 +58,15 @@ aside{
   font-size: 1.4rem;
 }
 
+.logo-link {
+  color: white;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
 .boton-menu{
   background-color: transparent;
   border: 0;
