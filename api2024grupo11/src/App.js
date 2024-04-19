@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { AsideHeader } from './components/AsideHeader.js/AsideHeader';
+import ProductCard from './components/Cards/ProductCard';
 
 
 function App() {
@@ -10,54 +10,7 @@ function App() {
             <main>
                 <h2 class="titulo-principal">Todos los productos</h2>
                 <div id="contenedor-productos" class="contenedor-productos">
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor1.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor01</h3>
-                      <p class="producto-precio">$1000</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor2.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor02</h3>
-                      <p class="producto-precio">$1500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor3.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor03</h3>
-                      <p class="producto-precio">$500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor1.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor01</h3>
-                      <p class="producto-precio">$1000</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor2.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor02</h3>
-                      <p class="producto-precio">$1500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src="./img/comedor/sillacomedor3.jpg" alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor03</h3>
-                      <p class="producto-precio">$500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
+                  <ProductCard />
                 </div>
             </main>
         </div>
@@ -153,24 +106,4 @@ const productos=[
     precio: 1000
   },
 ];
-
-const contenedorproductos = document.querySelector("#contenedor-productos");
-
-function cargarProductos(){
-  productos.forEach(producto => {
-
-    const div = document.createElement("div");
-    div.classList.add("producto");
-    div.innerHTML = `
-      <img class="producto-imagen" src="${producto.imagen}" alt="${producto.titulo}"></img>
-      <div class="producto-detalles">
-        <h3 class="producto-titulo">${producto.titulo}</h3>
-        <p class="producto-precio">$${producto.precio}</p>
-        <button class="producto-agregar" id="${producto.id}">Agregar</button>
-      </div>
-    `;
-    contenedorproductos.append(div);
-  })
-}
-
 
