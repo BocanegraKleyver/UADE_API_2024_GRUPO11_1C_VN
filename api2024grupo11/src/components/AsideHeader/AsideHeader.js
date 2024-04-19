@@ -8,8 +8,8 @@ export const AsideHeader = () => {
         </header>
         <nav>
             <ul>
-                <li><a class="boton-menu boton-volver" href="./App.js">Seguir Comprando</a></li>
-                <li><a class="boton-menu boton-carrito active" href="./carrito.html">Carrito</a></li>
+                <li><a class="boton-menu boton-volver" href="./">Seguir Comprando</a></li>
+                <li><a class="boton-menu boton-carrito active" href="./carrito">Carrito</a></li>
             </ul>
         </nav>
         <footer>
