@@ -58,6 +58,15 @@ aside{
   font-size: 1.4rem;
 }
 
+.logo-link {
+  color: white;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
 .boton-menu{
   background-color: transparent;
   border: 0;
@@ -104,13 +113,16 @@ main{
   gap:1rem;
 }
 
+.producto {
+  background-color: #f1f5f9;
+}
+
 .producto-imagen{
   max-width: 100%;
   border-radius: 1rem;
 }
 
 .producto-detalles{
-  background-color: aqua;
   padding: .5rem;
   border-radius: 1rem;
   margin-top: -2rem;
@@ -125,17 +137,18 @@ main{
 }
 
 .producto-agregar{
-  border:0;
-  background-color: white;
+  background-color: black;
   padding: .25rem;
+  color: white;
   text-transform: uppercase;
+  font-weight: bold;
   border-radius: .5rem;
   cursor: pointer;
   border: 2px solid black;
 }
 
 .producto-agregar:hover{
-  background-color: violet;
+  background-color: #1f1f1f;
   color:white;
 }
 
