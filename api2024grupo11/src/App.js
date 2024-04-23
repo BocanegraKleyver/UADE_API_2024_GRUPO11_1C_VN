@@ -8,6 +8,8 @@ import sillagamer2 from './img/gamer/sillagamer2.jpg';
 import sillajardin1 from './img/jardin/sillajardin1.jpg';
 import sillajardin2 from './img/jardin/sillajardin2.jpg';
 import sillajardin3 from './img/jardin/sillajardin3.jpg';
+import { AsideHeader } from './components/AsideHeader/AsideHeader.js';
+import { productos } from './utils/productos.js';
 
 
 function App() {
@@ -74,92 +76,7 @@ function App() {
 
 export default App;
 
-//PRODUCTOS
-const productos=[
-  //Silla Comedor
-  {
-    id:"silla-comedor-1",
-    titulo:"Silla comedor 1",
-    imagen:{sillacomedor1},
-    categoria:{
-      nombre:"Comedor",
-      id:"comedor",
-    },
-    precio: 1000
-  },
-  {
-    id:"silla-comedor-2",
-    titulo:"Silla comedor 2",
-    imagen:{sillacomedor2},
-    categoria:{
-      nombre:"Comedor",
-      id:"comedor",
-    },
-    precio: 1000
-  },
-  {
-    id:"silla-comedor-3",
-    titulo:"Silla comedor 3",
-    imagen:{sillacomedor3},
-    categoria:{
-      nombre:"Comedor",
-      id:"comedor",
-    },
-    precio: 1000
-  },
-  //Gamer
-  {
-    id:"silla-gamer-1",
-    titulo:"Silla gamer 1",
-    imagen:{sillagamer1},
-    categoria:{
-      nombre:"Gamer",
-      id:"gamer",
-    },
-    precio: 1000
-  },
-  {
-    id:"silla-gamer-2",
-    titulo:"Silla gamer 2",
-    imagen:{sillagamer2},
-    categoria:{
-      nombre:"Gamer",
-      id:"gamer",
-    },
-    precio: 1000
-  },
-  //Jardin
-  {
-    id:"silla-jardin-1",
-    titulo:"Silla jardin 1",
-    imagen:{sillajardin1},
-    categoria:{
-      nombre:"Jardin",
-      id:"jardin",
-    },
-    precio: 1000
-  },
-  {
-    id:"silla-jardin-2",
-    titulo:"Silla jardin 2",
-    imagen:{sillajardin2},
-    categoria:{
-      nombre:"Jardin",
-      id:"jardin",
-    },
-    precio: 1000
-  },
-  {
-    id:"silla-jardin-3",
-    titulo:"Silla jardin 3",
-    imagen:{sillajardin3},
-    categoria:{
-      nombre:"Jardin",
-      id:"jardin",
-    },
-    precio: 1000
-  },
-];
+
 
 const contenedorproductos = document.querySelector("#contenedor-productos");
 
@@ -179,5 +96,4 @@ function cargarProductos(){
     contenedorproductos.append(div);
   })
 }
-
 
