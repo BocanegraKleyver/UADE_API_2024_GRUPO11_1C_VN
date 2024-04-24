@@ -1,15 +1,7 @@
-import './App.css';
+import React from 'react'
 
-
-function carrito() {
+export const CarritoScreen = () => {
   return (
-    <div class="wrapper">
-            <main>
-                
-            </main>
-        </div>
-    
-  );
+    <div>CarritoScreen</div>
+  )
 }
-
-export default carrito;
