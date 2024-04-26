@@ -10,65 +10,15 @@ import sillajardin2 from './img/jardin/sillajardin2.jpg';
 import sillajardin3 from './img/jardin/sillajardin3.jpg';
 import { AsideHeader } from './components/AsideHeader/AsideHeader.js';
 import { productos } from './utils/productos.js';
+import { Routes, Route, Link } from 'react-router-dom';
+import {ProductCard} from './components/Cards/ProductCard.js';
 
 
 function App() {
   return (
     <div class="wrapper">
             <AsideHeader />
-            <main>
-                <h2 class="titulo-principal">Todos los productos</h2>
-                <div id="contenedor-productos" class="contenedor-productos">
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor1} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor01</h3>
-                      <p class="producto-precio">$1000</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor2} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor02</h3>
-                      <p class="producto-precio">$1500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor3} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor03</h3>
-                      <p class="producto-precio">$500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor1} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor01</h3>
-                      <p class="producto-precio">$1000</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor2} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor02</h3>
-                      <p class="producto-precio">$1500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                  <div class="producto">
-                    <img class="producto-imagen" src={sillacomedor3} alt=""></img>
-                    <div class="producto-detalles">
-                      <h3 class="producto-titulo">Comedor03</h3>
-                      <p class="producto-precio">$500</p>
-                      <button class="producto-agregar">Agregar</button>
-                    </div>
-                  </div>
-                </div>
-            </main>
+            <ProductCard />
         </div>
     
   );

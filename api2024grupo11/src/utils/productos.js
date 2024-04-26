@@ -1,11 +1,11 @@
-import sillacomedor1 from '../img/comedor/sillacomedor1.jpg';
-import sillacomedor2 from '../img/comedor/sillacomedor2.jpg';
-import sillacomedor3 from '../img/comedor/sillacomedor3.jpg';
-import sillagamer1 from '../img/gamer/sillagamer1.jpg';
-import sillagamer2 from '../img/gamer/sillagamer2.jpg';
-import sillajardin1 from '../img/jardin/sillajardin1.jpg';
-import sillajardin2 from '../img/jardin/sillajardin2.jpg';
-import sillajardin3 from '../img/jardin/sillajardin3.jpg';
+import sillacomedor1 from '..//img/comedor/sillacomedor1.jpg';
+import sillacomedor2 from '..//img/comedor/sillacomedor2.jpg';
+import sillacomedor3 from '..//img/comedor/sillacomedor3.jpg';
+import sillagamer1 from '..//img/gamer/sillagamer1.jpg';
+import sillagamer2 from '..//img/gamer/sillagamer2.jpg';
+import sillajardin1 from '..//img/jardin/sillajardin1.jpg';
+import sillajardin2 from '..//img/jardin/sillajardin2.jpg';
+import sillajardin3 from '..//img/jardin/sillajardin3.jpg';
 
 export const productos= [
     //Silla Comedor
