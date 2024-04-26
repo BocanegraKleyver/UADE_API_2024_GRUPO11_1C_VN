@@ -1,4 +1,5 @@
 import React from 'react'
+import { PageTitle } from '../components/Titles/PageTitle';
 
 
 export const GestionProductoScreen = () => {
@@ -6,7 +7,7 @@ export const GestionProductoScreen = () => {
 
 return (
 
-<div class="GestionProducto">
+<div class="GestionProducto" className="p-5">
     <div class="navbar navbar-clear">
         <div class="navbar-inner">
          <div class="center sliding">
@@ -22,7 +23,7 @@ return (
 
                 <div class="nice-header header-fix-top small">
                     <div class="logo">
-                        <h1>Gestiona tus Productos</h1>
+                        <PageTitle text="Gestiona tus productos"/>
                         <h2>Vendedor, en este lugar podras dar de alta los productos que necesites vender.</h2>
                     </div>
                 </div>

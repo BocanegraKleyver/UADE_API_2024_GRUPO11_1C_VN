@@ -2,7 +2,7 @@ import React from "react";
 
 export const AsideHeader = () => {
   return (
-    <aside>
+    <aside className="h-[100vh]">
       <header>
         <h1 class="logo">
           <a class="logo-link" href="/">
