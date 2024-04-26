@@ -40,7 +40,7 @@
 .wrapper{
   display: grid;
   grid-template-columns: 1fr 4fr;
-  background-color:chocolate;
+  background-color:rgb(210, 153, 30);
 }
 
 aside{
