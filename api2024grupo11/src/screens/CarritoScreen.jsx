@@ -2,6 +2,8 @@ import React from 'react'
 
 export const CarritoScreen = () => {
   return (
-    <div>CarritoScreen</div>
+    <div className='p-5 text-white'>
+      CarritoScreen
+    </div>
   )
 }
