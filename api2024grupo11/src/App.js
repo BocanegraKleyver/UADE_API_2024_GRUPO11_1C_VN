@@ -29,23 +29,23 @@ export default App;
 
 
 
-const contenedorproductos = document.querySelector("#contenedor-productos");
+//const contenedorproductos = document.querySelector("#contenedor-productos");
 
-function cargarProductos(){
-  productos.forEach(producto => {
+// function cargarProductos(){
+//   productos.forEach(producto => {
 
-    const div = document.createElement("div");
-    div.classList.add("producto");
-    div.innerHTML = `
-      <img class="producto-imagen" src="${producto.imagen}" alt="${producto.titulo}"></img>
-      <div class="producto-detalles">
-        <h3 class="producto-titulo">${producto.titulo}</h3>
-        <p class="producto-precio">$${producto.precio}</p>
-        <button class="producto-agregar" id="${producto.id}">Agregar</button>
-      </div>
-    `;
-    contenedorproductos.append(div);
-  })
-}
+//     const div = document.createElement("div");
+//     div.classList.add("producto");
+//     div.innerHTML = `
+//       <img class="producto-imagen" src="${producto.imagen}" alt="${producto.titulo}"></img>
+//       <div class="producto-detalles">
+//         <h3 class="producto-titulo">${producto.titulo}</h3>
+//         <p class="producto-precio">$${producto.precio}</p>
+//         <button class="producto-agregar" id="${producto.id}">Agregar</button>
+//       </div>
+//     `;
+//     contenedorproductos.append(div);
+//   })
+// }
 
 
