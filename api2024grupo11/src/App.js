@@ -1,30 +1,31 @@
-import './App.css';
-import './carrito.js';
-import sillacomedor1 from './img/comedor/sillacomedor1.jpg';
-import sillacomedor2 from './img/comedor/sillacomedor2.jpg';
-import sillacomedor3 from './img/comedor/sillacomedor3.jpg';
-import sillagamer1 from './img/gamer/sillagamer1.jpg';
-import sillagamer2 from './img/gamer/sillagamer2.jpg';
-import sillajardin1 from './img/jardin/sillajardin1.jpg';
-import sillajardin2 from './img/jardin/sillajardin2.jpg';
-import sillajardin3 from './img/jardin/sillajardin3.jpg';
-import { AsideHeader } from './components/AsideHeader/AsideHeader.js';
-import { productos } from './utils/productos.js';
-import { Routes, Route, Link } from 'react-router-dom';
-import {ProductCard} from './components/Cards/ProductCard.js';
-
+import React from "react";
+import { AsideHeader } from "./components/AsideHeader/AsideHeader";
+import { Routes, Route } from "react-router-dom";
+import { CarritoScreen } from "./screens/CarritoScreen";
+import { HomePage } from "./screens/HomePage";
+import { GestionProductoScreen } from "./screens/GestionProductoScreen";
 
 function App() {
   return (
     <div class="wrapper">
-            <AsideHeader />
-            <ProductCard />
-        </div>
-    
+
+      <AsideHeader />
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/carrito/">
+          <Route path="" element={<CarritoScreen />} exact />
+        </Route>
+        <Route path="/GestionProdutos/">
+          <Route path="" element={<GestionProductoScreen />} exact />
+        </Route>
+      </Routes>
+    </div>
+
   );
 }
 
 export default App;
+
 
 
 
@@ -46,4 +47,5 @@ function cargarProductos(){
     contenedorproductos.append(div);
   })
 }
+
 
