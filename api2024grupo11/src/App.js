@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { CarritoScreen } from "./screens/CarritoScreen";
 import { HomePage } from "./screens/HomePage";
 import { GestionProductoScreen } from "./screens/GestionProductoScreen";
-import {ProductCard} from "./Cards/ProductCard";
+import { seguirComprandoScreen } from "./screens/seguirComprandoScreen";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
 
         <Route path="/seguirComprando">
-          <Route path="" element={<ProductCard />} exact />
+          <Route path="" element={<seguirComprandoScreen />} exact />
         </Route>
 
         <Route path="/carrito/">
