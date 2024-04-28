@@ -1,0 +1,83 @@
+{
+  "categoria": [
+    {
+      "id": 1,
+      "nombre": "comedor"
+    },
+    {
+      "id":2,
+      "nombre":"jardin"
+    },
+    {
+      "id":3,
+      "nombre":"gamer"
+    }
+
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "postId": 1,
+      "titulo":"sillacomedor1",
+      "imagen":"./src/img/comedor/sillacomedor1.jpg",
+      "precio": 1000,
+      "cantidad": 5
+    },
+    {
+      "id": 1,
+      "postId": 2,
+      "titulo":"sillacomedor2",
+      "imagen":"./src/img/comedor/sillacomedor2.jpg",
+      "precio": 1000,
+      "cantidad": 4
+    },
+    {
+      "id": 1,
+      "postId": 3,
+      "titulo":"sillacomedor3",
+      "imagen":"./src/img/comedor/sillacomedor3.jpg",
+      "precio": 500,
+      "cantidad": 1
+    },
+    {
+      "id":2,
+      "postId":4,
+      "titulo":"sillajardin1",
+      "imagen":"./src/jardin/sillajardin1.jpg",
+      "precio": 450,
+      "cantidad": 10
+    },
+    {
+      "id":2,
+      "postId":5,
+      "titulo":"sillajardin2",
+      "imagen":"./src/jardin/sillajardin2.jpg",
+      "precio": 650,
+      "cantidad": 9
+    },
+    {
+      "id":2,
+      "postId":6,
+      "titulo":"sillajardin3",
+      "imagen":"./src/jardin/sillajardin3.jpg",
+      "precio": 550,
+      "cantidad": 6
+    },
+    {
+      "id":3,
+      "postId":7,
+      "titulo":"sillagamer1",
+      "imagen":"./src/gamer/sillagamer1.jpg",
+      "precio": 1450,
+      "cantidad": 0
+    },
+    {
+      "id":3,
+      "postId":8,
+      "titulo":"sillagamer2",
+      "imagen":"./src/gamer/sillagamer2.jpg",
+      "precio": 1250,
+      "cantidad": 3
+    }
+  ]
+}
