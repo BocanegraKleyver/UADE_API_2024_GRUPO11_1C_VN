@@ -13,7 +13,9 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <a class="boton-menu boton-volver" href="./">
+            <a class="boton-menu boton-volver" href="./"
+              
+            >
               Seguir Comprando
             </a>
           </li>

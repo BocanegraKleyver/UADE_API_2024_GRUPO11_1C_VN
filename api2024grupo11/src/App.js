@@ -14,9 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
 
-        <Route path="/seguirComprando">
-          <Route path="" element={<seguirComprandoScreen />} exact />
-        </Route>
+        
 
         <Route path="/carrito/">
           <Route path="" element={<CarritoScreen />} exact />
