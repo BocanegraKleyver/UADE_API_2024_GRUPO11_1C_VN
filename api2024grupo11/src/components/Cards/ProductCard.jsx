@@ -7,7 +7,7 @@ export const ProductCard = () => {
   const [productos, setProdoductos]=useState({});
   const [producto, setProducto]=useState({});
 
-  useEffect(() => {fetch("http://localhost:3000/productos")
+  useEffect(() => {fetch("http://localhost:3000/producto")
     .then((Response) => Response.json())
     .then((data)=>setProdoductos(data))}, [])
 
