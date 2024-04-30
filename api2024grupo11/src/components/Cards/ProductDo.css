@@ -1,0 +1,44 @@
+.contenedor-productos{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:1rem;
+  }
+  
+  .producto {
+    background-color: #f1f5f9;
+  }
+  
+  .producto-imagen{
+    max-width: 100%;
+    border-radius: 1rem;
+  }
+  
+  .producto-detalles{
+    padding: .5rem;
+    border-radius: 1rem;
+    margin-top: -2rem;
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    gap:.25rem;
+  }
+  
+  .producto-titulo{
+    font-size: 1rem;
+  }
+  
+  .producto-agregar{
+    background-color: black;
+    padding: .25rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: .5rem;
+    cursor: pointer;
+    border: 2px solid black;
+  }
+  
+  .producto-agregar:hover{
+    background-color: #1f1f1f;
+    color:white;
+  }

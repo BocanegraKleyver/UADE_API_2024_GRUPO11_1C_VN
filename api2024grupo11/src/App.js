@@ -4,16 +4,19 @@ import { Routes, Route } from "react-router-dom";
 import { CarritoScreen } from "./screens/CarritoScreen";
 import { HomePage } from "./screens/HomePage";
 import { GestionProductoScreen } from "./screens/GestionProductoScreen";
-import { seguirComprandoScreen } from "./screens/seguirComprandoScreen";
+import { ProductCard } from "./components/Cards/ProductCard";
+import ProductoDo from "./components/Cards/ProductDo";
 
 function App() {
   return (
-    <div class="wrapper">
+    <div className="wrapper">
 
       <AsideHeader />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-
+        <Route path="/" element={<HomePage />}>
+          <Route path="" element={<ProductCard/>}/>
+        </Route>
+        
         
 
         <Route path="/carrito/">

@@ -4,7 +4,7 @@ export const AsideHeader = () => {
   return (
     <aside className="h-[100vh] bg-yellow-600">
       <header>
-        <h1 class="logo">
+        <h1 className="logo">
           <a class="logo-link" href="/">
             SillaShop
           </a>
@@ -13,20 +13,20 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <a class="boton-menu boton-volver" href="./"
+            <a className="boton-menu boton-volver" href="./"
               
             >
               Seguir Comprando
             </a>
           </li>
           <li>
-            <a class="boton-menu boton-carrito active" href="./carrito">
+            <a className="boton-menu boton-carrito active" href="./carrito">
               Carrito
             </a>
           </li>
           <li>
             <a
-              class="boton-menu boton-vender-tus-productos active"
+              className="boton-menu boton-vender-tus-productos active"
               href="./GestionProdutos"
             >
               Vender tus Productos
@@ -35,7 +35,7 @@ export const AsideHeader = () => {
         </ul>
       </nav>
       <footer>
-        <p class="texto-footer">© API 2024 Grupo 11</p>
+        <p className="texto-footer">© API 2024 Grupo 11</p>
       </footer>
     </aside>
   );

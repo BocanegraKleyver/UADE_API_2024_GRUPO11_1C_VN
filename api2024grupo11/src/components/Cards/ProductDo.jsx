@@ -1,13 +1,16 @@
-function ProductoDo({producto, deleteProductoDo, index}) {
+import './ProductDo.css';
+
+const ProductoDo=({props, deleteProductoDo, index})=> {
     return(
-        <div>
-            <img class="producto-imagen" src="${producto.imagen}" alt="${producto.titulo}"></img>
-            <div class="producto-detalles">
-                <h3 class="producto-titulo">${producto.titulo}</h3>
-                <p class="producto-precio">$${producto.precio}</p>
-                <button class="producto-agregar" id="${producto.id}">Agregar</button>
+        <div >
+            <img className="producto-imagen" src="${props.imagen}" alt="${props.titulo}"></img>
+            <div className="producto-detalles">
+                <h3 className="producto-titulo">${props.titulo}</h3>
+                <p className="producto-precio">$${props.precio}</p>
+                <button className="producto-agregar" id="${props.id}">Agregar</button>
             </div>
         </div>
     )
 }
-export default ProductoDo;
+
+export default ProductoDo
