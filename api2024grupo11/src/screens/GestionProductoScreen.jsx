@@ -1,8 +1,24 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { GestionProductoCard } from '../components/Cards/GestionProductoCard';
 
 export const GestionProductoScreen = () => {
 
+       const [productos, setProductos] = useState(
+        [
+        { text: "silla-comedor-1", cantidad: 1},
+        { text: "silla-comedor-2", cantidad:1}
+        ]
+       );
+
+       const estadoCantidadProducto = (index, nuevaCantidadStock) => {
+         const nuevoStockProducto = [...productos];
+         nuevoStockProducto[index].cantidad = nuevaCantidadStock;
+         setProductos(nuevoStockProducto);
+       };
+
+      const eliminarProducto = () => {
+        alert("Producto eliminado")
+      }
 
 return (
 
@@ -77,6 +93,15 @@ return (
                             </div>
                         </div>
                         <hr></hr>
+
+                        <div className='Gestionar_Productos-6'>
+                        {productos.map((producto, index) => (
+                           <GestionProductoCard key={index} producto={producto} estadoCantidadProducto={(nuevaCantidad) => estadoCantidadProducto(index, nuevaCantidad)}/>
+                           )
+                         )
+                        }
+                        </div>
+                        <button onClick={eliminarProducto} className='Gestionar_Productos-7'>Eliminar Producto</button>
                     </form>
                 </div>
             </div>
