@@ -22,8 +22,6 @@ return (
                 <div class="nice-header header-fix-top small">
                     <div class="logo">
                         <h1>Gestiona tus Productos</h1>
-                        <h2>Vendedor, en este lugar podras dar de alta los productos que necesites vender.</h2>
-                        <PageTitle text="Gestiona tus productos"/>
                         <h2>En este lugar podras dar de alta los productos que necesites vender.</h2>
                     </div>
                 </div>
@@ -66,18 +64,19 @@ return (
                         <div class="form-row">
                             <label for="foto"><span class="icon-lock"></span></label>
                             <input type="foto" id="foto" name="foto" placeholder="Foto elegida"></input>
+                            <hr></hr>
                             <div class="input-submit">
-                              <button type="submit">Subir Foto del Producto</button>
+                              <button type="submit" id="Button_subir_foto">Subir Foto del Producto</button>
                             </div>
                         </div>
                         <label class="error" for="foto"></label>    
 
                         <div class="form-row">
                             <div class="input-submit">
-                              <button type="submit">Dar de alta Producto</button>
+                              <button type="submit" id="Button_alta_producto">Dar de alta Producto</button>
                             </div>
                         </div>
-
+                        <hr></hr>
                     </form>
                 </div>
             </div>

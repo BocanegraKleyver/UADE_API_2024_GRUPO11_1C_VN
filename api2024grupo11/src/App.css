@@ -238,3 +238,37 @@ main{
   background-color: rgb(230, 215, 215);
   font-size: 20px;
 }
+
+#descripcion {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#categoria {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#precio {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#foto {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#Button_subir_foto {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+}
+
+#Button_alta_producto {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+
