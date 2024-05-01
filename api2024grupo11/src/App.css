@@ -272,3 +272,37 @@ main{
 }
 
 
+
+#IncrementarStockBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+#DecrementarStockBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+
+#EliminarProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+#AltaProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+#SubirFotoProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
