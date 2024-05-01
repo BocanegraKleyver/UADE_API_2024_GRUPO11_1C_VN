@@ -10,7 +10,6 @@ return (
     <div class="navbar navbar-clear">
         <div class="navbar-inner">
          <div class="center sliding">
-
          </div>
         </div>
     </div>
@@ -24,20 +23,27 @@ return (
                     <div class="logo">
                         <h1>Gestiona tus Productos</h1>
                         <h2>Vendedor, en este lugar podras dar de alta los productos que necesites vender.</h2>
+                        <PageTitle text="Gestiona tus productos"/>
+                        <h2>En este lugar podras dar de alta los productos que necesites vender.</h2>
                     </div>
                 </div>
-
+            <hr></hr>
 
             <div class="login-view-box mt-50">
                 <div class="list login-form-box">
                     <form name="formIniciar" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" id="formIniciar" class="form nice-label">
                         
+                    
                         <div class="form-row">
+                        
                             <label for="nombre"><span class="icon-man"></span></label>
+                            
                             <input type="text" id="nombre" name="nombre" placeholder="Nombre del Producto"></input>
+                            
                         </div>
+                        
                         <label class="error" for="nombre"></label>
-
+                        
 
                         <div class="form-row">
                             <label for="descripcion"><span class="icon-lock"></span></label>
