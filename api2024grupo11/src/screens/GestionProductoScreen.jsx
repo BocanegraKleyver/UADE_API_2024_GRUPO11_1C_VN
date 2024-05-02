@@ -33,8 +33,6 @@ export const GestionProductoScreen = () => {
     const [producto, setProductos] = useState([]);
     const [isAltaProductoButtonEnabled, setAltaProductoButtonEnabled] = useState(true); 
     // const [isEliminarProductoButtonEnabled, setEliminarProductoButtonEnabled] = useState(false);
-
-
     const navegate = useNavigate();
 
     useEffect( () => { getProductos().then((data) => setProductos(data)); }, [] ) 
@@ -138,9 +136,9 @@ return (
             <ol>
             {producto?.map((producto, index) => 
                 <li key={index}>
-                <Link onClick={() => {setAltaProductoButtonEnabled(false)}} id={producto.id} titulo={producto.titulo} cantidad={producto.cantidad} 
+                <Link onClick={() => {setAltaProductoButtonEnabled(false)}} id={producto.id} titulo={producto.titulo} cantidad={producto.cantidad} imagen1={producto.imagen_1} imagen2={producto.imagen_2}
                 index={index} handleRemoveProducto={handleRemoveProducto} onStockChange={(stock)=> handleIncrementarStock_OG(index, stock)}>
-                ID: {producto.id} | {producto.titulo}  | Cantidad: <button> - </button> {producto.cantidad} <IncrementarStockButton handleClickIncrementarStock={handleIncrementarStock}></IncrementarStockButton> |  
+                ID: {producto.id} | {producto.titulo}  | Cantidad: <button> - </button> {producto.cantidad} <IncrementarStockButton handleClickIncrementarStock={handleIncrementarStock}></IncrementarStockButton> | {producto.imagen_1} | {producto.imagen_2}
                 </Link> 
                 {<button type="button" onClick={() => handleRemoveProducto(id)}> Eliminar Producto</button>}
                 {/*Cuando usemos conexion a la BD borrado fisico
