@@ -9,6 +9,15 @@
       "descripcion": "Silla de comedor madera.",
       "precio": 1500,
       "cantidad": 4
+    },
+    {
+      "id": "2",
+      "titulo": "SillaRoja",
+      "categoria": "Jardin",
+      "imagen_1": "C:\\fakepath\\e569fab36495c9bbfc68881326c5ae6a3c79df467a3e4217c20316992e63a0e0.jpg",
+      "descripcion": "la silla roja",
+      "precio": "1000",
+      "cantidad": "2"
     }
   ],
   "categoria": [

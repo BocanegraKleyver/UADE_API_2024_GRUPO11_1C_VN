@@ -61,6 +61,11 @@ export const GestionProductoScreen = () => {
             setCantidad(nuevoStock);
         }
 
+
+    const [isOpen, setIsOpen] = useState(false);
+    const menuItems = ['Jardin','Comedor','Gamer'];
+
+
 return (
 
 <div className="Gestion_de_Productos_Screen">
@@ -95,7 +100,25 @@ return (
 
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="text" id="categoria_Producto" value={categoria} placeholder="CATEGORIA" onChange={e => setCategoria(e.target.value)}></input>
-                        <label className="form_Gestion_Producto_label"> : CATEGORIA</label>
+                        {/* <label className="form_Gestion_Producto_label"> : CATEGORIA</label> */}
+                        <button className="form_Gestion_Producto_input" type="button" onClick={() => setIsOpen(!isOpen)}>
+                        Categorias
+                        </button>
+                        {isOpen && (
+                            <div>
+                                {menuItems.map((item, index) => (
+                                    <div key={index}>
+                                        {item}
+                                      
+                                        </div>
+                                ))}
+                            </div>
+                        )
+
+                        }
+
+
+
                 </div>
                 <br/>
 
