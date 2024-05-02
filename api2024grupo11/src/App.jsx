@@ -10,13 +10,9 @@ function App() {
     <div class="wrapper">
       <AsideHeader />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/carrito/">
-          <Route path="" element={<CarritoScreen />} exact />
-        </Route>
-        <Route path="/GestionProdutos/">
-          <Route path="" element={<GestionProductoScreen />} exact />
-        </Route>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/carrito/" element={<CarritoScreen/>}/>
+        <Route path="/GestionProdutos/" element={<GestionProductoScreen/>}/>
       </Routes>
     </div>
   );

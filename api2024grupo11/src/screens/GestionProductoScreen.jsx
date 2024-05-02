@@ -1,49 +1,175 @@
-import React, { useState } from 'react'
-import { GestionProductoCard } from '../components/Cards/GestionProductoCard';
+import React from 'react'
+import { useState,useEffect,useId} from 'react';
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import {AltaProductoButton} from '../components/Buttons/AltaProductoButton';
+import {EliminarProductoButton} from  '../components/Buttons/EliminarProductoButton';
+import {GestionProductoCard} from '../components/Cards/GestionProductoCard';
+
+import {IncrementarStockButton} from '../components/Buttons/IncrementarStockButton';
+import DecrementarStockButton from '../components/Buttons/DecrementarStockButton';
+import SubirFotoProductoButton from '../components/Buttons/SubirFotoProductoButton';
+import {getProductos,altaProdcuto,eliminarProducto} from '../components/Services/productosService';
 
 export const GestionProductoScreen = () => {
 
-       const [productos, setProductos] = useState(
-        [
-        { text: "silla-comedor-1", cantidad: 1},
-        { text: "silla-comedor-2", cantidad:1}
-        ]
-       );
+    //    const estadoCantidadProducto = (index, nuevaCantidadStock) => {
+    //      const nuevoStockProducto = [...productos];
+    //      nuevoStockProducto[index].cantidad = nuevaCantidadStock;
+    //      setProductos(nuevoStockProducto);
+    //    };
 
-       const estadoCantidadProducto = (index, nuevaCantidadStock) => {
-         const nuevoStockProducto = [...productos];
-         nuevoStockProducto[index].cantidad = nuevaCantidadStock;
-         setProductos(nuevoStockProducto);
-       };
+    //   const eliminarProducto = () => {
+    //     alert("Producto eliminado")
+    //   }
 
-      const eliminarProducto = () => {
-        alert("Producto eliminado")
-      }
+    const [id, setId] = useState();
+    const [titulo, setTitulo] = useState();
+    const [categoria, setCategoria] = useState();
+    const [imagen_1, setImagen_1] = useState();
+    const [imagen_2, setImagen_2] = useState();
+    const [descripcion, setDescripcion] = useState();
+    const [precio, setPrecio] = useState();
+    const [cantidad, setCantidad] = useState();    
+    const [producto, setProductos] = useState([]);
+    const [isAltaProductoButtonEnabled, setAltaProductoButtonEnabled] = useState(true); 
+    // const [isEliminarProductoButtonEnabled, setEliminarProductoButtonEnabled] = useState(false);
+
+
+    const navegate = useNavigate();
+
+    useEffect( () => { getProductos().then((data) => setProductos(data)); }, [] ) 
+
+    const handleRemoveProducto = (id) => {
+        const newStock = [...producto];
+        newStock.splice(id,1);
+        setProductos(newStock);
+        alert("Has eliminado el producto seleccionado.")
+        // navegate("/GestionProdutos");
+    }
+
+    const handleAltaProducto = () => {
+        altaProdcuto(id,titulo,categoria,imagen_1,imagen_2,descripcion,precio,cantidad);
+        navegate("/GestionProdutos");
+    }
+
+    const handleIncrementarStock_OG = ({producto, onStockChange}) => {
+        const newCantidadStock = producto.cantidad + 1;
+        onStockChange(newCantidadStock);
+    }
+
+        const handleIncrementarStock = (index, stock) => {
+            const nuevoStock = [...producto];
+            nuevoStock[index].cantidad = stock;
+            setCantidad(nuevoStock);
+        }
 
 return (
 
-<div class="GestionProducto">
-    <div class="navbar navbar-clear">
-        <div class="navbar-inner">
-         <div class="center sliding">
-         </div>
-        </div>
-    </div>
+<div className="Gestion_de_Productos_Screen">
+    <div class="navbar navbar-clear"> <div class="navbar-inner"> <div class="center sliding"></div></div> </div>
 
     <div class="pages navbar-fixed toolbar-fixed">
         <div data-page="Productos" class="page">
             <div class="page-content">
 
 
-                <div class="nice-header header-fix-top small">
-                    <div class="logo">
-                        <h1>Gestiona tus Productos</h1>
-                        <h2>En este lugar podras dar de alta los productos que necesites vender.</h2>
-                    </div>
-                </div>
-            <hr></hr>
+    <div class="nice-header header-fix-top small"> <div class="logo">
+        <h1>Gestion de Productos</h1>
+        <h4>En este espacio vas a poder subir los productos que necesites vender. Tambien vas a poder modificar el stock y eliminar.</h4>
+        </div>
+    </div>
+    <hr></hr>
 
-            <div class="login-view-box mt-50">
+    <div className="Gestion_de_Productos_Form">
+            <legend>Productos</legend>
+            <form> 
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="number" id="id_Producto" value={id} placeholder="ID" onChange={e => setId(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : ID</label>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="text" id="titulo_Producto" value={titulo} placeholder="TITULO" onChange={e => setTitulo(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : TITULO</label>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="text" id="categoria_Producto" value={categoria} placeholder="CATEGORIA" onChange={e => setCategoria(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : CATEGORIA</label>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <label className="form_Gestion_Producto_label"> IMAGEN 1:  </label>
+                        <input className="form_Gestion_Producto_input" type="file" id="imagen_Producto_1" value={imagen_1} onChange={e => setImagen_1(e.target.value)} accept="image/jpeg,image/png" multiple="" tabindex="-1"  data-testid="fileInput"></input>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <label className="form_Gestion_Producto_label"> IMAGEN 2:  </label>
+                        <input className="form_Gestion_Producto_input" type="file" id="imagen_Producto_2" value={imagen_2} onChange={e => setImagen_2(e.target.value)} accept="image/jpeg,image/png" multiple="" tabindex="-1"  data-testid="fileInput"></input>
+                </div>
+                <br/>
+
+
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="text" id="descripcion_Producto" value={descripcion} placeholder="DESCRIPCION" onChange={e => setDescripcion(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : DESCRIPCION</label>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="number" id="precio_Producto" value={precio} placeholder="PRECIO" onChange={e => setPrecio(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : PRECIO</label>
+                </div>
+                <br/>
+
+                <div className="form_Gestion_Producto_group">
+                        <input className="form_Gestion_Producto_input" type="number" id="cantidad_Producto" value={cantidad} placeholder="CANTIDAD" onChange={e => setCantidad(e.target.value)}></input>
+                        <label className="form_Gestion_Producto_label"> : CANTIDAD</label>
+                </div>
+                <br/>
+           {isAltaProductoButtonEnabled  && <AltaProductoButton handleClickAltaProducto={handleAltaProducto}>  </AltaProductoButton>} 
+            <br/>
+            <br/>
+            <legend>Stock De Productos</legend>
+            <ol>
+            {producto?.map((producto, index) => 
+                <li key={index}>
+                <Link onClick={() => {setAltaProductoButtonEnabled(false)}} id={producto.id} titulo={producto.titulo} cantidad={producto.cantidad} 
+                index={index} handleRemoveProducto={handleRemoveProducto} onStockChange={(stock)=> handleIncrementarStock_OG(index, stock)}>
+                ID: {producto.id} | {producto.titulo}  | Cantidad: <button> - </button> {producto.cantidad} <IncrementarStockButton handleClickIncrementarStock={handleIncrementarStock}></IncrementarStockButton> |  
+                </Link> 
+                {<button type="button" onClick={() => handleRemoveProducto(id)}> Eliminar Producto</button>}
+                {/*Cuando usemos conexion a la BD borrado fisico
+                {isEliminarProductoButtonEnabled && <EliminarProductoButton handleClickEliminarProducto={handleRemoveProducto(producto.id)}></EliminarProductoButton>}*/}
+                        
+                </li>
+            )}
+            </ol>
+            <Outlet></Outlet>
+            {/* Cuando usemos conexion a la BD borrado fisico
+            {{isAltaProductoButtonEnabled && <button className='btn_eliminar_Producto' role="button" onClick={() => setEliminarProductoButtonEnabled(true)}>BTNN_Eliminar Producto</button>}}             */}
+            </form>
+        </div>
+        </div> 
+        </div>
+        </div>
+        </div> 
+    );
+};
+
+
+
+
+
+
+
+
+
+            {/* <div class="login-view-box mt-50">
                 <div class="list login-form-box">
                     <form name="formIniciar" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" id="formIniciar" class="form nice-label">
                         
@@ -94,21 +220,13 @@ return (
                         </div>
                         <hr></hr>
 
-                        <div className='Gestionar_Productos-6'>
+                        {/* <div className='Gestionar_Productos-6'>
                         {productos.map((producto, index) => (
                            <GestionProductoCard key={index} producto={producto} estadoCantidadProducto={(nuevaCantidad) => estadoCantidadProducto(index, nuevaCantidad)}/>
                            )
                          )
                         }
-                        </div>
-                        <button onClick={eliminarProducto} className='Gestionar_Productos-7'>Eliminar Producto</button>
-                    </form>
-                </div>
-            </div>
+                         <button onClick={eliminarProducto} className='Gestionar_Productos-7'>Eliminar Producto</button>
+                        </div> */}
 
-            </div>
-        </div>
-    </div> 
-    </div>
-    );
-};
+       

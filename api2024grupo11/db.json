@@ -1,0 +1,28 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "titulo": "sillacomedor",
+      "categoria": "comedor",
+      "imagen_1": "",
+      "imagen_2": "",
+      "descripcion": "Silla de comedor madera.",
+      "precio": 1500,
+      "cantidad": 4
+    }
+  ],
+  "categoria": [
+    {
+      "id": 1,
+      "descripcion": "comedor"
+    },
+    {
+      "id": 2,
+      "descripcion": "gamer"
+    },
+    {
+      "id": 3,
+      "descripcion": "jardin"
+    }
+  ]
+}
