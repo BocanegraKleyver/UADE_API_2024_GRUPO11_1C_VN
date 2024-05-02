@@ -6,11 +6,21 @@
   
   .producto {
     background-color: #f1f5f9;
+    border-radius: 2rem;
+  }
+
+  .producto:hover{
+    box-shadow: 0 1rem 2rem black;
   }
   
   .producto-imagen{
-    max-width: 100%;
+    width:20rem;
+    height: 20rem;
     border-radius: 1rem;
+    object-fit: cover;
+  }
+  .producto-imagen:hover{
+    transform: scale(1.2);
   }
   
   .producto-detalles{
@@ -21,10 +31,28 @@
     display:flex;
     flex-direction: column;
     gap:.25rem;
+
   }
   
   .producto-titulo{
     font-size: 1rem;
+    text-emphasis-color: black;
+    font-weight: bold;
+  }
+  .producto-precio{
+    font-size: 1rem;
+    text-emphasis-color: black;
+    font-weight: bold;
+  }
+  .producto-cantidad{
+    font-size: 1rem;
+    text-emphasis-color: black;
+    font-weight: bold;
+  }
+  .producto-descripcion{
+    font-size: 1rem;
+    text-emphasis-color: black;
+    font-weight: bold;
   }
   
   .producto-agregar{
@@ -36,9 +64,16 @@
     border-radius: .5rem;
     cursor: pointer;
     border: 2px solid black;
+    max-width:5rem;
+    justify-content:flex-end;
   }
   
   .producto-agregar:hover{
     background-color: #1f1f1f;
     color:white;
+  }
+
+  .paralelo{
+    display: flex;
+    justify-content: space-between;
   }
