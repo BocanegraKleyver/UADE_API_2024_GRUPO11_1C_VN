@@ -19,7 +19,7 @@
       "id": 1,
       "titulo":"sillacomedor1",
       "categoria":"comedor",
-      "imagen":"./src/img/comedor/sillacomedor1.jpg",
+      "imagen":"/img/comedor/sillacomedor1.jpg",
       "descripcion":"silla de comedor",
       "precio": 1000,
       "cantidad": 5
@@ -28,7 +28,7 @@
       "id": 2,
       "titulo":"sillacomedor2",
       "categoria":"comedor",
-      "imagen":"./src/img/comedor/sillacomedor2.jpg",
+      "imagen":"/img/comedor/sillacomedor2.jpg",
       "descripcion":"silla de comedor",
       "precio": 1000,
       "cantidad": 4
@@ -37,7 +37,7 @@
       "id": 3,
       "titulo":"sillacomedor3",
       "categoria":"comedor",
-      "imagen":"./src/img/comedor/sillacomedor3.jpg",
+      "imagen":"/img/comedor/sillacomedor3.jpg",
       "descripcion":"silla de comedor",
       "precio": 500,
       "cantidad": 1
@@ -46,7 +46,7 @@
       "id":4,
       "titulo":"sillajardin1",
       "categoria":"jardin",
-      "imagen":"./src/jardin/sillajardin1.jpg",
+      "imagen":"/img/jardin/sillajardin1.jpg",
       "descripcion":"silla de jardin",
       "precio": 450,
       "cantidad": 10
@@ -55,7 +55,7 @@
       "id":5,
       "titulo":"sillajardin2",
       "categoria":"jardin",
-      "imagen":"./src/jardin/sillajardin2.jpg",
+      "imagen":"/img/jardin/sillajardin2.jpg",
       "descripcion":"silla de jardin",
       "precio": 650,
       "cantidad": 9
@@ -64,7 +64,7 @@
       "id":6,
       "titulo":"sillajardin3",
       "categoria":"jardin",
-      "imagen":"./src/jardin/sillajardin3.jpg",
+      "imagen":"/img/jardin/sillajardin3.jpg",
       "descripcion":"silla de jardin",
       "precio": 550,
       "cantidad": 6
@@ -73,7 +73,7 @@
       "id":7,
       "titulo":"sillagamer1",
       "categoria":"gamer",
-      "imagen":"./src/gamer/sillagamer1.jpg",
+      "imagen":"/img/gamer/sillagamer1.jpg",
       "descripcion":"silla de juego",
       "precio": 1450,
       "cantidad": 0
@@ -82,7 +82,7 @@
       "id":8,
       "titulo":"sillagamer2",
       "categoria":"jardin",
-      "imagen":"./src/gamer/sillagamer2.jpg",
+      "imagen":"/img/gamer/sillagamer2.jpg",
       "descripcion":"silla de juego",
       "precio": 1250,
       "cantidad": 3

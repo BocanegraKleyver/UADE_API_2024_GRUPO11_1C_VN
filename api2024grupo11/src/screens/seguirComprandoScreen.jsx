@@ -9,7 +9,7 @@ const SeguirComprandoScreen = () => {
 
 
     useEffect(() => {
-      fetch("http://localhost:3000/producto")
+      fetch("http://localhost:8000/productos")
       .then((response) => response.json())
       .then((data)=>setProdoductos(data)).then(console.log(setProdoductos));
     }, [])
@@ -25,6 +25,7 @@ const SeguirComprandoScreen = () => {
           
   
          </div>
+         
           
       </div>
     )
