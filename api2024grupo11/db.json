@@ -17,7 +17,6 @@
   "productos": [
     {
       "id": 1,
-      "postId": 1,
       "titulo":"sillacomedor1",
       "categoria":"comedor",
       "imagen":"./src/img/comedor/sillacomedor1.jpg",
@@ -27,7 +26,6 @@
     },
     {
       "id": 2,
-      "postId": 2,
       "titulo":"sillacomedor2",
       "categoria":"comedor",
       "imagen":"./src/img/comedor/sillacomedor2.jpg",
@@ -37,7 +35,6 @@
     },
     {
       "id": 3,
-      "postId": 3,
       "titulo":"sillacomedor3",
       "categoria":"comedor",
       "imagen":"./src/img/comedor/sillacomedor3.jpg",
@@ -47,7 +44,6 @@
     },
     {
       "id":4,
-      "postId":4,
       "titulo":"sillajardin1",
       "categoria":"jardin",
       "imagen":"./src/jardin/sillajardin1.jpg",
@@ -57,7 +53,6 @@
     },
     {
       "id":5,
-      "postId":5,
       "titulo":"sillajardin2",
       "categoria":"jardin",
       "imagen":"./src/jardin/sillajardin2.jpg",
@@ -67,7 +62,6 @@
     },
     {
       "id":6,
-      "postId":6,
       "titulo":"sillajardin3",
       "categoria":"jardin",
       "imagen":"./src/jardin/sillajardin3.jpg",
@@ -77,7 +71,6 @@
     },
     {
       "id":7,
-      "postId":7,
       "titulo":"sillagamer1",
       "categoria":"gamer",
       "imagen":"./src/gamer/sillagamer1.jpg",
@@ -87,7 +80,6 @@
     },
     {
       "id":8,
-      "postId":8,
       "titulo":"sillagamer2",
       "categoria":"jardin",
       "imagen":"./src/gamer/sillagamer2.jpg",

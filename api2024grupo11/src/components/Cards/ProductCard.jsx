@@ -1,17 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import ProductoDo from './ProductDo';
-import { Outlet } from 'react-router-dom';
+import ProductDo from './ProductDo';
 
-export const ProductCard = () => {
+
+ const ProductCard = () => {
 
   const [productos, setProdoductos]=useState([]);
-  const [producto, setProducto]=useState([]);
+
 
   useEffect(() => {
     fetch("http://localhost:3000/producto")
-    .then((Response) => Response.json())
-    .then((data)=>setProdoductos(data))}, [])
+    .then((response) => response.json())
+    .then((data)=>setProdoductos(data)).then(console.log(setProdoductos));
+  }, [])
 
   
   
@@ -19,19 +20,17 @@ export const ProductCard = () => {
   return (
     <div>
        <div className="contenedor-productos">
-        {productos.map((product)=>(<>
-          <ProductoDo 
-            key={product.postId}
-            titulo={product.titulo}
-            imagen={product.imagen}
-            precio={product.precio}
-          />
+        
+        {productos.map((value, index)=>(<>
+          <ProductDo value={value} key={index} />
           </>
         ))}
-        <Outlet></Outlet>
+        
+
        </div>
         
     </div>
   )
 }
 
+export default ProductCard;
