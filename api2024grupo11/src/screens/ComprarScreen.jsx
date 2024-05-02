@@ -1,9 +1,10 @@
 import React from "react";
 import ProductDo from "../components/Cards/ProductDo";
 import { useState, useEffect } from 'react';
+import { PageTitle } from "../components/Titles/PageTitle";
 
 
-const SeguirComprandoScreen = () => {
+const ComprarScreen = () => {
 
     const [productos, setProdoductos]=useState([]);
 
@@ -16,6 +17,7 @@ const SeguirComprandoScreen = () => {
   
     return (
       <div>
+        <div className='text-black bold p-5' ><PageTitle text="¿Que desea comprar?"/></div>
          <div className="contenedor-productos">
           
           {productos.map((value, index)=>(<>
@@ -31,4 +33,4 @@ const SeguirComprandoScreen = () => {
     )
 }
 
-export default SeguirComprandoScreen;
+export default ComprarScreen;
