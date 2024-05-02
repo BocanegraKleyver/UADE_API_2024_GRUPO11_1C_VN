@@ -103,9 +103,7 @@ return (
                         {/* <label className="form_Gestion_Producto_label"> : CATEGORIA</label> */}
                         <button className="form_Gestion_Producto_input" type="button" onClick={() => setIsOpen(!isOpen)}>
                         Categorias
-                        </button>
-                        {isOpen && (
-                            <div>
+                        </button> {isOpen && (<div>
                                 {menuItems.map((item, index) => (
                                     <div key={index}>
                                         {item}
@@ -114,10 +112,14 @@ return (
                                 ))}
                             </div>
                         )
-
                         }
-
-
+                        <select id="selector_dropdown" value={menuItems.} onchange={e => setCategoria(e.target.value)}>
+                        <option value={categoria} onChange={e => setCategoria(e.target.value)}></option>
+                        <option value={categoria}> </option>
+                        <option value={menuItems.item}>Comedor</option>
+                        <option value={menuItems.item}>Gamer</option>
+                        </select>
+                        <label for="selector">Categoria</label>
 
                 </div>
                 <br/>
