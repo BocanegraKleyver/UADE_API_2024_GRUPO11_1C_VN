@@ -36,8 +36,6 @@ export const GestionProductoScreen = () => {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-
-
     ///////////////////////////////// Bloque de  los handlers /////////////////////////////////
 
     //Handles setID
@@ -182,6 +180,7 @@ return (
                 </div>
 
                 <div className="form_Gestion_Producto_group">
+
                     <input className="form_Gestion_Producto_input" type="text" id="categoria_Producto" value={categoriaSeleccionada} placeholder="SELECCIONE CATEGORIA" readOnly></input>
                     <label className="form_Gestion_Producto_label"> : CATEGORIA </label>
                     <select className="form_Gestion_Producto_input" id="Selector_categoria_dropdown" value={categoriaSeleccionada} onChange={handleCategoriaSeleccionadaChange}>
@@ -190,7 +189,6 @@ return (
                             <option key={index} value={categoria.descripcion}>{categoria.descripcion} </option>
                         ))}
                     </select>
-                        
                 </div>
                 <br/>
 
