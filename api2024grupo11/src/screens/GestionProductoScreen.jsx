@@ -2,13 +2,12 @@ import React from 'react'
 import {useState,useEffect} from 'react';
 import {Outlet, useNavigate } from "react-router-dom";
 import { getCategoria} from '../components/Services/categoriaService';
-import {getProductos,altaProdcuto,eliminarProducto} from '../components/Services/productosService';
+import {getProductos,altaProdcuto,eliminarProducto, aumentarCantidad} from '../components/Services/productosService';
 import {AltaProductoButton} from '../components/Buttons/AltaProductoButton';
 import {EliminarProductoButton} from  '../components/Buttons/EliminarProductoButton';
-
 import {IncrementarStockButton} from '../components/Buttons/IncrementarStockButton';
-import DecrementarStockButton from '../components/Buttons/DecrementarStockButton';
-import {GestionProductoCard} from '../components/Cards/GestionProductoCard';
+import {DecrementarStockButton} from '../components/Buttons/DecrementarStockButton';
+// import {GestionProductoCard} from '../components/Cards/GestionProductoCard';
 
 
 export const GestionProductoScreen = () => {
@@ -107,32 +106,49 @@ export const GestionProductoScreen = () => {
     const handleRemoveProducto = (id) => {
 
         eliminarProducto(id);
-        const newStock = producto.filter(producto => producto.id !== id);
-        setProductos(newStock);
+        const nuevoStock = producto.filter(producto => producto.id !== id);
+        setProductos(nuevoStock);
         alert("Has eliminado el producto seleccionado.")
         navegate("/GestionProdutos");
     };
 
+    // //Handles Incrementar Stock del  producto
+    // const handleIncrementarStock = (index) => {
+    //     const nuevoStock = [...producto];
+    //     nuevoStock[index].cantidad ++;
+    //     setProductos(nuevoStock);
+    // };
 
 
-
-
-    // //    const estadoCantidadProducto = (index, nuevaCantidadStock) => {
-    // //      const nuevoStockProducto = [...productos];
-    // //      nuevoStockProducto[index].cantidad = nuevaCantidadStock;
-    // //      setProductos(nuevoStockProducto);
-    // //    };
-
-    const handleIncrementarStock_OG = ({producto, onStockChange}) => {
-        const newCantidadStock = producto.cantidad + 1;
-        onStockChange(newCantidadStock);
-    };
-
-        const handleIncrementarStock = (index, stock) => {
-            const nuevoStock = [...producto];
-            nuevoStock[index].cantidad = stock;
-            setCantidad(nuevoStock);
+    //Handles Incrementar Stock del  producto
+    const handleIncrementarStock = (id,cantidad) => {
+        aumentarCantidad(id,cantidad)
+        .then((newCantidad) => {
+            if(producto.id === id){
+                return{...producto,cantidad: newCantidad};
+            }
+            return producto;
+            }).cath(error=> {
+                console.error("Error incrementando stock:",error);
+            });
         };
+    
+
+    //Handles Decrementar Stock del  producto
+    const handleDecrementarStock = (id,cantidad) => {
+        aumentarCantidad(id,cantidad)
+        .then((newCantidad) => {
+            if(producto.id === id){
+                return{...producto,cantidad: newCantidad};
+            }
+            return producto;
+            }).cath(error=> {
+                console.error("Error Decrementando stock:",error);
+            });
+        };
+    
+
+
 
 return (
 
@@ -215,9 +231,12 @@ return (
                     <tr>
                         <th>ID</th>
                         <th>Producto</th>
-                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
                         <th>Imagen 1</th>
                         <th>Imagen 2</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
                         <th>Opcion</th>
                     </tr>
                 </thead>
@@ -226,13 +245,16 @@ return (
                     <tr key={index}>
                         <td>{producto.id}</td>
                         <td>{producto.titulo}</td>
-                        <td>
-                            <button>-</button>
-                            {producto.cantidad}
-                            <IncrementarStockButton handleClickIncrementarStock={() => handleIncrementarStock(index, producto, setCantidad)} />
-                        </td>
+                        <td>{producto.precio}</td>
+                        <td>{producto.categoria.descripcion}</td> 
                         <td>{producto.imagen_1 && (<img src={producto.imagen_1} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
                         <td>{producto.imagen_2 && (<img src={producto.imagen_2} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
+                        <td>{producto.descripcion}</td>
+                        <td>
+                            <DecrementarStockButton id={producto.id} cantidad={producto.cantidad} handleDecrementarStock={handleDecrementarStock}></DecrementarStockButton>
+                            {producto.cantidad}
+                            <IncrementarStockButton id={producto.id} cantidad={producto.cantidad} handleIncrementarStock={handleIncrementarStock}></IncrementarStockButton>
+                        </td>
                         <td>
                             <EliminarProductoButton productId={producto.id} handleClickEliminarProducto={handleRemoveProducto}></EliminarProductoButton>
                         </td>
@@ -249,3 +271,4 @@ return (
         </div> 
     );
 };
+

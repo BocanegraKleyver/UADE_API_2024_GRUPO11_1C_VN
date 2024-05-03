@@ -49,3 +49,68 @@ export const eliminarProducto = (id) => {
     .cath(error => console.log('error', error));
 
 };
+
+
+export const aumentarCantidad = (id,cantidad) => {
+    
+    fetch("http://localhost:3000/productos/" + id)
+    .then(response => response.json())
+    .then(producto => {
+
+        const cantidadNueva = cantidad + 1;
+        
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": id,
+            "cantidad":cantidadNueva 
+        });
+        
+        var requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/productos/" +id, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    })
+    .catch(error => console.log('error', error));
+};
+
+export const decrementarCantidad = (id,cantidad) => {
+    
+    fetch("http://localhost:3000/productos/" + id)
+    .then(response => response.json())
+    .then(producto => {
+
+        const cantidadNueva = cantidad - 1;
+        
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id": id,
+            "cantidad":cantidadNueva 
+        });
+        
+        var requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/productos/" +id, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    })
+    .catch(error => console.log('error', error));
+};
