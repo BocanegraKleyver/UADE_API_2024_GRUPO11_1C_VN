@@ -13,11 +13,6 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <a className="boton-menu boton-volver" href="./Comprar">
-              Comprar
-            </a>
-          </li>
-          <li>
             <a className="boton-menu boton-carrito active" href="./carrito">
               Carrito
             </a>

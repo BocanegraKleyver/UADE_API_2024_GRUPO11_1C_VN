@@ -81,7 +81,14 @@ export const aumentarCantidad = (id,cantidad) => {
     .catch(error => console.log('error', error));
 };
 
+
+
+
 export const decrementarCantidad = (id,cantidad) => {
+
+    // cant actual del producto
+    // restar esa cantidad
+    // pegarle de nuevo a la api
     
     fetch("http://localhost:8000/productos/" + id)
     .then(response => response.json())
@@ -105,7 +112,7 @@ export const decrementarCantidad = (id,cantidad) => {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:8000/productos/" +id, requestOptions)
+        fetch("http://localhost:8000/productos/" + id, requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

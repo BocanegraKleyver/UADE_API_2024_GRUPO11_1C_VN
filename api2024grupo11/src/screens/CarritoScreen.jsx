@@ -1,28 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageTitle } from '../components/Titles/PageTitle';
 import { CartItemCard } from '../components/Cards/CartItemCard';
+import { getCarrito, eliminarItemDelCarrito, vaciarCarrito } from '../Services/carritoService';
+import { useNavigate } from 'react-router-dom';
 
 export const CarritoScreen = () => {
 
-  const [productos, setProductos] = useState([
-    { text: "Silla Gamer HyperX RGB PRO 4 patas", cantidad: 1, precio: 2 },
-    { text: "Silla Ejecutiva", cantidad: 1, precio: 5 }
-  ]);
+  const navigate = useNavigate(); 
+  const [productos, setProductos] = useState([]);
+  const [cantidades, setCantidades] = useState([]);
 
-  // params: acummulator y valor actual.
-  const totalEstimado = productos.reduce((total, producto) => {
-    return total + (producto.cantidad * producto.precio);
-  }, 0);
+  useEffect(() => {
+    getCarrito()
+    .then((data)=> {
+      setProductos(data);
+      setCantidades(data.map(() => 1));
+    });
+  }, []);
+
+
+  const comprarDeshabilitado = productos.length === 0;
 
   const handleCantidadChange = (index, nuevaCantidad) => {
-    const nuevosProductos = [...productos];
-    nuevosProductos[index].cantidad = nuevaCantidad;
-    setProductos(nuevosProductos);
+    const nuevasCantidades = [...cantidades];
+    nuevasCantidades[index] = nuevaCantidad;
+    setCantidades(nuevasCantidades);
   };
 
   const handleComprar = () => {
-    alert("Compra exitosa")
+    const arrayIds = productos.map(objeto => objeto.id);
+    vaciarCarrito(arrayIds)
+    alert("Compra exitosa");
+    navigate("/")
+  };
+
+  const handleEliminarDelCarrito = (id) => {
+    eliminarItemDelCarrito(id)
+    const productosNoEliminados = productos.filter(producto => producto.id !== id);
+    setProductos(productosNoEliminados);
+    alert("Has eliminado el producto seleccionado.")
   }
+
+  const totalEstimado = productos.reduce((total, producto, index) => {
+    return total + (cantidades[index] * producto.precio);
+  }, 0);
 
   return (
     <div className='text-black p-5'>
@@ -31,19 +52,20 @@ export const CarritoScreen = () => {
         <div className='flex flex-col w-full h-full gap-3 justify-center py-5'>
           {productos.map((producto, index) => (
             <CartItemCard
-              key={index}
+              key={producto.id}
               producto={producto}
-              onCantidadChange={(nuevaCantidad) => handleCantidadChange(index, nuevaCantidad)}
+              cantidad={cantidades[index]}
+              onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
+              onEliminarDelCarrito={(key) => handleEliminarDelCarrito(key)}
             />
           ))}
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
           <span className='font-bold'>Información del carrito</span>
           <span className='font-normal'>Total estimado: <span className='text-black'>${totalEstimado}</span></span>
-          <button onClick={handleComprar} className='p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center'>Comprar</button>
+          <button onClick={handleComprar} disabled={comprarDeshabilitado} className='p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center'>Comprar</button>
         </div>
       </div>
     </div>
   );
 };
- 

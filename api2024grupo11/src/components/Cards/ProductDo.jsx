@@ -1,9 +1,7 @@
-import './ProductDo.css';
-
-function ProductDo({value}) {
+function ProductDo({value, agregarAlCarrito}) {
     return(
         <div class="producto">
-            <img className="producto-imagen" src={value.imagen} alt={value.titulo}></img>
+            <img className="producto-imagen" src={value.imagen_1} alt={value.titulo}></img>
             <div className="producto-detalles">
                 <h3 className="producto-titulo">{value.titulo}</h3>
                 <header class="paralelo">
@@ -11,7 +9,7 @@ function ProductDo({value}) {
                 <p className="producto-cantidad">Stock: {value.cantidad}</p>
                 </header>
                 <p className="producto-descripcion">{value.descripcion}</p>
-                <button className="producto-agregar" id={value.id}>Agregar</button>
+                <button className="producto-agregar" onClick={() => agregarAlCarrito(value)}>Agregar</button>
             </div>
         </div>
     )

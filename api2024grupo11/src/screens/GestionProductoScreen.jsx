@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
 import {Outlet, useNavigate } from "react-router-dom";
-import { getCategoria} from '../components/Services/categoriaService';
-import {getProductos,altaProdcuto,eliminarProducto, aumentarCantidad} from '../components/Services/productosService';
+import { getCategoria} from '../Services/categoriaService';
+import {getProductos,altaProdcuto,eliminarProducto, aumentarCantidad} from '../Services/productosService';
 import {AltaProductoButton} from '../components/Buttons/AltaProductoButton';
 import {EliminarProductoButton} from  '../components/Buttons/EliminarProductoButton';
 import {IncrementarStockButton} from '../components/Buttons/IncrementarStockButton';
@@ -121,6 +121,30 @@ export const GestionProductoScreen = () => {
     //     nuevoStock[index].cantidad ++;
     //     setProductos(nuevoStock);
     // };
+
+    // const handleIncrementarStock = (id) => {
+
+    //     producto.map(p => {
+            
+    //         if (p.id === id) {
+    //             p.cantidad++;
+    //         }});
+
+
+    //     const nuevoStock = [...producto];
+    //     nuevoStock[index].cantidad ++;
+ 
+    //     const updateStock = nuevoStock[index];
+    //     aumentarCantidad(updateStock.id, updateStock.cantidad)
+    //     .then((response) =>{
+    //         console.log("Cantidad updateada",response);
+    //     }).catch((error) => {
+    //         console.error("Error Updateand", error);
+    //     });
+ 
+    //     setProductos(nuevoStock);
+    // };
+ 
 
 
     //Handles Incrementar Stock del  producto
@@ -264,7 +288,7 @@ return (
                         <td>
                             <DecrementarStockButton id={producto.id} cantidad={producto.cantidad} handleDecrementarStock={handleDecrementarStock}></DecrementarStockButton>
                             {producto.cantidad}
-                            <IncrementarStockButton id={producto.id} cantidad={producto.cantidad} handleIncrementarStock={handleIncrementarStock}></IncrementarStockButton>
+                            <IncrementarStockButton id={producto.id} cantidad={producto.cantidad} handleIncrementarStock={(id) => handleIncrementarStock(id)}></IncrementarStockButton>
                         </td>
                         <td>
                             <EliminarProductoButton productId={producto.id} handleClickEliminarProducto={handleRemoveProducto}></EliminarProductoButton>
