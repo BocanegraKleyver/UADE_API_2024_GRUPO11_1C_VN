@@ -12,14 +12,13 @@
       "id":3,
       "nombre":"gamer"
     }
- 
   ],
   "productos": [
     {
       "id": 1,
       "titulo":"sillacomedor1",
       "categoria":"comedor",
-      "imagen_1":"/img/gamer/sillagamer1.jpg",
+      "imagen":"/img/comedor/sillacomedor1.jpg",
       "imagen_2":"",
       "descripcion":"silla de comedor",
       "precio": 1000,

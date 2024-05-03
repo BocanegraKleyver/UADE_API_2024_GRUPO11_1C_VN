@@ -1,9 +1,18 @@
+import sillacomedor1 from '..//img/comedor/sillacomedor1.jpg';
+import sillacomedor2 from '..//img/comedor/sillacomedor2.jpg';
+import sillacomedor3 from '..//img/comedor/sillacomedor3.jpg';
+import sillagamer1 from '..//img/gamer/sillagamer1.jpg';
+import sillagamer2 from '..//img/gamer/sillagamer2.jpg';
+import sillajardin1 from '..//img/jardin/sillajardin1.jpg';
+import sillajardin2 from '..//img/jardin/sillajardin2.jpg';
+import sillajardin3 from '..//img/jardin/sillajardin3.jpg';
+
 export const productos= [
     //Silla Comedor
     {
       id:"silla-comedor-1",
       titulo:"Silla comedor 1",
-      imagen:"./img/comedor/sillacomedor1.jpg",
+      imagen:{sillacomedor1},
       categoria:{
         nombre:"Comedor",
         id:"comedor",
@@ -13,7 +22,7 @@ export const productos= [
     {
       id:"silla-comedor-2",
       titulo:"Silla comedor 2",
-      imagen:"./img/comedor/sillacomedor2.jpg",
+      imagen:{sillacomedor2},
       categoria:{
         nombre:"Comedor",
         id:"comedor",
@@ -23,7 +32,7 @@ export const productos= [
     {
       id:"silla-comedor-3",
       titulo:"Silla comedor 3",
-      imagen:"./img/comedor/sillacomedor3.jpg",
+      imagen:{sillacomedor3},
       categoria:{
         nombre:"Comedor",
         id:"comedor",
@@ -34,7 +43,7 @@ export const productos= [
     {
       id:"silla-gamer-1",
       titulo:"Silla gamer 1",
-      imagen:"./img/gamer/sillagamer1.jpg",
+      imagen:{sillagamer1},
       categoria:{
         nombre:"Gamer",
         id:"gamer",
@@ -44,7 +53,7 @@ export const productos= [
     {
       id:"silla-gamer-2",
       titulo:"Silla gamer 2",
-      imagen:"./img/gamer/sillagamer2.jpg",
+      imagen:{sillagamer2},
       categoria:{
         nombre:"Gamer",
         id:"gamer",
@@ -55,7 +64,7 @@ export const productos= [
     {
       id:"silla-jardin-1",
       titulo:"Silla jardin 1",
-      imagen:"./img/gamer/sillajardin1.jpg",
+      imagen:{sillajardin1},
       categoria:{
         nombre:"Jardin",
         id:"jardin",
@@ -65,7 +74,7 @@ export const productos= [
     {
       id:"silla-jardin-2",
       titulo:"Silla jardin 2",
-      imagen:"./img/gamer/sillajardin2.jpg",
+      imagen:{sillajardin2},
       categoria:{
         nombre:"Jardin",
         id:"jardin",
@@ -75,7 +84,7 @@ export const productos= [
     {
       id:"silla-jardin-3",
       titulo:"Silla jardin 3",
-      imagen:"./img/gamer/sillajardin3.jpg",
+      imagen:{sillajardin3},
       categoria:{
         nombre:"Jardin",
         id:"jardin",
