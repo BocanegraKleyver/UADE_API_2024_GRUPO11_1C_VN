@@ -17,8 +17,10 @@ const ComprarScreen = () => {
   
     return (
       <div>
-        <div className='text-black bold p-5' ><PageTitle text="¿Que desea comprar?"/></div>
-         <div className="contenedor-productos">
+        <div className='text-black bold p-5' >
+            <PageTitle text="¿Que desea comprar?"/>
+        </div>
+        <div className="contenedor-productos">
           
           {productos.map((value, index)=>(<>
             <ProductDo value={value} key={index} />
@@ -26,7 +28,7 @@ const ComprarScreen = () => {
           ))}
           
   
-         </div>
+        </div>
          
           
       </div>
