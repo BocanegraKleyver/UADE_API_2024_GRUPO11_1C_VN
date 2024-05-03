@@ -1,16 +1,15 @@
 import React from 'react'
-import { useState,useEffect,useId} from 'react';
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import {useState,useEffect} from 'react';
+import {Outlet, useNavigate } from "react-router-dom";
+import { getCategoria} from '../components/Services/categoriaService';
+import {getProductos,altaProdcuto,eliminarProducto} from '../components/Services/productosService';
 import {AltaProductoButton} from '../components/Buttons/AltaProductoButton';
 import {EliminarProductoButton} from  '../components/Buttons/EliminarProductoButton';
-import {GestionProductoCard} from '../components/Cards/GestionProductoCard';
 
 import {IncrementarStockButton} from '../components/Buttons/IncrementarStockButton';
 import DecrementarStockButton from '../components/Buttons/DecrementarStockButton';
-import SubirFotoProductoButton from '../components/Buttons/SubirFotoProductoButton';
-import {getProductos,altaProdcuto,eliminarProducto} from '../components/Services/productosService';
-import { getCategoria} from '../components/Services/categoriaService';
-import { UploadFotoProductoButton } from '../components/Buttons/UploadFotoProductoButton';
+import {GestionProductoCard} from '../components/Cards/GestionProductoCard';
+
 
 export const GestionProductoScreen = () => {
 
@@ -25,7 +24,7 @@ export const GestionProductoScreen = () => {
     const [precio, setPrecio] = useState();
     const [cantidad, setCantidad] = useState();   
     const [producto, setProductos] = useState([]);
- 
+    const navegate = useNavigate();
     
 
     /////////////// Bloque de  los llamados al JSON (features base de datos) ///////////////////
@@ -98,32 +97,23 @@ export const GestionProductoScreen = () => {
         setCantidad(event.target.value);
     }
 
+    //Handles ALTA productos
+    const handleAltaProducto = () => {
+        altaProdcuto(id,titulo,categoria,imagen_1,imagen_2,descripcion,precio,cantidad);
+        navegate("/GestionProdutos");
+    };
 
- 
+    //Handles DELETE productos
+    const handleRemoveProducto = (id) => {
+
+        eliminarProducto(id);
+        const newStock = producto.filter(producto => producto.id !== id);
+        setProductos(newStock);
+        alert("Has eliminado el producto seleccionado.")
+        navegate("/GestionProdutos");
+    };
 
 
-
-
-
- 
-    const [isAltaProductoButtonEnabled, setAltaProductoButtonEnabled] = useState(true); 
-    // const [isEliminarProductoButtonEnabled, setEliminarProductoButtonEnabled] = useState(false);
-    const navegate = useNavigate();
-
-
-
-
-
-
-    // const handleSubmitFoto_1 =() => {
-    //     // Add the uploaded image to the producto state
-    //     setProductos([...producto, {imagen_1}]);
-    // };
-
-    // const handleSubmitFoto_2 =() => {
-    //     // Add the uploaded image to the producto state
-    //     setProductos([...producto, {imagen_2}]);
-    // };
 
 
 
@@ -132,25 +122,6 @@ export const GestionProductoScreen = () => {
     // //      nuevoStockProducto[index].cantidad = nuevaCantidadStock;
     // //      setProductos(nuevoStockProducto);
     // //    };
-
-    // //   const eliminarProducto = () => {
-    // //     alert("Producto eliminado")
-    // //   }
-
-
-
-    const handleRemoveProducto = (id) => {
-        const newStock = [...producto];
-        newStock.splice(id,1);
-        setProductos(newStock);
-        alert("Has eliminado el producto seleccionado.")
-        // navegate("/GestionProdutos");
-    };
-
-    const handleAltaProducto = () => {
-        altaProdcuto(id,titulo,categoria,imagen_1,imagen_2,descripcion,precio,cantidad);
-        navegate("/GestionProdutos");
-    };
 
     const handleIncrementarStock_OG = ({producto, onStockChange}) => {
         const newCantidadStock = producto.cantidad + 1;
@@ -162,11 +133,6 @@ export const GestionProductoScreen = () => {
             nuevoStock[index].cantidad = stock;
             setCantidad(nuevoStock);
         };
-
-
-    const [isOpen, setIsOpen] = useState(false);
-    const menuItems = ['Jardin','Comedor','Gamer'];
-
 
 return (
 
@@ -180,7 +146,8 @@ return (
 
     <div class="nice-header header-fix-top small"> <div class="logo">
         <h1>Gestion de Productos</h1>
-        <h4>En este espacio vas a poder subir los productos que necesites vender. Tambien vas a poder modificar el stock y eliminar.</h4>
+        <hr></hr>
+        <h5>En este espacio vas a poder dar de alta tus productos. Ademas podras realizar modificaciones en cuanto al stock que quieras vender o eliminarlos.</h5>
         </div>
     </div>
     <hr></hr>
@@ -239,10 +206,10 @@ return (
                 </div>
                 <br/>
                 
-            {isAltaProductoButtonEnabled  && <AltaProductoButton handleClickAltaProducto={handleAltaProducto}></AltaProductoButton>}
-            {/* {<UploadFotoProductoButton handleClickUploadFotoProducto={handleSubmitFoto}></UploadFotoProductoButton>}  */}
+            <AltaProductoButton handleClickAltaProducto={handleAltaProducto}></AltaProductoButton>
             <hr></hr>
-            <legend>Stock De Productos</legend>         
+
+            <legend>Stock actual de tus Productos</legend>         
             <table>
                 <thead>
                     <tr>
@@ -251,7 +218,7 @@ return (
                         <th>Cantidad</th>
                         <th>Imagen 1</th>
                         <th>Imagen 2</th>
-                        <th>Acciones</th>
+                        <th>Opcion</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -267,19 +234,13 @@ return (
                         <td>{producto.imagen_1 && (<img src={producto.imagen_1} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
                         <td>{producto.imagen_2 && (<img src={producto.imagen_2} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
                         <td>
-                            <button type="button" onClick={() => handleRemoveProducto(producto.id)}>Eliminar Producto</button>
+                            <EliminarProductoButton productId={producto.id} handleClickEliminarProducto={handleRemoveProducto}></EliminarProductoButton>
                         </td>
                     </tr>
-                        )
-                    )
-                }
-                </tbody>
-            </table>    
-
-
+                ))}
+                </tbody> 
+            </table>
             <Outlet></Outlet>
-            {/* Cuando usemos conexion a la BD borrado fisico
-            {{isAltaProductoButtonEnabled && <button className='btn_eliminar_Producto' role="button" onClick={() => setEliminarProductoButtonEnabled(true)}>BTNN_Eliminar Producto</button>}}             */}
             </form>
         </div>
         </div> 
@@ -288,73 +249,3 @@ return (
         </div> 
     );
 };
-
-
-
-
-
-
-
-
-
-            {/* <div class="login-view-box mt-50">
-                <div class="list login-form-box">
-                    <form name="formIniciar" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" id="formIniciar" class="form nice-label">
-                        
-                    
-                        <div class="form-row">
-                        
-                            <label for="nombre"><span class="icon-man"></span></label>
-                            
-                            <input type="text" id="nombre" name="nombre" placeholder="Nombre del Producto"></input>
-                            
-                        </div>
-                        
-                        <label class="error" for="nombre"></label>
-                        
-
-                        <div class="form-row">
-                            <label for="descripcion"><span class="icon-lock"></span></label>
-                            <input type="descripcion" id="descripcion" name="descripcion" placeholder="Descripcion del Producto"></input>
-                        </div>
-                        <label class="error" for="descripcion"></label>
-
-                        <div class="form-row">
-                            <label for="categoria"><span class="icon-lock"></span></label>
-                            <input type="categoria" id="categoria" name="categoria" placeholder="Categoria del Producto"></input>
-                        </div>
-                        <label class="error" for="categoria"></label>
-
-                        <div class="form-row">
-                            <label for="precio"><span class="icon-lock"></span></label>
-                            <input type="precio" id="precio" name="precio" placeholder="Precio del Producto"></input>
-                        </div>
-                        <label class="error" for="precio"></label>                      
-
-                        <div class="form-row">
-                            <label for="foto"><span class="icon-lock"></span></label>
-                            <input type="foto" id="foto" name="foto" placeholder="Foto elegida"></input>
-                            <hr></hr>
-                            <div class="input-submit">
-                              <button type="submit" id="Button_subir_foto">Subir Foto del Producto</button>
-                            </div>
-                        </div>
-                        <label class="error" for="foto"></label>    
-
-                        <div class="form-row">
-                            <div class="input-submit">
-                              <button type="submit" id="Button_alta_producto">Dar de alta Producto</button>
-                            </div>
-                        </div>
-                        <hr></hr>
-
-                        {/* <div className='Gestionar_Productos-6'>
-                        {productos.map((producto, index) => (
-                           <GestionProductoCard key={index} producto={producto} estadoCantidadProducto={(nuevaCantidad) => estadoCantidadProducto(index, nuevaCantidad)}/>
-                           )
-                         )
-                        }
-                         <button onClick={eliminarProducto} className='Gestionar_Productos-7'>Eliminar Producto</button>
-                        </div> */}
-
-       
