@@ -1,12 +1,16 @@
 import React from 'react';
 import { DecrementItemButton } from '../Buttons/DecrementItemButton';
 import { IncrementItemButton } from '../Buttons/IncrementItemButton';
+import { actualizarCarrito } from '../../Services/carritoService';
 
 export const CartItemCard = ({ producto, cantidad, onCantidadChange, onEliminarDelCarrito }) => {
 
   const handleIncrementItem = () => {
+
     const nuevaCantidad = cantidad + 1;
+
     onCantidadChange(nuevaCantidad);
+    actualizarCarrito(nuevaCantidad, producto)
   };
 
   const handleDecrementItem = () => {

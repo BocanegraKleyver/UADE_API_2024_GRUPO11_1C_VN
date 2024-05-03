@@ -13,14 +13,14 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <a className="boton-menu boton-carrito active" href="./carrito">
+            <a className="boton-menu boton-carrito active" href="/carrito">
               Carrito
             </a>
           </li>
           <li>
             <a
               className="boton-menu boton-vender-tus-productos active"
-              href="./GestionProdutos"
+              href="/gestionProductos"
             >
               Gestiona tus Productos
             </a>

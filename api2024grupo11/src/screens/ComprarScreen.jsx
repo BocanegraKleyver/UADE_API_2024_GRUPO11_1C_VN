@@ -16,8 +16,12 @@ const ComprarScreen = () => {
   
 
     const handleAgregarAlCarrito = (producto) => {
+      if (producto.cantidad === 0) {
+        alert("No hay stock del producto. Intente más tarde o con otro producto.")
+        return;
+      }
       agregarItemAlCarrito(producto);
-      alert("Item agreagado al carrito")
+      alert("Item agregado al carrito")
     }
 
     return (

@@ -15,7 +15,7 @@ export const agregarItemAlCarrito = (item) => {
         "id": item.id,
         "titulo": item.titulo,
         "precio": item.precio,
-        "cantidad": item.cantidad
+        "cantidad": 1
     });
     
     var requestOptions = {
@@ -26,6 +26,30 @@ export const agregarItemAlCarrito = (item) => {
     };
 
     fetch("http://localhost:8000/carrito", requestOptions)
+    .then(Response => Response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+};
+
+export const actualizarCarrito = (cantidad, item) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "id": item.id,
+        "titulo": item.titulo,
+        "precio": item.precio,
+        "cantidad": cantidad
+    });
+    
+    var requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:8000/carrito/" + item.id, requestOptions)
     .then(Response => Response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));

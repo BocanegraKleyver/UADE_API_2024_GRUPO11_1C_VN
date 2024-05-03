@@ -19,7 +19,7 @@ function App() {
           <Route path="" element={<CarritoScreen />} exact />
         </Route>
         
-        <Route path="/GestionProdutos/">
+        <Route path="/gestionProductos/">
           <Route path="" element={<GestionProductoScreen />} exact />
         </Route>
       </Routes>

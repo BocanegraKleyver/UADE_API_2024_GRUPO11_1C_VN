@@ -3,6 +3,7 @@ import { PageTitle } from '../components/Titles/PageTitle';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { getCarrito, eliminarItemDelCarrito, vaciarCarrito } from '../Services/carritoService';
 import { useNavigate } from 'react-router-dom';
+import { decrementarCantidad } from '../Services/productosService';
 
 export const CarritoScreen = () => {
 
@@ -27,8 +28,12 @@ export const CarritoScreen = () => {
     setCantidades(nuevasCantidades);
   };
 
+  // chequear stock elimina mal
   const handleComprar = () => {
     const arrayIds = productos.map(objeto => objeto.id);
+    productos.forEach((producto, index) => {
+      decrementarCantidad(producto.id, cantidades[index]);
+    });
     vaciarCarrito(arrayIds)
     alert("Compra exitosa");
     navigate("/")
