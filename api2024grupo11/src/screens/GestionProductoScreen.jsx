@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {useState,useEffect} from 'react';
 import {Outlet, useNavigate } from "react-router-dom";
 import { getCategoria} from '../components/Services/categoriaService';
@@ -11,8 +11,8 @@ import {DecrementarStockButton} from '../components/Buttons/DecrementarStockButt
 
 
 export const GestionProductoScreen = () => {
-
-    //Variables 
+    ///////////////////////////////////// Variables /////////////////////////////////////////////
+    
     const [id, setId] = useState();
     const [titulo, setTitulo] = useState();
     const [categoria, setCategoria] = useState([]);
@@ -230,7 +230,7 @@ return (
                         <th>ID</th>
                         <th>Producto</th>
                         <th>Precio</th>
-                        <th>Categoria</th>
+                        {/* <th>Categoria</th> */}
                         <th>Imagen 1</th>
                         <th>Imagen 2</th>
                         <th>Descripcion</th>
@@ -243,8 +243,8 @@ return (
                     <tr key={index}>
                         <td>{producto.id}</td>
                         <td>{producto.titulo}</td>
-                        <td>{producto.precio}</td>
-                        <td>{producto.categoria.descripcion}</td> 
+                        <td>${producto.precio}</td>
+                        {/* <td>{producto.categoria}</td>  */}
                         <td>{producto.imagen_1 && (<img src={producto.imagen_1} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
                         <td>{producto.imagen_2 && (<img src={producto.imagen_2} alt="Uploaded" style={{ maxWidth: '75px' }} />)}</td>
                         <td>{producto.descripcion}</td>

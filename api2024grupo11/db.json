@@ -1,26 +1,5 @@
 {
-  "productos": [
-    {
-      "id": "1",
-      "categoria": [
-        {
-          "id": 1,
-          "descripcion": "comedor"
-        },
-        {
-          "id": 2,
-          "descripcion": "gamer"
-        },
-        {
-          "id": 3,
-          "descripcion": "jardin"
-        }
-      ],
-      "imagen_1": "",
-      "imagen_2": "",
-      "cantidad": 7
-    }
-  ],
+  "productos": [],
   "categoria": [
     {
       "id": 1,
