@@ -151,3 +151,158 @@ main{
   background-color: #1f1f1f;
   color:white;
 }
+
+/*Carrito*/
+
+.contenedor-carrito{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.carrito-vacio{
+  color:purple;
+}
+
+.carrito-productos{
+  display:flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.carrito-producto{
+  display:flex;
+  justify-content: space-between;
+  background-color: gray;
+  color: violet;
+  padding: .5rem;
+  padding-right: 1.5rem;
+  border-radius: 1rem;
+  align-items: center;
+}
+
+.carrito-producto-imagen{
+  width: 4rem;
+  border-radius: 1rem;
+}
+
+.carrito-producto-small{
+  font-size: .75rem;
+}
+
+.carrito-producto-eliminar{
+  border: 0;
+  background-color: transparent;
+  color: red;
+  cursor:pointer;
+}
+
+.carrito-acciones{
+  display: flex;
+  justify-content: space-between;
+}
+
+.carrito-acciones-vaciar{
+  border:0;
+  background-color: gray;
+  padding: 1rem;
+  border-radius: 1rem;
+  color:violet;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.carrito-acciones-derecha{
+  display: flex;
+  background-color: gray;
+  padding: 1rem;
+  border-radius: 1rem;
+  color:violet;
+  text-transform: uppercase;
+}
+
+.carrito-acciones-total{
+  display: flex;
+}
+
+.carrito-acciones-comprar{
+  border:0;
+  background-color: violet;
+  padding: 1rem;
+  border-radius: 1rem;
+  color:white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#nombre {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#descripcion {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#categoria {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#precio {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#foto {
+  background-color: rgb(230, 215, 215);
+  font-size: 20px;
+}
+
+#Button_subir_foto {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+}
+
+#Button_alta_producto {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+
+
+#IncrementarStockBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+#DecrementarStockBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+
+#EliminarProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+#AltaProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
+
+#SubirFotoProductoBoton {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-size: 20px;
+  margin-top: 1em;
+  margin:auto;
+}
