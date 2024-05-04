@@ -6,9 +6,7 @@ import { actualizarCarrito } from '../../Services/carritoService';
 export const CartItemCard = ({ producto, cantidad, onCantidadChange, onEliminarDelCarrito }) => {
 
   const handleIncrementItem = () => {
-
     const nuevaCantidad = cantidad + 1;
-
     onCantidadChange(nuevaCantidad);
     actualizarCarrito(nuevaCantidad, producto)
   };
@@ -19,6 +17,7 @@ export const CartItemCard = ({ producto, cantidad, onCantidadChange, onEliminarD
     }
     const nuevaCantidad = cantidad - 1;
     onCantidadChange(nuevaCantidad);
+    actualizarCarrito(nuevaCantidad, producto)
   };
 
   const handleEliminarItem = () => {

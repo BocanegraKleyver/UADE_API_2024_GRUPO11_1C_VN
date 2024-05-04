@@ -1,5 +1,3 @@
-import React from "react";
-
 export const getCategoria = () => {
     return(
         fetch("http://localhost:3000/categoria")
@@ -39,7 +37,6 @@ export const eliminarCategoria = (id) => {
 
     fetch("http://localhost:3000/categoria/" + id, requestOptions)
     .then(Response => Response.text())
-    .then(result => console.log(result))
     .cath(error => console.log('error', error));
 
 };

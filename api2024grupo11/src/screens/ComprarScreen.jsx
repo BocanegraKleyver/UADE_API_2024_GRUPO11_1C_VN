@@ -11,7 +11,7 @@ const ComprarScreen = () => {
     useEffect(() => {
       fetch("http://localhost:8000/productos")
       .then((response) => response.json())
-      .then((data)=>setProdoductos(data)).then(console.log(setProdoductos));
+      .then((data)=>setProdoductos(data))
     }, [])
   
 
@@ -30,15 +30,10 @@ const ComprarScreen = () => {
             <PageTitle text="¿Que desea comprar?"/>
         </div>
         <div className="contenedor-productos">
-          
           {productos.map((value, index)=>(
-            <ProductDo value={value} key={index} agregarAlCarrito={handleAgregarAlCarrito} />
+            <ProductDo value={value} key={index} agregarAlCarrito={() => handleAgregarAlCarrito(value)} />
           ))}
-          
-  
         </div>
-         
-          
       </div>
     )
 }

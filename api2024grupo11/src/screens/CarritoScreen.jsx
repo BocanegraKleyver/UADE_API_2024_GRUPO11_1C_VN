@@ -3,19 +3,19 @@ import { PageTitle } from '../components/Titles/PageTitle';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { getCarrito, eliminarItemDelCarrito, vaciarCarrito } from '../Services/carritoService';
 import { useNavigate } from 'react-router-dom';
-import { decrementarCantidad } from '../Services/productosService';
+import { decrementarCantidadEnN } from '../Services/productosService';
 
 export const CarritoScreen = () => {
 
   const navigate = useNavigate(); 
   const [productos, setProductos] = useState([]);
-  const [cantidades, setCantidades] = useState([]);
+  const [cantidades, setCantidades] = useState([]); 
 
   useEffect(() => {
     getCarrito()
     .then((data)=> {
       setProductos(data);
-      setCantidades(data.map(() => 1));
+      setCantidades(data.map(d => d.cantidad));
     });
   }, []);
 
@@ -32,7 +32,7 @@ export const CarritoScreen = () => {
   const handleComprar = () => {
     const arrayIds = productos.map(objeto => objeto.id);
     productos.forEach((producto, index) => {
-      decrementarCantidad(producto.id, cantidades[index]);
+      decrementarCantidadEnN(producto, cantidades[index]);
     });
     vaciarCarrito(arrayIds)
     alert("Compra exitosa");

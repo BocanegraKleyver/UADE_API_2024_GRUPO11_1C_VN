@@ -3,7 +3,6 @@ export const getCarrito = () => {
         fetch("http://localhost:8000/carrito")
         .then((Response) => Response.json())
         .catch(error => console.log('error',error))
-        .finally(() => console.log('promise is finished'))
     )
 };
 
@@ -27,7 +26,6 @@ export const agregarItemAlCarrito = (item) => {
 
     fetch("http://localhost:8000/carrito", requestOptions)
     .then(Response => Response.text())
-    .then(result => console.log(result))
     .catch(error => console.log('error', error));
 };
 
@@ -51,7 +49,6 @@ export const actualizarCarrito = (cantidad, item) => {
 
     fetch("http://localhost:8000/carrito/" + item.id, requestOptions)
     .then(Response => Response.text())
-    .then(result => console.log(result))
     .catch(error => console.log('error', error));
 };
 
