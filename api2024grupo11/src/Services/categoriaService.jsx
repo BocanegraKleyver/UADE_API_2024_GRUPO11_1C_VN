@@ -1,42 +1,59 @@
-export const getCategoria = () => {
-    return(
-        fetch("http://localhost:3000/categoria")
-        .then((Response) => Response.json())
-        .catch(error => console.log('error',error))
-        .finally(() => console.log('promise is finished'))
-    )
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api/categoria';
+
+const CategoriaService = {
+  getAllCategorias: async () => {
+    try {
+      const response = await axios.get(API_URL);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al obtener las categorías: ${error.message}`);
+    }
+  },
+
+  getCategoriaById: async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al obtener la categoría con ID ${id}: ${error.message}`);
+    }
+  },
+
+  createCategoria: async (categoria) => {
+    try {
+      const response = await axios.post(API_URL, categoria);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al crear la categoría: ${error.message}`);
+    }
+  },
+
+  updateCategoria: async (id, categoria) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}`, categoria);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al actualizar la categoría con ID ${id}: ${error.message}`);
+    }
+  },
+
+
+
+  
+  deleteCategoria: async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+    } catch (error) {
+      throw new Error(`Error al eliminar la categoría con ID ${id}: ${error.message}`);
+    }
+  }
 };
 
-export const altaCategoria = (id,descripcion) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-        "id": id,
-        "descripcion": descripcion
-    });
-    
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
 
-    fetch("http://localhost:3000/categoria", requestOptions)
-    .then(Response => Response.text())
-    .then(result => console.log(result))
-    .cath(error => console.log('error', error));
-};
+export default CategoriaService;
 
-export const eliminarCategoria = (id) => {
-    
-    var requestOptions = {
-        method: 'DELETE',
-    };
 
-    fetch("http://localhost:3000/categoria/" + id, requestOptions)
-    .then(Response => Response.text())
-    .cath(error => console.log('error', error));
 
-};

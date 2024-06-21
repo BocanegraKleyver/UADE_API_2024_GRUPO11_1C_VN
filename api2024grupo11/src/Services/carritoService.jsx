@@ -1,6 +1,6 @@
 export const getCarrito = () => {
     return(
-        fetch("http://localhost:8000/carrito")
+        fetch("http://localhost:8080/carrito")
         .then((Response) => Response.json())
         .catch(error => console.log('error',error))
     )
@@ -24,7 +24,7 @@ export const agregarItemAlCarrito = (item) => {
         redirect: 'follow'
     };
 
-    fetch("http://localhost:8000/carrito", requestOptions)
+    fetch("http://localhost:8080/carrito", requestOptions)
     .then(Response => Response.text())
     .catch(error => console.log('error', error));
 };
@@ -47,7 +47,7 @@ export const actualizarCarrito = (cantidad, item) => {
         redirect: 'follow'
     };
 
-    fetch("http://localhost:8000/carrito/" + item.id, requestOptions)
+    fetch("http://localhost:8080/carrito/" + item.id, requestOptions)
     .then(Response => Response.text())
     .catch(error => console.log('error', error));
 };
@@ -57,7 +57,7 @@ export const eliminarItemDelCarrito = (id) => {
         method: 'DELETE',
     };
 
-    fetch("http://localhost:8000/carrito/" + id, requestOptions)
+    fetch("http://localhost:8080/carrito/" + id, requestOptions)
     .then(Response => Response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -72,7 +72,7 @@ export const vaciarCarrito = (arrayIds) => {
             method: 'DELETE',
         };
     
-        fetch("http://localhost:8000/carrito/" + id, requestOptions)
+        fetch("http://localhost:8080/carrito/" + id, requestOptions)
         .then(Response => Response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

@@ -2,6 +2,7 @@ import React from 'react';
 import {useState,useEffect} from 'react';
 import {Outlet, useNavigate } from "react-router-dom";
 import { getCategoria} from '../Services/categoriaService';
+import CategoriaService from '../Services/categoriaService';
 import {getProductos,altaProdcuto,eliminarProducto, aumentarCantidad, decrementarCantidad} from '../Services/productosService';
 import {AltaProductoButton} from '../components/Buttons/AltaProductoButton';
 import {EliminarProductoButton} from  '../components/Buttons/EliminarProductoButton';
@@ -28,11 +29,33 @@ export const GestionProductoScreen = () => {
     /////////////// Bloque de  los llamados al JSON (features base de datos) ///////////////////
    
     ///Hook Json Categorias
-    useEffect(() => { getCategoria().then((data) => setCategoria(data));},[]);
- 
+    // useEffect(() => { getCategoria().then((data) => setCategoria(data));},[]);
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const data = await CategoriaService.getAllCategorias(); // Usa el método correcto del servicio
+                setCategoria(data);
+            } catch (error) {
+                console.error('Error al cargar las categorías:', error.message);
+            }
+        };
+
+        fetchCategorias();
+    }, []);
     //Hook Json Productos
-    useEffect(() => { getProductos().then((data) => setProductos(data));},[]);
- 
+    // useEffect(() => { getProductos().then((data) => setProductos(data));},[]);
+    useEffect(() => {
+        const fetchProductos = async () => {
+            try {
+                const data = await CategoriaService.getProductos(); // Asumiendo que hay un método getProductos en tu servicio de productos
+                setProductos(data);
+            } catch (error) {
+                console.error('Error al cargar los productos:', error.message);
+            }
+        };
+
+        fetchProductos();
+    }, []);
     ///////////////////////////////////////////////////////////////////////////////////////////
  
     ///////////////////////////////// Bloque de  los handlers /////////////////////////////////
@@ -284,3 +307,5 @@ return (
         </div>
     );
 };
+
+export default GestionProductoScreen;

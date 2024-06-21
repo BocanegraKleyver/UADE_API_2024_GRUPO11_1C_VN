@@ -1,6 +1,6 @@
 export const getProductos = () => {
     return(
-        fetch("http://localhost:8000/productos")
+        fetch("http://localhost:8080/producto")
         .then((Response) => Response.json())
         .catch(error => console.log('error',error))
     )
@@ -28,7 +28,7 @@ export const altaProdcuto = (id,titulo,categoria,imagen_1,imagen_2,descripcion,p
         redirect: 'follow'
     };
  
-    fetch("http://localhost:8000/productos", requestOptions)
+    fetch("http://localhost:8080/producto", requestOptions)
     .then(Response => Response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -40,7 +40,7 @@ export const eliminarProducto = (id) => {
         method: 'DELETE',
     };
  
-    fetch("http://localhost:8000/productos/" + id, requestOptions)
+    fetch("http://localhost:8080/producto/" + id, requestOptions)
     .then(Response => Response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -64,7 +64,7 @@ export const aumentarCantidad = (id, cantidad) => {
         redirect: 'follow'
     };
  
-    fetch(`http://localhost:8000/productos/${id}`, requestOptions)
+    fetch(`http://localhost:8080/producto/${id}`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 throw new Error('La solicitud PATCH no fue exitosa.');
@@ -92,7 +92,7 @@ export const decrementarCantidad = (id, cantidad) => {
         redirect: 'follow'
     };
  
-    fetch(`http://localhost:8000/productos/${id}`, requestOptions)
+    fetch(`http://localhost:8080/producto/${id}`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 throw new Error('La solicitud PATCH no fue exitosa.');
@@ -107,7 +107,7 @@ export const decrementarCantidadEnN = async (producto, cantADecrementar) => {
     myHeaders.append("Content-Type", "application/json");
 
     try {
-        const response = await fetch("http://localhost:8000/productos/" + producto.id);
+        const response = await fetch("http://localhost:8080/producto/" + producto.id);
         const productoADecrementar = await response.json();
         
         const nuevaCantidad = productoADecrementar.cantidad - cantADecrementar;
@@ -122,7 +122,7 @@ export const decrementarCantidadEnN = async (producto, cantADecrementar) => {
             redirect: 'follow'
         };
      
-        const patchResponse = await fetch(`http://localhost:8000/productos/${producto.id}`, requestOptions);
+        const patchResponse = await fetch(`http://localhost:8080/producto/${producto.id}`, requestOptions);
 
         if (!patchResponse.ok) {
             throw new Error('La solicitud PATCH no fue exitosa.');

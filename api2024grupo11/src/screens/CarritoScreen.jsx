@@ -74,3 +74,4 @@ export const CarritoScreen = () => {
     </div>
   );
 };
+export default CarritoScreen;

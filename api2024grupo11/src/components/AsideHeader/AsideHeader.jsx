@@ -1,29 +1,52 @@
 import React from "react";
+import { NavLink } from "react-router-dom"; // Importa NavLink para manejar enlaces activos
 
 export const AsideHeader = () => {
   return (
     <aside className="h-[100vh] bg-yellow-600">
       <header>
         <h1 className="logo">
-          <a class="logo-link" href="/">
+          <NavLink to="/" className="logo-link">
             SillaShop
-          </a>
+          </NavLink>
         </h1>
       </header>
       <nav>
         <ul>
           <li>
-            <a className="boton-menu boton-carrito active" href="/carrito">
+            <NavLink to="/carrito" className="boton-menu boton-carrito" activeClassName="active">
               Carrito
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a
-              className="boton-menu boton-vender-tus-productos active"
-              href="/gestionProductos"
-            >
+            <NavLink to="/gestionProductos" className="boton-menu boton-vender-tus-productos" activeClassName="active">
               Gestiona tus Productos
-            </a>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/descuento" className="boton-menu boton-descuento" activeClassName="active">
+              Descuentos
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/categoria" className="boton-menu boton-categoria" activeClassName="active">
+              Categorias
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/producto" className="boton-menu boton-producto" activeClassName="active">
+              Productos
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/rol" className="boton-menu boton-rol" activeClassName="active">
+              Rol
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
+              Administrar
+            </NavLink>
           </li>
         </ul>
       </nav>
