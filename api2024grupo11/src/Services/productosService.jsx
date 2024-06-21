@@ -6,6 +6,14 @@ export const getProductos = () => {
     )
 };
 
+export const getProductoScreen = (id) => {
+    return(
+        fetch("http://localhost:8000/productos" + id)
+        .then((Response) => Response.json())
+        .catch(error => console.log('error',error))
+    )
+};
+
 export const altaProdcuto = (id,titulo,categoria,imagen_1,imagen_2,descripcion,precio,cantidad) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

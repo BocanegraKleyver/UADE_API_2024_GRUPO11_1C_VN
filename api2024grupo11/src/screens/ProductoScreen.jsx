@@ -7,8 +7,11 @@ const ProductoScreen =() =>{
 
     const [producto, setPrododucto]=useState([]);
 
+    //Hook Json Productos
+    useEffect(() => { getProductoScreen().then((data) => setProducto(data));},[]);
+
     useEffect(() => {
-      fetch("")
+      fetch("http://localhost:8000/productos/" + producto.id)
       .then((response) => response.json())
       .then((data)=>setPrododucto(data))
     }, [])
@@ -28,7 +31,7 @@ const ProductoScreen =() =>{
         <div className='text-black bold p-5' >
             <PageTitle text="Informacion del Producto"/>
         </div>
-        <div className="contenedor-productos">
+        <div>
           {producto.map((value, index)=>(
             <ProductDo value={value} key={index} agregarAlCarrito={() => handleAgregarAlCarrito(value)} />
           ))}
