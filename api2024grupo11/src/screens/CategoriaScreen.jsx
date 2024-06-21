@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link  } from 'react-router-dom';
-import { useCategoriaContext } from '../context/CategoriaContext'; // Asegúrate de importar correctamente el contexto
+import { useCategoriaContext } from '../context/CategoriaContext';
 
 const CategoriaScreen = () => {
   const { categorias, agregarCategoria, actualizarCategoria, eliminarCategoria } = useCategoriaContext();
@@ -10,12 +10,12 @@ const CategoriaScreen = () => {
 
   const handleCrearCategoria = () => {
     agregarCategoria(nuevaCategoria);
-    setNuevaCategoria({ id: null, descripcion: '' }); // Limpiar el input después de crear
+    setNuevaCategoria({ id: null, descripcion: '' });
   };
 
   const handleActualizarCategoria = () => {
     actualizarCategoria(categoriaSeleccionada.id, categoriaSeleccionada);
-    setCategoriaSeleccionada(null); // Limpiar la categoría seleccionada después de actualizar
+    setCategoriaSeleccionada(null);
   };
 
   const handleEliminarCategoria = (id) => {

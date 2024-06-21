@@ -8,14 +8,14 @@ const RolScreen = () => {
     const [rolSeleccionado, setRolSeleccionado] = useState(null);
 
     useEffect(() => {
-        loadRoles(); // Cargar roles al montar el componente
-    }, []);
+        loadRoles();
+    }, [loadRoles]);
 
     const handleCreateRol = async () => {
         try {
             await createRol({ descripcion: descripcionRol });
             setDescripcionRol('');
-            loadRoles(); // Recargar roles después de crear uno nuevo
+            loadRoles();
         } catch (error) {
             console.error('Error al crear el rol:', error);
         }
@@ -27,7 +27,7 @@ const RolScreen = () => {
     
             await updateRol(rolSeleccionado.id, { descripcion: rolSeleccionado.descripcion });
             setRolSeleccionado(null);
-            loadRoles(); // Recargar roles después de actualizar
+            loadRoles();
         } catch (error) {
             console.error('Error al actualizar el rol:', error);
         }

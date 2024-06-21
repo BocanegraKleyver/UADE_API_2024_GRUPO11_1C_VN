@@ -6,7 +6,18 @@ const AdministrarScreen = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Administrar</h2>
       <ul className="space-y-4 mb-8">
-        
+      <li>
+          <Link to="/rol" className="block bg-white shadow-md rounded-md p-4">
+            Administrar Roles
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/usuario" className="block bg-white shadow-md rounded-md p-4">
+            Administrar Usuarios
+          </Link>
+        </li>
+
         <li>
           <Link to="/categoria" className="block bg-white shadow-md rounded-md p-4">
             Administrar Categorías
@@ -25,11 +36,7 @@ const AdministrarScreen = () => {
           </Link>
         </li>
 
-        <li>
-          <Link to="/rol" className="block bg-white shadow-md rounded-md p-4">
-            Administrar Roles
-          </Link>
-        </li>
+
 
       </ul>
 

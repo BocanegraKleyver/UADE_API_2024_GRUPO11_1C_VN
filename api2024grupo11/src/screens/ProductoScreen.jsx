@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductoService from '../Services/ProductoService';
-import CategoriaService from '../Services/categoriaService'; // Importar servicio de categorías
-import DescuentoService from '../Services/descuentoService'; // Importar servicio de descuentos
+import CategoriaService from '../Services/categoriaService';
+import DescuentoService from '../Services/descuentoService';
 
 const ProductoScreen = () => {
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({
     titulo: '',
+    descripcion: '',
     imagen_1_url: '',
     imagen_2_url: '',
     precio: 0.0,
@@ -16,8 +17,8 @@ const ProductoScreen = () => {
     idDescuento: null
   });
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorías
-  const [descuentos, setDescuentos] = useState([]); // Estado para almacenar los descuentos
+  const [categorias, setCategorias] = useState([]);
+  const [descuentos, setDescuentos] = useState([]);
 
   useEffect(() => {
     fetchProductos();
@@ -37,7 +38,7 @@ const ProductoScreen = () => {
   const fetchCategorias = async () => {
     try {
       const data = await CategoriaService.getAllCategorias();
-      console.log('Categorías recibidas:', data); // Verificar en la consola del navegador
+      console.log('Categorías recibidas:', data);
       setCategorias(data);
     } catch (error) {
       console.error('Error fetching categorías:', error);
@@ -46,7 +47,7 @@ const ProductoScreen = () => {
 
   const fetchDescuentos = async () => {
     try {
-      const data = await DescuentoService.getAllDescuentos(); // Método para obtener todos los descuentos
+      const data = await DescuentoService.getAllDescuentos();
       setDescuentos(data);
     } catch (error) {
       console.error('Error fetching descuentos:', error);
@@ -55,10 +56,11 @@ const ProductoScreen = () => {
 
   const handleCrearProducto = async () => {
     try {
-      await ProductoService.createProducto(nuevoProducto);
-      await fetchProductos(); // Actualizar la lista de productos después de crear uno nuevo
+      const nuevo = await ProductoService.createProducto(nuevoProducto);
+      await fetchProductos();
       setNuevoProducto({
         titulo: '',
+        descripcion: '',
         imagen_1_url: '',
         imagen_2_url: '',
         precio: 0.0,
@@ -66,6 +68,7 @@ const ProductoScreen = () => {
         idCategoria: null,
         idDescuento: null
       });
+      setProductos([...productos, nuevo]);
     } catch (error) {
       console.error('Error creando producto:', error);
     }
@@ -74,7 +77,7 @@ const ProductoScreen = () => {
   const handleActualizarProducto = async () => {
     try {
       await ProductoService.updateProducto(productoSeleccionado.id, productoSeleccionado);
-      await fetchProductos(); // Actualizar la lista de productos después de actualizar uno existente
+      await fetchProductos();
       setProductoSeleccionado(null);
     } catch (error) {
       console.error(`Error actualizando producto con ID ${productoSeleccionado.id}:`, error);
@@ -84,7 +87,7 @@ const ProductoScreen = () => {
   const handleEliminarProducto = async (id) => {
     try {
       await ProductoService.deleteProducto(id);
-      await fetchProductos(); // Actualizar la lista de productos después de eliminar uno
+      await fetchProductos();
     } catch (error) {
       console.error(`Error eliminando producto con ID ${id}:`, error);
     }
@@ -95,23 +98,32 @@ const ProductoScreen = () => {
       <h2 className="text-2xl font-bold mb-4">Productos</h2>
       <ul className="space-y-4 mb-8">
         {productos.map((producto) => (
-          <li key={producto.id} className="flex items-center justify-between p-4 bg-white shadow-md rounded-md">
-            <div>
-              <p className="text-lg font-semibold">{producto.titulo}</p>
-            </div>
-            <div className="space-x-2">
-              <button
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                onClick={() => setProductoSeleccionado(producto)}
-              >
-                Editar
-              </button>
-              <button
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
-                onClick={() => handleEliminarProducto(producto.id)}
-              >
-                Eliminar
-              </button>
+          <li key={producto.id} className="flex flex-col p-4 bg-white shadow-md rounded-md">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-lg font-semibold">{producto.titulo}</p>
+                <p>{producto.descripcion}</p>
+                <p>Precio: {producto.precio}</p>
+                <p>Cantidad: {producto.cantidad}</p>
+                <p>Categoría: {categorias.find(c => c.id === producto.idCategoria)?.descripcion}</p>
+                <p>Descuento: {descuentos.find(d => d.id === producto.idDescuento)?.porcentaje}%</p>
+                <p>Imagen 1 URL: {producto.imagen_1_url}</p>
+                <p>Imagen 2 URL: {producto.imagen_2_url}</p>
+              </div>
+              <div className="space-x-2">
+                <button
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                  onClick={() => setProductoSeleccionado(producto)}
+                >
+                  Editar
+                </button>
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded-md"
+                  onClick={() => handleEliminarProducto(producto.id)}
+                >
+                  Eliminar
+                </button>
+              </div>
             </div>
           </li>
         ))}
@@ -126,6 +138,13 @@ const ProductoScreen = () => {
             className="p-2 border border-gray-300 rounded-md flex-1"
             value={nuevoProducto.titulo}
             onChange={(e) => setNuevoProducto({ ...nuevoProducto, titulo: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Descripción"
+            className="p-2 border border-gray-300 rounded-md flex-1"
+            value={nuevoProducto.descripcion}
+            onChange={(e) => setNuevoProducto({ ...nuevoProducto, descripcion: e.target.value })}
           />
           <input
             type="text"
@@ -157,22 +176,22 @@ const ProductoScreen = () => {
           />
           <select
             className="p-2 border border-gray-300 rounded-md flex-1"
-            value={nuevoProducto.idCategoria}
+            value={nuevoProducto.idCategoria || ''}
             onChange={(e) => setNuevoProducto({ ...nuevoProducto, idCategoria: parseInt(e.target.value) })}
           >
             <option value="">Seleccionar Categoría</option>
             {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+              <option key={categoria.id} value={categoria.id}>{categoria.descripcion}</option>
             ))}
           </select>
           <select
             className="p-2 border border-gray-300 rounded-md flex-1"
-            value={nuevoProducto.idDescuento}
+            value={nuevoProducto.idDescuento || ''}
             onChange={(e) => setNuevoProducto({ ...nuevoProducto, idDescuento: parseInt(e.target.value) })}
           >
             <option value="">Seleccionar Descuento</option>
             {descuentos.map((descuento) => (
-              <option key={descuento.id} value={descuento.id}>{descuento.nombre}</option>
+              <option key={descuento.id} value={descuento.id}>{descuento.porcentaje}%</option>
             ))}
           </select>
           <button
@@ -225,22 +244,22 @@ const ProductoScreen = () => {
             />
             <select
               className="p-2 border border-gray-300 rounded-md flex-1"
-              value={productoSeleccionado.idCategoria}
+              value={productoSeleccionado.idCategoria || ''}
               onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, idCategoria: parseInt(e.target.value) })}
             >
               <option value="">Seleccionar Categoría</option>
               {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+                <option key={categoria.id} value={categoria.id}>{categoria.descripcion}</option>
               ))}
             </select>
             <select
               className="p-2 border border-gray-300 rounded-md flex-1"
-              value={productoSeleccionado.idDescuento}
+              value={productoSeleccionado.idDescuento || ''}
               onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, idDescuento: parseInt(e.target.value) })}
             >
               <option value="">Seleccionar Descuento</option>
               {descuentos.map((descuento) => (
-                <option key={descuento.id} value={descuento.id}>{descuento.nombre}</option>
+                <option key={descuento.id} value={descuento.id}>{descuento.porcentaje}%</option>
               ))}
             </select>
             <button

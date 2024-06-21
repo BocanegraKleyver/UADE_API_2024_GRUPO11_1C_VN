@@ -1,76 +1,76 @@
 import React, { createContext, useState, useContext } from 'react';
-import RolService from '../Services/rolService'; // Ajusta la ruta según la estructura de tu proyecto
+import RolService from '../Services/rolService';
 
-// Creamos el contexto
+
 const RolContext = createContext();
 
-// Hook personalizado para acceder al contexto
+
 export const useRolContext = () => useContext(RolContext);
 
-// Proveedor del contexto, donde definimos el estado y las funciones relacionadas con los roles
+
 export const RolProvider = ({ children }) => {
     const [roles, setRoles] = useState([]);
-    const [error, setError] = useState(null); // Manejo de errores opcional
+    const [error, setError] = useState(null);
 
-    // Función para cargar todos los roles
+    
     const loadRoles = async () => {
         try {
             const data = await RolService.getAllRoles();
             setRoles(data);
         } catch (error) {
-            setError(error.message); // Opcional: manejo de errores
+            setError(error.message);
         }
     };
 
-    // Función para obtener un rol por su ID
+    
     const getRolById = async (id) => {
         try {
             const data = await RolService.getRolById(id);
             return data;
         } catch (error) {
-            setError(error.message); // Opcional: manejo de errores
+            setError(error.message);
             throw error;
         }
     };
 
-    // Función para crear un nuevo rol
+    
     const createRol = async (rol) => {
         try {
             const data = await RolService.createRol(rol);
-            setRoles([...roles, data]); // Actualizamos localmente el estado de roles
+            setRoles([...roles, data]); 
             return data;
         } catch (error) {
-            setError(error.message); // Opcional: manejo de errores
+            setError(error.message);
             throw error;
         }
     };
 
-    // Función para actualizar un rol existente
+    
     const updateRol = async (id, rol) => {
         try {
             const data = await RolService.updateRol(id, rol);
             const updatedRoles = roles.map((r) => (r.id === id ? data : r));
-            setRoles(updatedRoles); // Actualizamos localmente el estado de roles
+            setRoles(updatedRoles);
             return data;
         } catch (error) {
-            setError(error.message); // Opcional: manejo de errores
+            setError(error.message);
             throw error;
         }
     };
 
-    // Función para eliminar un rol
+    
     const deleteRol = async (id) => {
         try {
             await RolService.deleteRol(id);
             const updatedRoles = roles.filter((r) => r.id !== id);
-            setRoles(updatedRoles); // Actualizamos localmente el estado de roles
+            setRoles(updatedRoles);
         } catch (error) {
-            setError(error.message); // Opcional: manejo de errores
+            setError(error.message);
             throw error;
         }
     };
 
-    // Creamos el objeto de contexto con las funciones y el estado necesario
+    
     const contextValue = {
         roles,
         error,
@@ -81,6 +81,6 @@ export const RolProvider = ({ children }) => {
         deleteRol
     };
 
-    // Devolvemos el proveedor del contexto con su valor
+    
     return <RolContext.Provider value={contextValue}>{children}</RolContext.Provider>;
 };

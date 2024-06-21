@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import DescuentoService from '../Services/descuentoService'; // Asegúrate de que la ruta sea correcta y coincida con el nombre del archivo y ubicación
+import DescuentoService from '../Services/descuentoService';
 
 const DescuentoContext = createContext();
 
@@ -11,7 +11,7 @@ export const DescuentoProvider = ({ children }) => {
   useEffect(() => {
     const fetchDescuentos = async () => {
       try {
-        const data = await DescuentoService.getAllDescuentos(); // Aquí se llama a getAllDescuentos del servicio
+        const data = await DescuentoService.getAllDescuentos();
         setDescuentos(data);
       } catch (error) {
         console.error('Error al obtener descuentos:', error.message);
@@ -23,7 +23,7 @@ export const DescuentoProvider = ({ children }) => {
 
   const agregarDescuento = async (nuevoDescuento) => {
     try {
-      const descuentoCreado = await DescuentoService.createDescuento(nuevoDescuento); // Aquí se llama a createDescuento del servicio
+      const descuentoCreado = await DescuentoService.createDescuento(nuevoDescuento);
       setDescuentos([...descuentos, descuentoCreado]);
     } catch (error) {
       console.error('Error al crear descuento:', error.message);
@@ -33,7 +33,7 @@ export const DescuentoProvider = ({ children }) => {
 
   const actualizarDescuento = async (id, descuentoActualizado) => {
     try {
-      const descuentoModificado = await DescuentoService.updateDescuento(id, descuentoActualizado); // Aquí se llama a updateDescuento del servicio
+      const descuentoModificado = await DescuentoService.updateDescuento(id, descuentoActualizado);
       setDescuentos(descuentos.map((descuento) => (descuento.id === id ? descuentoModificado : descuento)));
     } catch (error) {
       console.error(`Error al actualizar descuento con ID ${id}:`, error.message);
@@ -43,7 +43,7 @@ export const DescuentoProvider = ({ children }) => {
 
   const eliminarDescuento = async (id) => {
     try {
-      await DescuentoService.deleteDescuento(id); // Aquí se llama a deleteDescuento del servicio
+      await DescuentoService.deleteDescuento(id);
       setDescuentos(descuentos.filter((descuento) => descuento.id !== id));
     } catch (error) {
       console.error(`Error al eliminar descuento con ID ${id}:`, error.message);
