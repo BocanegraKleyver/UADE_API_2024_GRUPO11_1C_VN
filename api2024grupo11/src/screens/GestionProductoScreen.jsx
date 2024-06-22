@@ -28,10 +28,10 @@ export const GestionProductoScreen = () => {
     /////////////// Bloque de  los llamados al JSON (features base de datos) ///////////////////
    
     ///Hook Json Categorias
-    useEffect(() => { getCategoria().then((data) => setCategoria(data));},[]);
+    // useEffect(() => { getCategoria().then((data) => setCategoria(data));},[]);
  
-    //Hook Json Productos
-    useEffect(() => { getProductos().then((data) => setProductos(data));},[]);
+    // //Hook Json Productos
+    // useEffect(() => { getProductos().then((data) => setProductos(data));},[]);
  
     ///////////////////////////////////////////////////////////////////////////////////////////
  
