@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { agregarItemAlCarrito } from "../Services/carritoService";
-import ProductDo from "../components/Cards/ProductDo";
+import ProductSelect from "../components/Cards/ProductSelect";
 import { PageTitle } from "../components/Titles/PageTitle";
 
-const ProductoScreen =() =>{
+const ProductoScreen =(props) =>{
 
     const [producto, setPrododucto]=useState([]);
 
     //Hook Json Productos
-    useEffect(() => { getProductoScreen().then((data) => setProducto(data));},[]);
+    //useEffect(() => { getProductoScreen().then((data) => setProducto(data));},[]);
+    const { id } = useParams();
 
     useEffect(() => {
-      fetch("http://localhost:8000/productos/" + producto.id)
-      .then((response) => response.json())
+      fetch("http://localhost:8000/productos/" + id)
+      .then((response) =>{ 
+        console.log (id)
+        return response.json()})
       .then((data)=>setPrododucto(data))
     }, [])
   
@@ -32,9 +36,9 @@ const ProductoScreen =() =>{
             <PageTitle text="Informacion del Producto"/>
         </div>
         <div>
-          {producto.map((value, index)=>(
-            <ProductDo value={value} key={index} agregarAlCarrito={() => handleAgregarAlCarrito(value)} />
-          ))}
+        
+          <ProductSelect value={producto} agregarAlCarrito={() => handleAgregarAlCarrito(producto)} />
+        
         </div>
       </div>
     )

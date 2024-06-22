@@ -1,9 +1,10 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import { AsideHeader } from "./components/AsideHeader/AsideHeader";
-import { Routes, Route } from "react-router-dom";
 import { CarritoScreen } from "./screens/CarritoScreen";
-import { GestionProductoScreen } from "./screens/GestionProductoScreen";
 import ComprarScreen from "./screens/ComprarScreen";
+import { GestionProductoScreen } from "./screens/GestionProductoScreen";
+import ProductoScreen from "./screens/ProductoScreen";
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
         <Route path="/gestionProductos/">
           <Route path="" element={<GestionProductoScreen />} exact />
         </Route>
+
+        <Route path="/producto/:id" element={<ProductoScreen />}/>
+
       </Routes>
     </div>
 

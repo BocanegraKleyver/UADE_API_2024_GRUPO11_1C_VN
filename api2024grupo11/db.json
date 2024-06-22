@@ -32,6 +32,13 @@
     }
   ],
   "categoria": [],
-  "carrito": [],
-  "productoscreen":[]
+  "carrito": [
+    {
+      "id": "1",
+      "titulo": "Silla_Comedor",
+      "precio": 7000,
+      "cantidad": 1
+    }
+  ],
+  "productoscreen": []
 }
