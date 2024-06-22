@@ -175,51 +175,52 @@ return (
  
  
     <div class="nice-header header-fix-top small"> <div class="logo">
-        <h1>Gestión de Productos</h1>
+        <h3 class="font-bold text-2xl">Gestión de Productos</h3>
         <hr></hr>
-        <h5>En este espacio vas a poder dar de alta tus productos. Además, podrás realizar modificaciones en cuanto al stock que quieras vender o eliminarlos.</h5>
+        <h3 class="nice-header header-fix-top small">En este espacio vas a poder dar de alta tus productos. Además, podrás realizar modificaciones en cuanto al stock que quieras vender o eliminarlos</h3>
         </div>
     </div>
     <hr></hr>
  
     <div className="Gestion_de_Productos_Form">
-            <legend>Productos</legend>
+            {/* <legend>Productos</legend> */}
             <form>
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="number" id="id_Producto" value={id} placeholder="ID" onChange={handleSetID}></input>
                         <label className="form_Gestion_Producto_label"> : ID</label>
                 </div>
- 
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="text" id="titulo_Producto" value={titulo} placeholder="TITULO" onChange={handleSetTitulo}></input>
                         <label className="form_Gestion_Producto_label"> : TITULO</label>
                 </div>
- 
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                     <label className="form_Gestion_Producto_label"> FOTO 1 DEL PRODUCTO:  </label>
-                    <input className="form_Gestion_Producto_input" type="file" id="imagen_Producto_1" onChange={handleFileFotoChange_1} accept="image/jpeg,image/png" data-testid="fileInput" ></input>                  
+                    <input className="form_Gestion_Producto_input" class="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center" type="file" id="imagen_Producto_1" onChange={handleFileFotoChange_1} accept="image/jpeg,image/png" data-testid="fileInput" ></input>                  
                 </div>
- 
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                     <label className="form_Gestion_Producto_label"> FOTO 2 DEL PRODUCTO:  </label>
-                    <input className="form_Gestion_Producto_input" type="file" id="imagen_Producto_2" onChange={handleFileFotoChange_2} accept="image/jpeg,image/png" data-testid="fileInput" ></input>                  
+                    <input className="form_Gestion_Producto_input" class="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center" type="file" id="imagen_Producto_2" onChange={handleFileFotoChange_2} accept="image/jpeg,image/png" data-testid="fileInput" ></input>                  
                 </div>
-   
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="text" id="descripcion_Producto" value={descripcion} placeholder="DESCRIPCION" onChange={handleSetDescripcion}></input>
                         <label className="form_Gestion_Producto_label"> : DESCRIPCION</label>
                 </div>
- 
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="number" id="precio_Producto" value={precio} placeholder="PRECIO" onChange={handleSetPrecio}></input>
                         <label className="form_Gestion_Producto_label"> : PRECIO</label>
                 </div>
- 
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <input className="form_Gestion_Producto_input" type="number" id="cantidad_Producto" value={cantidad} placeholder="CANTIDAD" onChange={handleSetCantidad}></input>
                         <label className="form_Gestion_Producto_label"> : CANTIDAD</label>
                 </div>
-               
+                <br></br>
                 <div className="form_Gestion_Producto_group">
                         <select className="form_Gestion_Producto_input" id="Selector_categoria_dropdown" value={categoria} onChange={handleSetCategoria}>
                             <option value=""> Seleccione </option>
@@ -231,23 +232,13 @@ return (
                 </div>
                 <br></br>
  
-                {/* Categoria para usar con valores del JSON    
-                <div className="form_Gestion_Producto_group">
-                    <input className="form_Gestion_Producto_input" type="text" id="categoria_Producto" value={categoriaSeleccionada} placeholder="SELECCIONE CATEGORIA" readOnly></input>
-                    <label className="form_Gestion_Producto_label"> : CATEGORIA </label>
-                    <select className="form_Gestion_Producto_input" id="Selector_categoria_dropdown" value={categoriaSeleccionada} onChange={handleCategoriaSeleccionadaChange}>
-                        <option value=""> Seleccione </option>
-                        {categoria.map((categoria, index) => (
-                            <option key={index} value={categoria.descripcion}>{categoria.descripcion} </option>
-                        ))}
-                    </select>
-                </div>
-                <br/> */}
- 
             <AltaProductoButton handleClickAltaProducto={handleAltaProducto}></AltaProductoButton>
+            <br></br>
             <hr></hr>
- 
-            <legend>Stock actual de tus Productos</legend>        
+
+            <h3 class="font-bold text-2xl">Stock actual de tus Productos</h3>
+
+            <br></br>    
             <table>
                 <thead>
                     <tr>
