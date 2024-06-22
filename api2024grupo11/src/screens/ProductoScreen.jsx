@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ProductoService from '../Services/ProductoService';
+import ProductoService from '../Services/productoService';
 import CategoriaService from '../Services/categoriaService';
 import DescuentoService from '../Services/descuentoService';
 
@@ -9,10 +9,10 @@ const ProductoScreen = () => {
   const [nuevoProducto, setNuevoProducto] = useState({
     titulo: '',
     descripcion: '',
-    imagen_1_url: '',
-    imagen_2_url: '',
-    precio: 0.0,
-    cantidad: 0,
+    imagen_1: null,
+    imagen_2: null,
+    precio: '',
+    cantidad: '',
     idCategoria: null,
     idDescuento: null
   });
@@ -54,29 +54,56 @@ const ProductoScreen = () => {
     }
   };
 
+
+
   const handleCrearProducto = async () => {
     try {
-      const nuevo = await ProductoService.createProducto(nuevoProducto);
+      if (!validateNuevoProducto()) {
+        console.error('Por favor complete todos los campos requeridos correctamente');
+        
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('titulo', nuevoProducto.titulo);
+      formData.append('descripcion', nuevoProducto.descripcion);
+      formData.append('precio', parseFloat(nuevoProducto.precio));
+      formData.append('cantidad', parseInt(nuevoProducto.cantidad));
+      formData.append('idCategoria', parseInt(nuevoProducto.idCategoria));
+      formData.append('idDescuento', parseInt(nuevoProducto.idDescuento));
+      formData.append('imagen_1', nuevoProducto.imagen_1);
+      formData.append('imagen_2', nuevoProducto.imagen_2);
+  
+      const nuevo = await ProductoService.createProducto(formData);
       await fetchProductos();
-      setNuevoProducto({
-        titulo: '',
-        descripcion: '',
-        imagen_1_url: '',
-        imagen_2_url: '',
-        precio: 0.0,
-        cantidad: 0,
-        idCategoria: null,
-        idDescuento: null
-      });
+      resetNuevoProducto();
       setProductos([...productos, nuevo]);
     } catch (error) {
       console.error('Error creando producto:', error);
+      
     }
   };
+  
+  
 
   const handleActualizarProducto = async () => {
     try {
-      await ProductoService.updateProducto(productoSeleccionado.id, productoSeleccionado);
+      if (!validateProductoSeleccionado()) {
+        console.error('Por favor complete todos los campos requeridos correctamente');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('titulo', productoSeleccionado.titulo);
+      formData.append('descripcion', productoSeleccionado.descripcion);
+      formData.append('precio', parseFloat(productoSeleccionado.precio));
+      formData.append('cantidad', parseInt(productoSeleccionado.cantidad));
+      formData.append('idCategoria', parseInt(productoSeleccionado.idCategoria));
+      formData.append('idDescuento', parseInt(productoSeleccionado.idDescuento));
+      formData.append('imagen_1', productoSeleccionado.imagen_1);
+      formData.append('imagen_2', productoSeleccionado.imagen_2);
+
+      await ProductoService.updateProducto(productoSeleccionado.id, formData);
       await fetchProductos();
       setProductoSeleccionado(null);
     } catch (error) {
@@ -93,37 +120,103 @@ const ProductoScreen = () => {
     }
   };
 
+  const handleImagen1Change = (e) => {
+    setNuevoProducto({ ...nuevoProducto, imagen_1: e.target.files[0] });
+  };
+
+  const handleImagen2Change = (e) => {
+    setNuevoProducto({ ...nuevoProducto, imagen_2: e.target.files[0] });
+  };
+
+
+  const validateNuevoProducto = () => {
+    return (
+      nuevoProducto.titulo.trim() !== '' &&
+      nuevoProducto.descripcion.trim() !== '' &&
+      !isNaN(parseFloat(nuevoProducto.precio)) &&
+      !isNaN(parseInt(nuevoProducto.cantidad)) &&
+      nuevoProducto.idCategoria !== null &&
+      nuevoProducto.idDescuento !== null
+    );
+  };
+
+  const validateProductoSeleccionado = () => {
+    return (
+      productoSeleccionado &&
+      productoSeleccionado.titulo.trim() !== '' &&
+      productoSeleccionado.descripcion.trim() !== '' &&
+      !isNaN(parseFloat(productoSeleccionado.precio)) &&
+      !isNaN(parseInt(productoSeleccionado.cantidad)) &&
+      productoSeleccionado.idCategoria !== null &&
+      productoSeleccionado.idDescuento !== null
+    );
+  };
+
+  const resetNuevoProducto = () => {
+    setNuevoProducto({
+      titulo: '',
+      descripcion: '',
+      imagen_1: null,
+      imagen_2: null,
+      precio: '',
+      cantidad: '',
+      idCategoria: null,
+      idDescuento: null
+    });
+  };
+
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Productos</h2>
       <ul className="space-y-4 mb-8">
         {productos.map((producto) => (
-          <li key={producto.id} className="flex flex-col p-4 bg-white shadow-md rounded-md">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-lg font-semibold">{producto.titulo}</p>
-                <p>{producto.descripcion}</p>
-                <p>Precio: {producto.precio}</p>
+          <li key={producto.id} className="p-4 bg-white shadow-md rounded-md">
+            <div className="grid grid-cols-4 gap-4">
+              <div className="col-span-1 flex flex-col">
+                <p className="text-lg font-semibold mb-2">{producto.titulo}</p>
+                <p className="mb-2">{producto.descripcion}</p>
+              </div>
+              <div className="col-span-1 flex flex-col">
                 <p>Cantidad: {producto.cantidad}</p>
-                <p>Categoría: {categorias.find(c => c.id === producto.idCategoria)?.descripcion}</p>
+                <p>Precio: {producto.precio}</p>
                 <p>Descuento: {descuentos.find(d => d.id === producto.idDescuento)?.porcentaje}%</p>
-                <p>Imagen 1 URL: {producto.imagen_1_url}</p>
-                <p>Imagen 2 URL: {producto.imagen_2_url}</p>
+                <p>Categoría: {categorias.find(c => c.id === producto.idCategoria)?.descripcion}</p>
               </div>
-              <div className="space-x-2">
-                <button
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                  onClick={() => setProductoSeleccionado(producto)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="px-4 py-2 bg-red-500 text-white rounded-md"
-                  onClick={() => handleEliminarProducto(producto.id)}
-                >
-                  Eliminar
-                </button>
+              <div className="col-span-1 flex justify-center items-center">
+                <img
+                  src={`data:image/jpeg;base64,${producto.imagen_1}`}
+                  className="w-24 h-24 object-cover cursor-pointer"
+                  style={{ maxWidth: '75px' }}
+                  alt="Imagen 1"
+                  onClick={() => window.open(`data:image/jpeg;base64,${producto.imagen_1}`, '_blank')}
+                />
               </div>
+              {producto.imagen_2 && (
+                <div className="col-span-1 flex justify-center items-center">
+                  <img
+                    src={`data:image/jpeg;base64,${producto.imagen_2}`}
+                    className="w-24 h-24 object-cover cursor-pointer"
+                    style={{ maxWidth: '75px' }}
+                    alt="Imagen 2"
+                    onClick={() => window.open(`data:image/jpeg;base64,${producto.imagen_2}`, '_blank')}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="flex justify-end space-x-2 mt-4">
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                onClick={() => setProductoSeleccionado(producto)}
+              >
+                Editar
+              </button>
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded-md"
+                onClick={() => handleEliminarProducto(producto.id)}
+              >
+                Eliminar
+              </button>
             </div>
           </li>
         ))}
@@ -146,20 +239,19 @@ const ProductoScreen = () => {
             value={nuevoProducto.descripcion}
             onChange={(e) => setNuevoProducto({ ...nuevoProducto, descripcion: e.target.value })}
           />
+
           <input
-            type="text"
-            placeholder="Imagen 1 URL"
+            type="file"
             className="p-2 border border-gray-300 rounded-md flex-1"
-            value={nuevoProducto.imagen_1_url}
-            onChange={(e) => setNuevoProducto({ ...nuevoProducto, imagen_1_url: e.target.value })}
+            onChange={handleImagen1Change}
           />
+
           <input
-            type="text"
-            placeholder="Imagen 2 URL"
+            type="file"
             className="p-2 border border-gray-300 rounded-md flex-1"
-            value={nuevoProducto.imagen_2_url}
-            onChange={(e) => setNuevoProducto({ ...nuevoProducto, imagen_2_url: e.target.value })}
+            onChange={handleImagen2Change}
           />
+
           <input
             type="number"
             placeholder="Precio"
@@ -214,20 +306,19 @@ const ProductoScreen = () => {
               value={productoSeleccionado.titulo}
               onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, titulo: e.target.value })}
             />
+
             <input
-              type="text"
-              placeholder="Imagen 1 URL"
+              type="file"
               className="p-2 border border-gray-300 rounded-md flex-1"
-              value={productoSeleccionado.imagen_1_url}
-              onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, imagen_1_url: e.target.value })}
+              onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, imagen_1: e.target.files[0] })}
             />
+
             <input
-              type="text"
-              placeholder="Imagen 2 URL"
+              type="file"
               className="p-2 border border-gray-300 rounded-md flex-1"
-              value={productoSeleccionado.imagen_2_url}
-              onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, imagen_2_url: e.target.value })}
+              onChange={(e) => setProductoSeleccionado({ ...productoSeleccionado, imagen_2: e.target.files[0] })}
             />
+
             <input
               type="number"
               placeholder="Precio"
@@ -280,7 +371,7 @@ const ProductoScreen = () => {
           ATRAS
         </button>
         <Link
-          to="/"
+          to="/home"
           className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
         >
           Volver a la pantalla principal
@@ -291,3 +382,4 @@ const ProductoScreen = () => {
 };
 
 export default ProductoScreen;
+

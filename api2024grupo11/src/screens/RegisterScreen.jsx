@@ -10,10 +10,10 @@ const RegisterScreen = () => {
     mail: '',
     usuario: '',
     password: '',
-    idRol: 2 // Asignamos el rol por defecto "user"
+    idRol: 2 
   });
 
-  const [registroExitoso, setRegistroExitoso] = useState(false); // Define registroExitoso aquí
+  const [registroExitoso, setRegistroExitoso] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,7 @@ const RegisterScreen = () => {
         mail: '',
         usuario: '',
         password: '',
-        idRol: 2 // Restauramos el rol por defecto para futuros registros
+        idRol: 2 
       });
       setRegistroExitoso(true);
       
@@ -152,7 +152,7 @@ const RegisterScreen = () => {
           ATRAS
         </button>
         <Link
-          to="/login" // Redirige a /login al hacer clic
+          to="/login"
           className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
         >
           Volver a la pantalla de inicio de sesión

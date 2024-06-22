@@ -41,7 +41,7 @@ const AdministrarScreen = () => {
       </ul>
 
       <Link
-        to="/"
+        to="/home"
         className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
       >
         Volver a la pantalla principal

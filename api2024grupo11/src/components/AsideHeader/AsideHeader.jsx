@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom"; // Importa NavLink para manejar enlaces activos
+import { NavLink } from "react-router-dom"; 
 
 export const AsideHeader = () => {
   return (
@@ -26,6 +26,11 @@ export const AsideHeader = () => {
           <li>
             <NavLink to="/home" className="boton-menu boton-home" activeClassName="active">
               Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
+              Catalogo
             </NavLink>
           </li>
           <li>
@@ -56,11 +61,6 @@ export const AsideHeader = () => {
           <li>
             <NavLink to="/carrito" className="boton-menu boton-carrito" activeClassName="active">
               Carrito
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/gestionProductos" className="boton-menu boton-vender-tus-productos" activeClassName="active">
-              Gestiona tus Productos
             </NavLink>
           </li>
           <li>

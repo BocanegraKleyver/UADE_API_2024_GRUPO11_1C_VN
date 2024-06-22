@@ -25,7 +25,34 @@ const ProductoService = {
 
   createProducto: async (producto) => {
     try {
-      const response = await axios.post(API_URL, producto);
+      
+      const formData = new FormData();
+
+      
+      formData.append('titulo', producto.titulo);
+      formData.append('descripcion', producto.descripcion);
+      formData.append('precio', producto.precio);
+      formData.append('cantidad', producto.cantidad);
+      formData.append('idCategoria', producto.idCategoria);
+      formData.append('idDescuento', producto.idDescuento);
+
+      
+      if (producto.imagen_1) {
+        formData.append('imagen_1', producto.imagen_1);
+      }
+
+      
+      if (producto.imagen_2) {
+        formData.append('imagen_2', producto.imagen_2);
+      }
+
+      
+      const response = await axios.post(API_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
+      });
+
       return response.data;
     } catch (error) {
       console.error('Error creating producto:', error);

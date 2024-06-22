@@ -5,18 +5,18 @@ import { useUsuarioContext } from '../context/UsuarioContext';
 const HomeScreen = () => {
     const { usuarioAutenticado } = useUsuarioContext();
 
-    // Suponiendo que tienes una propiedad en el contexto que indica si el usuario es administrador
+    
     const esAdministrador = usuarioAutenticado && usuarioAutenticado.administrador;
 
-    // Supongamos que tienes una lista de productos con imágenes
+    
     const productos = [
         { id: 1, nombre: 'Silla Gamer', imagen: '/img/silla-gamer.jpg' },
         { id: 2, nombre: 'Silla Ejecutiva', imagen: '/img/silla-ejecutiva.jpg' },
         { id: 3, nombre: 'Silla de Comedor', imagen: '/img/silla-comedor.jpg' },
-        // Agrega más productos según sea necesario
+        
     ];
 
-    // Función para obtener una imagen aleatoria de los productos
+    
     const obtenerImagenAleatoria = () => {
         const productoAleatorio = productos[Math.floor(Math.random() * productos.length)];
         return productoAleatorio.imagen;
@@ -36,7 +36,6 @@ const HomeScreen = () => {
             </nav>
 
             <div className="grid grid-cols-3 gap-4">
-                {/* Mostrar imágenes aleatorias de productos */}
                 {productos.map((producto) => (
                     <div key={producto.id} className="bg-white p-4 rounded-md shadow-md">
                         <img src={producto.imagen} alt={producto.nombre} className="w-full h-auto mb-2" />

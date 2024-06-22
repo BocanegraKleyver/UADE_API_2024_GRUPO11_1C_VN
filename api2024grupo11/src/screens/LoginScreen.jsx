@@ -37,7 +37,7 @@ const LoginScreen = () => {
     }, 5000);
   };
 
-  // Si el inicio de sesión fue exitoso o el usuario ya está autenticado, redireccionar a /home
+  
   if (inicioSesionExitoso || usuarioAutenticado) {
     return <Link to="/home" />;
   }

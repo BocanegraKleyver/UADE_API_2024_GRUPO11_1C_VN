@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AsideHeader } from "./components/AsideHeader/AsideHeader";
 import CarritoScreen from "./screens/CarritoScreen";
-import GestionProductoScreen from "./screens/GestionProductoScreen";
 import ComprarScreen from "./screens/ComprarScreen";
 
 import DescuentoScreen from "./screens/DescuentoScreen";
@@ -13,6 +12,7 @@ import UsuarioScreen from "./screens/UsuarioScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
+import CatalogoProductosScreen from "./screens/CatalogoProductosScreen";
 
 import { DescuentoProvider } from "./context/DescuentoContext";
 import { CategoriaProvider } from "./context/CategoriaContext";
@@ -41,15 +41,15 @@ function App() {
                   <Route path="/home" element={<HomeScreen />} />
                   <Route path="/administrar" element={<AdministrarScreen />} />
                   <Route path="/rol" element={<RolScreen />} />
+                  <Route
+                    path="/catalogo"
+                    element={<CatalogoProductosScreen />}
+                  />
                   <Route path="/usuario" element={<UsuarioScreen />} />
                   <Route path="/categoria" element={<CategoriaScreen />} />
                   <Route path="/descuento" element={<DescuentoScreen />} />
                   <Route path="/producto" element={<ProductoScreen />} />
                   <Route path="/carrito" element={<CarritoScreen />} />
-                  <Route
-                    path="/gestionProductos"
-                    element={<GestionProductoScreen />}
-                  />
                   <Route path="/comprar" element={<ComprarScreen />} />
                 </Routes>
               </div>

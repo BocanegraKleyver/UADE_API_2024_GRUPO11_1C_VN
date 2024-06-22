@@ -66,7 +66,7 @@ export const eliminarItemDelCarrito = (id) => {
 
 export const vaciarCarrito = (arrayIds) => {
 
-    // No encontramos forma de vaciar el carrito de una
+    
     arrayIds.forEach(id => {
         var requestOptions = {
             method: 'DELETE',
