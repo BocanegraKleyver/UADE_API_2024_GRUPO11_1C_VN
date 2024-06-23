@@ -3,17 +3,15 @@ import ProductoService from '../Services/productoService';
 
 const ProductoContext = createContext();
 
-
 export const useProductoContext = () => useContext(ProductoContext);
-
 
 export const ProductoProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
 
-
   useEffect(() => {
     fetchProductos();
   }, []);
+
 
 
   const fetchProductos = async () => {
@@ -28,23 +26,7 @@ export const ProductoProvider = ({ children }) => {
   
   const crearProducto = async (nuevoProducto) => {
     try {
-      const formData = new FormData();
-      formData.append('titulo', nuevoProducto.titulo);
-      formData.append('descripcion', nuevoProducto.descripcion);
-      formData.append('precio', nuevoProducto.precio);
-      formData.append('cantidad', nuevoProducto.cantidad);
-      formData.append('idCategoria', nuevoProducto.idCategoria);
-      formData.append('idDescuento', nuevoProducto.idDescuento);
-
-      if (nuevoProducto.imagen_1) {
-        formData.append('imagen_1', nuevoProducto.imagen_1, nuevoProducto.imagen_1.name);
-      }
-
-      if (nuevoProducto.imagen_2) {
-        formData.append('imagen_2', nuevoProducto.imagen_2, nuevoProducto.imagen_2.name);
-      }
-
-      const nuevo = await ProductoService.createProducto(formData);
+      const nuevo = await ProductoService.createProducto(nuevoProducto);
       setProductos([...productos, nuevo]);
     } catch (error) {
       console.error('Error creando producto:', error);
@@ -55,23 +37,7 @@ export const ProductoProvider = ({ children }) => {
   
   const actualizarProducto = async (id, productoActualizado) => {
     try {
-      const formData = new FormData();
-      formData.append('titulo', productoActualizado.titulo);
-      formData.append('descripcion', productoActualizado.descripcion);
-      formData.append('precio', productoActualizado.precio);
-      formData.append('cantidad', productoActualizado.cantidad);
-      formData.append('idCategoria', productoActualizado.idCategoria);
-      formData.append('idDescuento', productoActualizado.idDescuento);
-
-      if (productoActualizado.imagen_1) {
-        formData.append('imagen_1', productoActualizado.imagen_1, productoActualizado.imagen_1.name);
-      }
-
-      if (productoActualizado.imagen_2) {
-        formData.append('imagen_2', productoActualizado.imagen_2, productoActualizado.imagen_2.name);
-      }
-
-      await ProductoService.updateProducto(id, formData);
+      await ProductoService.updateProducto(id, productoActualizado);
       const productosActualizados = await ProductoService.getAllProductos();
       setProductos(productosActualizados);
     } catch (error) {
@@ -91,7 +57,6 @@ export const ProductoProvider = ({ children }) => {
     }
   };
 
-  
   const productoContextValue = {
     productos,
     crearProducto,
@@ -99,7 +64,6 @@ export const ProductoProvider = ({ children }) => {
     eliminarProducto
   };
 
-  
   return (
     <ProductoContext.Provider value={productoContextValue}>
       {children}

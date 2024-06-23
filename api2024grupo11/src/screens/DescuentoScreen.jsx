@@ -7,6 +7,7 @@ const DescuentoScreen = () => {
   const { descuentos, agregarDescuento, actualizarDescuento, eliminarDescuento } = useDescuentoContext();
   const [nuevoDescuento, setNuevoDescuento] = useState({ porcentaje: '' });
   const [descuentoSeleccionado, setDescuentoSeleccionado] = useState(null);
+  const [filtroDescuento, setFiltroDescuento] = useState('');
 
   const handleCrearDescuento = async () => {
     try {
@@ -36,11 +37,27 @@ const DescuentoScreen = () => {
     }
   };
 
+  const descuentosFiltrados = descuentos.filter(descuento =>
+    descuento.porcentaje.toString().includes(filtroDescuento)
+  );
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Descuentos</h2>
+
+      
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Buscar porcentaje de descuento"
+          className="p-2 border border-gray-300 rounded-md"
+          value={filtroDescuento}
+          onChange={(e) => setFiltroDescuento(e.target.value)}
+        />
+      </div>
+
       <ul className="space-y-4 mb-8">
-        {descuentos.map((descuento) => (
+        {descuentosFiltrados.map((descuento) => (
           <li key={descuento.id} className="flex items-center justify-between p-4 bg-white shadow-md rounded-md">
             <span>{descuento.porcentaje}%</span>
             <div className="space-x-2">
@@ -97,8 +114,7 @@ const DescuentoScreen = () => {
         </div>
       )}
 
-
-<div className="flex justify-between">
+      <div className="flex justify-between">
         <button
           onClick={() => window.history.back()}
           className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
@@ -107,7 +123,7 @@ const DescuentoScreen = () => {
         </button>
       </div>
 
-        <Link to="/home" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
+      <Link to="/home" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
         Volver a la pantalla principal
       </Link>
     </div>

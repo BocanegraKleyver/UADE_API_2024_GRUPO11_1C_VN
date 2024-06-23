@@ -28,7 +28,7 @@ const CatalogoProductosScreen = () => {
       <div className="grid grid-cols-3 gap-4">
         {productos.map((producto) => (
           <div key={producto.id} className="bg-white p-4 rounded-md shadow-md">
-            <img src={producto.imagen_1_url} alt={producto.titulo} className="w-full h-auto mb-2" />
+            <img src={producto.imagen_1_URL} alt={producto.titulo} className="w-full h-auto mb-2" />
             <p className="text-lg font-semibold">{producto.titulo}</p>
             <p>{producto.descripcion}</p>
             <p>Precio: ${producto.precio}</p>

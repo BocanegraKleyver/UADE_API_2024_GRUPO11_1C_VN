@@ -25,17 +25,17 @@ export const AsideHeader = () => {
           </li>
           <li>
             <NavLink to="/administrar/categoria" className="boton-menu boton-categoria" activeClassName="active">
-              Categorias
+            Administrar Categorias
             </NavLink>
           </li>
           <li>
             <NavLink to="/administrar/descuento" className="boton-menu boton-descuento" activeClassName="active">
-              Descuentos
+            Administrar Descuentos
             </NavLink>
           </li>
           <li>
-            <NavLink to="/administrar//producto" className="boton-menu boton-producto" activeClassName="active">
-              Productos
+            <NavLink to="/administrar/producto" className="boton-menu boton-producto" activeClassName="active">
+            Administrar Productos
             </NavLink>
           </li>
           <li>
