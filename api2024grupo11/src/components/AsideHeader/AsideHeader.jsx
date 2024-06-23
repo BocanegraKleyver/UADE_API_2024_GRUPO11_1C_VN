@@ -13,64 +13,34 @@ export const AsideHeader = () => {
       </header>
       <nav>
         <ul>
-        <li>
-            <NavLink to="/login" className="boton-menu boton-login" activeClassName="active">
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/register" className="boton-menu boton-register" activeClassName="active">
-              Register
-            </NavLink>
-          </li>
           <li>
             <NavLink to="/home" className="boton-menu boton-home" activeClassName="active">
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
-              Catalogo
+            <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
+              Administrar
             </NavLink>
           </li>
           <li>
-            <NavLink to="/rol" className="boton-menu boton-rol" activeClassName="active">
-              Rol
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/usuario" className="boton-menu boton-usuario" activeClassName="active">
-              Usuario
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/categoria" className="boton-menu boton-categoria" activeClassName="active">
+            <NavLink to="/administrar/categoria" className="boton-menu boton-categoria" activeClassName="active">
               Categorias
             </NavLink>
           </li>
           <li>
-            <NavLink to="/descuento" className="boton-menu boton-descuento" activeClassName="active">
+            <NavLink to="/administrar/descuento" className="boton-menu boton-descuento" activeClassName="active">
               Descuentos
             </NavLink>
           </li>
           <li>
-            <NavLink to="/producto" className="boton-menu boton-producto" activeClassName="active">
+            <NavLink to="/administrar//producto" className="boton-menu boton-producto" activeClassName="active">
               Productos
             </NavLink>
           </li>
           <li>
-            <NavLink to="/carrito" className="boton-menu boton-carrito" activeClassName="active">
-              Carrito
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/comprar" className="boton-menu boton-comprar" activeClassName="active">
-              Comprar
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
-              Administrar
+            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
+              Catalogo
             </NavLink>
           </li>
         </ul>
