@@ -11,7 +11,7 @@ function ProductDo({value, agregarAlCarrito}) {
                 <p className="producto-precio">$ {value.precio}</p>
                 <p className="producto-cantidad">Stock: {value.cantidad}</p>
                 </header>
-                <p className="producto-descripcion">{value.descripcion}</p>
+                
                 <button className="producto-agregar" onClick={() => agregarAlCarrito(value)}>Agregar</button>
             </div>
         </div>
