@@ -1,8 +1,8 @@
 function ProductSelect({value, agregarAlCarrito}) {
     return(
         <div class="producto">
-            <img className="producto-imagen" src={value.imagen_1} alt={value.titulo}></img>
-            <img className="producto-imagen" src={value.imagen_2} alt={value.titulo}></img>
+            <img className="producto-imagen2" src={value.imagen_1} alt={value.titulo}></img>
+            <img className="producto-imagen2" src={value.imagen_2} alt={value.titulo}></img>
             <div className="producto-detalles">
                 <h3 className="producto-titulo">{value.titulo}</h3>
                 <header class="paralelo">
