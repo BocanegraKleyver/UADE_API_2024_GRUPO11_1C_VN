@@ -334,10 +334,11 @@ main{
 }
 
 .producto-imagen2{
-  width:20rem;
-  height: 20rem;
+  width:40rem;
+  height: 40rem;
   border-radius: 1rem;
   object-fit: cover;
+  
 }
 
 .producto-detalles{
@@ -356,13 +357,28 @@ main{
   text-emphasis-color: black;
   font-weight: bold;
 }
+.producto-titulo2{
+  font-size: 5rem;
+  text-emphasis-color: black;
+  font-weight: bold;
+}
 .producto-precio{
   font-size: 1rem;
   text-emphasis-color: black;
   font-weight: bold;
 }
+.producto-precio2{
+  font-size: 5rem;
+  text-emphasis-color: black;
+  font-weight: bold;
+}
 .producto-cantidad{
   font-size: 1rem;
+  text-emphasis-color: black;
+  font-weight: bold;
+}
+.producto-cantidad2{
+  font-size: 5rem;
   text-emphasis-color: black;
   font-weight: bold;
 }
@@ -395,3 +411,8 @@ main{
   justify-content: space-between;
 }
 
+.paralelo2{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:1rem;
+}
