@@ -1,9 +1,11 @@
 import React from "react";
-import { AsideHeader } from "./components/AsideHeader/AsideHeader";
+import { AsideHeader } from "./components/AsideHeader/AsideHeader.jsx";
 import { Routes, Route } from "react-router-dom";
-import { CarritoScreen } from "./screens/CarritoScreen";
-import { GestionProductoScreen } from "./screens/GestionProductoScreen";
-import ComprarScreen from "./screens/ComprarScreen";
+import { CarritoScreen } from "./screens/CarritoScreen.jsx";
+import { GestionProductoScreen } from "./screens/GestionProductoScreen.jsx";
+import { UsuariosScreen } from "./screens/UsuariosScreen.jsx"
+import ComprarScreen from "./screens/ComprarScreen.jsx";
+import { CrearUsuariosScreen } from "./screens/CrearUsuariosScreen.jsx";
 
 
 function App() {
@@ -21,6 +23,15 @@ function App() {
         
         <Route path="/gestionProductos/">
           <Route path="" element={<GestionProductoScreen />} exact />
+        </Route>
+
+        <Route path="/usuarios">
+          <Route path="" element={<UsuariosScreen />} exact />
+        </Route>
+
+        
+        <Route path="/crearUsuario">
+          <Route path="" element={<CrearUsuariosScreen />} exact />
         </Route>
       </Routes>
     </div>

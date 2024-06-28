@@ -25,6 +25,14 @@ export const AsideHeader = () => {
               Gestiona tus Productos
             </a>
           </li>
+                    <li>
+            <a
+              className="boton-menu boton-vender-tus-productos active"
+              href="/usuarios"
+            >
+              Iniciar sesion
+            </a>
+          </li>
         </ul>
       </nav>
       <footer>
