@@ -27,7 +27,7 @@ const ComprarScreen = () => {
 
   const handleAgregarAFavoritos = (producto) => {
     agregarItemAFavoritos(producto);
-    alert("Item agregado al carrito");
+    alert("Producto agregado a favoritos");
   };
 
   return (
@@ -41,14 +41,6 @@ const ComprarScreen = () => {
             value={value}
             key={index}
             agregarAlCarrito={() => handleAgregarAlCarrito(value)}
-          />
-        ))}
-      </div>
-      <div className="contenedor-productos-fav">
-        {productos.map((value, index) => (
-          <ProductDo
-            value={value}
-            key={index}
             agregarAFavoritos={() => handleAgregarAFavoritos(value)}
           />
         ))}

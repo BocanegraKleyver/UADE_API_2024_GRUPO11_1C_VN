@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { CrearUsuarios } from "../Services/usuarioService";
 
 export const CrearUsuariosScreen = () => {
@@ -7,6 +9,7 @@ export const CrearUsuariosScreen = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   const handleSetUsername = (event) => {
     setUsername(event.target.value);
@@ -29,6 +32,7 @@ export const CrearUsuariosScreen = () => {
 
   const handleCrearUsuario = async () => {
     await CrearUsuarios(username, password, nombre, apellido, email);
+    navigate("/");
   };
 
   return (

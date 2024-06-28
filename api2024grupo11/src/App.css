@@ -152,6 +152,22 @@ main{
   color:white;
 }
 
+.producto-favoritos {
+  background-color: black;
+  padding: .25rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: .5rem;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.producto-favoritos:hover {
+  background-color: #1f1f1f;
+  color: white;
+}
+
 /*Carrito*/
 
 .contenedor-carrito{
@@ -380,6 +396,24 @@ main{
 .producto-agregar:hover{
   background-color: #1f1f1f;
   color:white;
+}
+
+.producto-favoritos {
+  background-color: black;
+  padding: .25rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: .5rem;
+  cursor: pointer;
+  border: 2px solid black;
+  max-width: 5rem;
+  justify-content: flex-end;
+}
+
+.producto-favoritos:hover {
+  background-color: #1f1f1f;
+  color: white;
 }
 
 .paralelo{

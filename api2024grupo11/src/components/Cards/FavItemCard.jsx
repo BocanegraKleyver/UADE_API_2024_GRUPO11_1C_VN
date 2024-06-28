@@ -1,6 +1,6 @@
 import React from "react";
 
-export const FavItemCard = ({ producto, cantidad, onEliminarDeFavoritos }) => {
+export const FavItemCard = ({ producto, onEliminarDeFavoritos }) => {
   const handleEliminarItem = () => {
     onEliminarDeFavoritos(producto.id);
   };

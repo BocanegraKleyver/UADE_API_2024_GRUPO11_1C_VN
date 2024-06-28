@@ -6,6 +6,7 @@ import { GestionProductoScreen } from "./screens/GestionProductoScreen.jsx";
 import { UsuariosScreen } from "./screens/UsuariosScreen.jsx"
 import ComprarScreen from "./screens/ComprarScreen.jsx";
 import { CrearUsuariosScreen } from "./screens/CrearUsuariosScreen.jsx";
+import { FavoritosScreen } from "./screens/FavoritosScreen.jsx";
 
 
 function App() {
@@ -29,9 +30,12 @@ function App() {
           <Route path="" element={<UsuariosScreen />} exact />
         </Route>
 
-        
         <Route path="/crearUsuario">
           <Route path="" element={<CrearUsuariosScreen />} exact />
+        </Route>
+
+        <Route path="/favoritos/">
+          <Route path="" element={<FavoritosScreen />} exact />
         </Route>
       </Routes>
     </div>
