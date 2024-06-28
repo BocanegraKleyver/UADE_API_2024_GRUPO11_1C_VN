@@ -14,7 +14,7 @@ export const FavItemCard = ({
   };
 
   return (
-    <div className="overflow-hidden bg-slate-200 h-[8vh] shadow rounded-md px-3 flex items-center">
+    <div className="overflow-hidden bg-slate-200 h-[20vh] shadow rounded-md px-3 flex items-center">
       <div className="grid grid-cols-3 items-center w-full text-xs">
         <img
           className="producto-imagen-fav"

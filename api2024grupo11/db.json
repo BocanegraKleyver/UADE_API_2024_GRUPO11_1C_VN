@@ -52,6 +52,11 @@
       "id": "2",
       "titulo": "Silla_Gamer",
       "precio": 33000
+    },
+    {
+      "id": "1",
+      "titulo": "Silla_Comedor",
+      "precio": 7000
     }
   ]
 }

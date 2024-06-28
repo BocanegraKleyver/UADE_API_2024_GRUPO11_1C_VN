@@ -11,9 +11,15 @@ const DescripcionScreen = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getProducto(id).then((data) => {
-      setProducto(data);
-    });
+    const fetchProducto = async () => {
+      try {
+        const data = await getProducto(id);
+        setProducto(data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProducto();
   }, [id]);
 
   const handleAgregarAlCarrito = (producto) => {
