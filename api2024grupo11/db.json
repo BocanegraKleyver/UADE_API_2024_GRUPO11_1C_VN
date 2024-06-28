@@ -34,19 +34,20 @@
   "categoria": [],
   "carrito": [
     {
-      "id": "1",
-      "titulo": "Silla_Comedor",
-      "precio": 7000,
+      "id": "2",
+      "titulo": "Silla_Gamer",
+      "precio": 33000,
+      "cantidad": 1
+    },
+    {
+      "id": "3",
+      "titulo": "Silla_Jardin",
+      "precio": 3500,
       "cantidad": 1
     }
   ],
   "usuario": [],
   "favoritos": [
-    {
-      "id": "1",
-      "titulo": "Silla_Comedor",
-      "precio": 7000
-    },
     {
       "id": "2",
       "titulo": "Silla_Gamer",
