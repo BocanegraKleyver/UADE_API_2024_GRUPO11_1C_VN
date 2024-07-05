@@ -117,7 +117,22 @@ main{
   background-color: #f1f5f9;
 }
 
+.contenedor-productos-fav {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+.producto-fav {
+  background-color: #f1f5f9;
+}
+
 .producto-imagen{
+  max-width: 100%;
+  border-radius: 1rem;
+}
+
+.producto-imagen-fav {
   max-width: 100%;
   border-radius: 1rem;
 }
@@ -150,6 +165,22 @@ main{
 .producto-agregar:hover{
   background-color: #1f1f1f;
   color:white;
+}
+
+.producto-favoritos {
+  background-color: black;
+  padding: .25rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: .5rem;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.producto-favoritos:hover {
+  background-color: #1f1f1f;
+  color: white;
 }
 
 /*Carrito*/
@@ -404,6 +435,24 @@ main{
 .producto-agregar:hover{
   background-color: #1f1f1f;
   color:white;
+}
+
+.producto-favoritos {
+  background-color: black;
+  padding: .25rem;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: .5rem;
+  cursor: pointer;
+  border: 2px solid black;
+  max-width: 5rem;
+  justify-content: flex-end;
+}
+
+.producto-favoritos:hover {
+  background-color: #1f1f1f;
+  color: white;
 }
 
 .paralelo{

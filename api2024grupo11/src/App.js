@@ -1,10 +1,15 @@
 import React from "react";
+
 import { Route, Routes } from "react-router-dom";
-import { AsideHeader } from "./components/AsideHeader/AsideHeader";
-import { CarritoScreen } from "./screens/CarritoScreen";
-import ComprarScreen from "./screens/ComprarScreen";
-import { GestionProductoScreen } from "./screens/GestionProductoScreen";
-import ProductoScreen from "./screens/ProductoScreen";
+import { AsideHeader } from "./components/AsideHeader/AsideHeader.jsx";
+import { CarritoScreen } from "./screens/CarritoScreen.jsx";
+import ComprarScreen from "./screens/ComprarScreen.jsx";
+import { CrearUsuariosScreen } from "./screens/CrearUsuariosScreen.jsx";
+import DescripcionScreen from "./screens/DetallesScreen.jsx";
+import { FavoritosScreen } from "./screens/FavoritosScreen.jsx";
+import { GestionProductoScreen } from "./screens/GestionProductoScreen.jsx";
+import { UsuariosScreen } from "./screens/UsuariosScreen.jsx";
+
 
 
 function App() {
@@ -24,7 +29,22 @@ function App() {
           <Route path="" element={<GestionProductoScreen />} exact />
         </Route>
 
-        <Route path="/producto/:id" element={<ProductoScreen />}/>
+
+        <Route path="/usuarios">
+          <Route path="" element={<UsuariosScreen />} exact />
+        </Route>
+
+        <Route path="/crearUsuario">
+          <Route path="" element={<CrearUsuariosScreen />} exact />
+        </Route>
+
+        <Route path="/favoritos/">
+          <Route path="" element={<FavoritosScreen />} exact />
+        </Route>
+
+        <Route path="/producto/:id">
+          <Route path="" element={<DescripcionScreen />} exact />
+        </Route>
 
       </Routes>
     </div>
