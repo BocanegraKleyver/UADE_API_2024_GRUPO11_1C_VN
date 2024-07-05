@@ -4,6 +4,43 @@ export const getProductos = () => {
     .catch((error) => console.log("error", error));
 };
 
+
+export const getProductoScreen = (id) => {
+    return(
+        fetch("http://localhost:8000/productos" + id)
+        .then((Response) => Response.json())
+        .catch(error => console.log('error',error))
+    )
+};
+
+export const altaProdcuto2 = (id,titulo,categoria,imagen_1,imagen_2,descripcion,precio,cantidad) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "id": id,
+        "titulo": titulo,
+        "categoria": categoria,
+        "imagen_1":imagen_1,
+        "imagen_2":imagen_2,
+        "descripcion": descripcion,
+        "precio":parseFloat(precio),
+        "cantidad":parseInt(cantidad)
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:8000/productos", requestOptions)
+    .then(Response => Response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+};
+
 export const getProducto = (id) => {
   var requestOptions = {
     method: "GET",
@@ -12,6 +49,7 @@ export const getProducto = (id) => {
   return fetch("http://localhost:8000/productos" + id, requestOptions)
     .then((Response) => Response.json())
     .catch((error) => console.log("error", error));
+
 };
 
 export const altaProdcuto = (
@@ -117,6 +155,7 @@ export const decrementarCantidad = (id, cantidad) => {
     .then((result) => console.log(result))
     .catch((error) => console.error("Error al disminuir la cantidad:", error));
 };
+
 export const decrementarCantidadEnN = async (producto, cantADecrementar) => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

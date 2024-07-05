@@ -1,13 +1,15 @@
 import React from "react";
+
+import { Route, Routes } from "react-router-dom";
 import { AsideHeader } from "./components/AsideHeader/AsideHeader.jsx";
-import { Routes, Route } from "react-router-dom";
 import { CarritoScreen } from "./screens/CarritoScreen.jsx";
-import { GestionProductoScreen } from "./screens/GestionProductoScreen.jsx";
-import { UsuariosScreen } from "./screens/UsuariosScreen.jsx"
 import ComprarScreen from "./screens/ComprarScreen.jsx";
 import { CrearUsuariosScreen } from "./screens/CrearUsuariosScreen.jsx";
-import { FavoritosScreen } from "./screens/FavoritosScreen.jsx";
 import DescripcionScreen from "./screens/DetallesScreen.jsx";
+import { FavoritosScreen } from "./screens/FavoritosScreen.jsx";
+import { GestionProductoScreen } from "./screens/GestionProductoScreen.jsx";
+import { UsuariosScreen } from "./screens/UsuariosScreen.jsx";
+
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
           <Route path="" element={<GestionProductoScreen />} exact />
         </Route>
 
+
         <Route path="/usuarios">
           <Route path="" element={<UsuariosScreen />} exact />
         </Route>
@@ -42,6 +45,7 @@ function App() {
         <Route path="/producto/:id">
           <Route path="" element={<DescripcionScreen />} exact />
         </Route>
+
       </Routes>
     </div>
 
