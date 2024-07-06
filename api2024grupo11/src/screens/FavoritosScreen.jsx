@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { PageTitle } from "../components/Titles/PageTitle";
 import { FavItemCard } from "../components/Cards/FavItemCard";
 import {
   getFavoritos,
@@ -32,7 +31,9 @@ export const FavoritosScreen = () => {
 
   return (
     <div className="text-black p-5">
-      <PageTitle text="Mis Favoritos" />
+      <h1>
+         Mis Favoritos
+      </h1>
       <div className="grid grid-cols-2 gap-2 h-full">
         <div className="contenedor-productos">
           {productos.map((producto) => (
