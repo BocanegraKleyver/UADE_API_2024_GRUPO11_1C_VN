@@ -6,21 +6,21 @@ import { ProductoService } from '../Services/ProductoService';
 
 export const CarritoScreen = () => {
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
-  const [cantidades, setCantidades] = useState([]); 
+  const [cantidades, setCantidades] = useState([]);
 
   const [totalGlobal, setTotalGlobal] = useState(0)
 
   useEffect(() => {
     getCarrito()
-    .then((data)=> {
-      if (data) {
-        setProductos(data.carrito.productos);
-        setCantidades(data.carrito.productos.map(d => d.cantidad));
-        setTotalGlobal(data.carrito.total)
-      }
-    });
+      .then((data) => {
+        if (data) {
+          setProductos(data.carrito.productos);
+          setCantidades(data.carrito.productos.map(d => d.cantidad));
+          setTotalGlobal(data.carrito.total)
+        }
+      });
   }, []);
 
 

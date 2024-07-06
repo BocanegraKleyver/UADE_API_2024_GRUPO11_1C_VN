@@ -7,12 +7,14 @@ import { agregarItemAFavoritos } from "../Services/favoritosService";
 export const ComprarScreen = () => {
   const [productos, setProdoductos] = useState([]);
 
-    // useEffect(() => {
-    //   fetch("http://localhost:8000/productos")
-    //   .then((response) => response.json())
-    //   .then((data)=>setProdoductos(data))
-    // }, [])
-  
+  // TODO: conectar al backend
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/productos")
+  //   .then((response) => response.json())
+  //   .then((data)=>setProdoductos(data))
+  // }, [])
+
 
   const handleAgregarAlCarrito = (producto) => {
     if (producto.cantidad === 0) {
@@ -34,7 +36,7 @@ export const ComprarScreen = () => {
     <div>
       <div className="text-black bold p-5">
         <h1>
-        ¿Que desea comprar?
+          ¿Que desea comprar?
         </h1>
       </div>
       <div className="contenedor-productos">

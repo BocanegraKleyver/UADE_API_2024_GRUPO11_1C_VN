@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 
 export const AsideHeader = () => {
   return (
@@ -18,26 +18,15 @@ export const AsideHeader = () => {
               Carrito
             </NavLink>
           </li>
+
+          {/* TODO: Renderizar condicionalmente si es Vendedor */}
           <li>
             <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
               Administrar
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/administrar/categoria" className="boton-menu boton-categoria" activeClassName="active">
-            Administrar Categorias
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/administrar/descuento" className="boton-menu boton-descuento" activeClassName="active">
-            Administrar Descuentos
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/administrar/producto" className="boton-menu boton-producto" activeClassName="active">
-            Administrar Productos
-            </NavLink>
-          </li>
+
+
           <li>
             <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
               Catalogo

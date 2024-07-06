@@ -25,7 +25,7 @@ export const ProductoProvider = ({ children }) => {
     }
   };
 
-  
+
   const crearProducto = async (nuevoProducto) => {
     try {
       const nuevo = await ProductoService.createProducto(nuevoProducto);
@@ -36,7 +36,7 @@ export const ProductoProvider = ({ children }) => {
     }
   };
 
-  
+
   const actualizarProducto = async (id, productoActualizado) => {
     try {
       await ProductoService.updateProducto(id, productoActualizado);
@@ -47,7 +47,7 @@ export const ProductoProvider = ({ children }) => {
       throw error;
     }
   };
-  
+
   const eliminarProducto = async (id) => {
     try {
       await ProductoService.deleteProducto(id);

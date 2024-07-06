@@ -53,11 +53,11 @@ export const DescuentoProvider = ({ children }) => {
   };
 
   return (
-    <DescuentoContext.Provider 
+    <DescuentoContext.Provider
       value={{
-        descuentos, 
-        agregarDescuento, 
-        actualizarDescuento, 
+        descuentos,
+        agregarDescuento,
+        actualizarDescuento,
         eliminarDescuento
       }}
     >

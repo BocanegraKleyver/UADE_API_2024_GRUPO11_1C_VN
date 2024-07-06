@@ -28,9 +28,7 @@ export const FavItemCard = ({
         >
           {producto.titulo}
         </Link>
-        {/* col 2 */}
         <div className="w-full text-right">
-          {/* Utiliza una función de flecha para envolver la llamada a handleEliminarItem */}
           <button
             onClick={() => handleEliminarItem()}
             className={`text-slate-500 text-[10px] hover:text-black`}

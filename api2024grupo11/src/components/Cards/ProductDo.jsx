@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function ProductDo({ value, agregarAlCarrito, agregarAFavoritos }) {
   return (
     <div class="producto">
-      <Link to={`/producto/${value.id}`}><img className="producto-imagen" src={value.imagen_1} alt={value.titulo}/></Link>
+      <Link to={`/producto/${value.id}`}><img className="producto-imagen" src={value.imagen_1} alt={value.titulo} /></Link>
       <div className="producto-detalles">
         <h3 className="producto-titulo">{value.titulo}</h3>
         <header class="paralelo">
