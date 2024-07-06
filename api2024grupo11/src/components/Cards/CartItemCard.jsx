@@ -1,27 +1,42 @@
 import React from 'react';
 import { DecrementItemButton } from '../Buttons/DecrementItemButton';
 import { IncrementItemButton } from '../Buttons/IncrementItemButton';
-import { actualizarCarrito } from '../../Services/carritoService';
+import { actualizarCarrito, restarCantidadCarrito, sumarCantidadCarrito } from '../../Services/carritoService';
 
 export const CartItemCard = ({ producto, cantidad, onCantidadChange, onEliminarDelCarrito }) => {
 
-  const handleIncrementItem = () => {
+  const handleIncrementItem = async () => {
     const nuevaCantidad = cantidad + 1;
-    onCantidadChange(nuevaCantidad);
-    actualizarCarrito(nuevaCantidad, producto)
+  
+    try {
+      const res = await sumarCantidadCarrito(1, producto.idProductos);
+  
+      if (res.error === 'No hay suficiente stock de ese producto') {
+        alert(res.error);
+      } else {
+        onCantidadChange(nuevaCantidad);
+      }
+    } catch (error) {
+      console.error("Ocurrió un error al incrementar la cantidad:", error);
+    }
   };
-
-  const handleDecrementItem = () => {
+  
+  const handleDecrementItem = async () => {
     if (cantidad === 0) {
       return;
     }
     const nuevaCantidad = cantidad - 1;
-    onCantidadChange(nuevaCantidad);
-    actualizarCarrito(nuevaCantidad, producto)
+
+    try {
+      await restarCantidadCarrito(1, producto.idProductos)
+      onCantidadChange(nuevaCantidad);
+    } catch (error) {
+      console.error("Ocurrió un error al incrementar la cantidad:", error);
+    }
   };
 
   const handleEliminarItem = () => {
-    onEliminarDelCarrito(producto.id);
+    onEliminarDelCarrito(producto.idProductos);
   };
 
   return (

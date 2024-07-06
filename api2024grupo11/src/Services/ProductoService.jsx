@@ -90,6 +90,40 @@ export const ProductoService = {
       console.error(`Error obteniendo cantidad disponible en stock para producto ID ${idProducto}:`, error);
       throw error;
     }
+  },
+
+  
+  restarStockAlComprar: async (producto, cantADecrementar) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  try {
+      const response = await fetch("http://localhost:8000/productos/" + producto.id);
+      const productoADecrementar = await response.json();
+      
+      const nuevaCantidad = productoADecrementar.cantidad - cantADecrementar;
+      const raw = JSON.stringify({
+          "cantidad": nuevaCantidad
+      });
+
+      const requestOptions = {
+          method: 'PATCH',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+      };
+   
+      const patchResponse = await fetch(`http://localhost:8000/productos/${producto.id}`, requestOptions);
+
+      if (!patchResponse.ok) {
+          throw new Error('La solicitud PATCH no fue exitosa.');
+      }
+
+      const result = await patchResponse.json();
+      console.log(result);
+  } catch (error) {
+      console.error('Error al disminuir la cantidad:', error);
   }
+};
 };
 
