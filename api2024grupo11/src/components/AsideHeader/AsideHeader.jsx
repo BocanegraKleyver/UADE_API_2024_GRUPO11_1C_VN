@@ -14,21 +14,21 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/carrito" className="boton-menu boton-home" activeClassName="active">
+            <NavLink to="/carrito" className="boton-menu boton-home" activeclassname="active">
               Carrito
             </NavLink>
           </li>
 
           {/* TODO: Renderizar condicionalmente si es Vendedor */}
           <li>
-            <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
+            <NavLink to="/administrar" className="boton-menu boton-administrar" activeclassname="active">
               Administrar
             </NavLink>
           </li>
 
 
           <li>
-            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
+            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeclassname="active">
               Catalogo
             </NavLink>
           </li>

@@ -7,7 +7,7 @@ export const CategoriaService = {
     try {
         const response = await axios.get(API_URL, {
           headers: {
-            'Authorization': "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZ3VzdGluZ3JpQGdtYWlsLmNvbSIsImlhdCI6MTcyMDMwMDcyMiwiYWd1c3RpbmdyaUBnbWFpbC5jb20iOiIkMmEkMTAkY0suRU1tN0d0RmVsQmEwenJrRXJpT3RHdnhZOG1PVVAvVUg1TXA2M3ZFemJoV1dDVlpVMkMiLCJleHAiOjE3MjAzODcxMjJ9.Z-y8vwuyxVVgNoty8wKMufzP-EMJjTaijKSqskbRg_hSEmOdtTklf9X3ib6gemHUgrFi1c28H9byo9_6wYp54A"
+            'Authorization': "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZ3VzdGluZ3JpQGdtYWlsLmNvbSIsImlhdCI6MTcyMDMwMjE5MiwiYWd1c3RpbmdyaUBnbWFpbC5jb20iOiIkMmEkMTAkY0suRU1tN0d0RmVsQmEwenJrRXJpT3RHdnhZOG1PVVAvVUg1TXA2M3ZFemJoV1dDVlpVMkMiLCJleHAiOjE3MjAzODg1OTJ9.4FauX6vyR_W5QAJ-CHETYcKbRSTjbebaDYvFi56h84M2sSRfnhaL3jPxYtAtA31sLdb86ytYyktfQrVvw-47aQ"
           }
         });
 
