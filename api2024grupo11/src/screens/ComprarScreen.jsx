@@ -1,11 +1,10 @@
 import React from "react";
 import ProductDo from "../components/Cards/ProductDo";
 import { useState, useEffect } from "react";
-import { PageTitle } from "../components/Titles/PageTitle";
 import { agregarItemAlCarrito } from "../Services/carritoService";
 import { agregarItemAFavoritos } from "../Services/favoritosService";
 
-const ComprarScreen = () => {
+export const ComprarScreen = () => {
   const [productos, setProdoductos] = useState([]);
 
   useEffect(() => {
@@ -33,7 +32,9 @@ const ComprarScreen = () => {
   return (
     <div>
       <div className="text-black bold p-5">
-        <PageTitle text="¿Que desea comprar?" />
+        <h1>
+        ¿Que desea comprar?
+        </h1>
       </div>
       <div className="contenedor-productos">
         {productos.map((value, index) => (
@@ -49,4 +50,4 @@ const ComprarScreen = () => {
   );
 };
 
-export default ComprarScreen;
+

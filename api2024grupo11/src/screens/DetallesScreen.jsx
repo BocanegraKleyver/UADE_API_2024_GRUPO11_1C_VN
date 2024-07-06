@@ -2,18 +2,17 @@ import React, { useEffect } from "react";
 import ProductDo from "../components/Cards/ProductDo";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { PageTitle } from "../components/Titles/PageTitle";
 import { agregarItemAlCarrito } from "../Services/carritoService";
-import { getProducto } from "../Services/productosService";
+import { ProductoService } from '../Services/ProductoService';
 
-const DescripcionScreen = () => {
+export const DescripcionScreen = () => {
   const [producto, setProducto] = useState();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchProducto = async () => {
       try {
-        const data = await getProducto(id);
+        const data = await ProductoService.getProductoById(id);
         setProducto(data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -36,7 +35,9 @@ const DescripcionScreen = () => {
   return (
     <div>
       <div className="text-black bold p-5">
-        <PageTitle text="Detalles" />
+        <h1>
+        Detalles
+        </h1>
       </div>
       <div className="contenedor-productos">
         <ProductDo
@@ -49,4 +50,4 @@ const DescripcionScreen = () => {
   );
 };
 
-export default DescripcionScreen;
+

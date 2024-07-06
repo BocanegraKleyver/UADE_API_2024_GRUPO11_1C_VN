@@ -1,29 +1,47 @@
 import React from "react";
+import { NavLink } from "react-router-dom"; 
 
 export const AsideHeader = () => {
   return (
     <aside className="h-[100vh] bg-yellow-600">
       <header>
         <h1 className="logo">
-          <a class="logo-link" href="/">
+          <NavLink to="/" className="logo-link">
             SillaShop
-          </a>
+          </NavLink>
         </h1>
       </header>
       <nav>
         <ul>
           <li>
-            <a className="boton-menu boton-carrito active" href="/carrito">
-              Carrito
-            </a>
+            <NavLink to="/home" className="boton-menu boton-home" activeClassName="active">
+              Home
+            </NavLink>
           </li>
           <li>
-            <a
-              className="boton-menu boton-vender-tus-productos active"
-              href="/gestionProductos"
-            >
-              Gestiona tus Productos
-            </a>
+            <NavLink to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
+              Administrar
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/administrar/categoria" className="boton-menu boton-categoria" activeClassName="active">
+            Administrar Categorias
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/administrar/descuento" className="boton-menu boton-descuento" activeClassName="active">
+            Administrar Descuentos
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/administrar/producto" className="boton-menu boton-producto" activeClassName="active">
+            Administrar Productos
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeClassName="active">
+              Catalogo
+            </NavLink>
           </li>
           <li>
             <a
