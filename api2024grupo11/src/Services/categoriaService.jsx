@@ -1,50 +1,58 @@
-export const getCategoria = async () => {
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api/categoria';
+
+export const CategoriaService = {
+  getAllCategorias: async () => {
     try {
-        const response = await fetch("http://localhost:3000/categoria");
-        const data = await response.json();
-        return data;
+      const response = await axios.get(API_URL);
+      return response.data;
     } catch (error) {
-        console.log('error', error);
-    } finally {
-        console.log('promise is finished');
+      throw new Error(`Error al obtener las categorías: ${error.message}`);
     }
+  },
+
+  getCategoriaById: async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al obtener la categoría con ID ${id}: ${error.message}`);
+    }
+  },
+
+  createCategoria: async (categoria) => {
+    try {
+      const response = await axios.post(API_URL, categoria);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al crear la categoría: ${error.message}`);
+    }
+  },
+
+  updateCategoria: async (id, categoria) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}`, categoria);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error al actualizar la categoría con ID ${id}: ${error.message}`);
+    }
+  },
+
+
+
+  
+  deleteCategoria: async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+    } catch (error) {
+      throw new Error(`Error al eliminar la categoría con ID ${id}: ${error.message}`);
+    }
+  }
 };
 
-export const altaCategoria = async (id, descripcion) => {
-    try {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        const raw = JSON.stringify({
-            "id": id,
-            "descripcion": descripcion
-        });
-        
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
 
-        const response = await fetch("http://localhost:3000/categoria", requestOptions);
-        const result = await response.text();
-        console.log(result);
-    } catch (error) {
-        console.log('error', error);
-    }
-};
 
-export const eliminarCategoria = async (id) => {
-    try {
-        const requestOptions = {
-            method: 'DELETE',
-        };
 
-        const response = await fetch("http://localhost:3000/categoria/" + id, requestOptions);
-        const result = await response.text();
-        console.log(result);
-    } catch (error) {
-        console.log('error', error);
-    }
-};
+
