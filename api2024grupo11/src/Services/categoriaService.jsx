@@ -50,7 +50,3 @@ export const CategoriaService = {
     }
   }
 };
-
-
-
-
