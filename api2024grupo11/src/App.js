@@ -18,6 +18,7 @@ import { CatalogoProductosScreen } from "./screens/CatalogoProductosScreen.jsx";
 import { DescuentoProvider } from "./context/DescuentoContext.jsx";
 import { CategoriaProvider } from "./context/CategoriaContext.jsx";
 import { ProductoProvider } from "./context/ProductoContext.jsx";
+import { CarritoScreen } from "./screens/CarritoScreen.jsx";
 
 function App() {
   return (
@@ -44,9 +45,9 @@ function App() {
 
               <Route path="/" element={<ComprarScreen />} exact></Route>
 
-              {/* <Route path="/carrito/">
+              <Route path="/carrito">
                 <Route path="" element={<CarritoScreen />} exact />
-              </Route> */}
+              </Route>
 
               {/* <Route path="/gestionProductos/">
                 <Route path="" element={<GestionProductoScreen />} exact />

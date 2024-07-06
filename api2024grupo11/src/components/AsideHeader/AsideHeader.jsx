@@ -14,8 +14,8 @@ export const AsideHeader = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/home" className="boton-menu boton-home" activeClassName="active">
-              Home
+            <NavLink to="/carrito" className="boton-menu boton-home" activeClassName="active">
+              Carrito
             </NavLink>
           </li>
           <li>

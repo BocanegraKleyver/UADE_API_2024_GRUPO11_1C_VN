@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { PageTitle } from '../components/Titles/PageTitle';
 import { CartItemCard } from '../components/Cards/CartItemCard';
-import { getCarrito, eliminarItemDelCarrito, vaciarCarrito } from '../Services/carritoService';
+import { getCarrito, eliminarItemDelCarrito } from '../Services/carritoService';
 import { useNavigate } from 'react-router-dom';
 import { ProductoService } from '../Services/ProductoService';
 
@@ -16,9 +15,11 @@ export const CarritoScreen = () => {
   useEffect(() => {
     getCarrito()
     .then((data)=> {
-      setProductos(data.carrito.productos);
-      setCantidades(data.carrito.productos.map(d => d.cantidad));
-      setTotalGlobal(data.carrito.total)
+      if (data) {
+        setProductos(data.carrito.productos);
+        setCantidades(data.carrito.productos.map(d => d.cantidad));
+        setTotalGlobal(data.carrito.total)
+      }
     });
   }, []);
 
@@ -33,11 +34,9 @@ export const CarritoScreen = () => {
 
   // chequear stock elimina mal
   const handleComprar = () => {
-    const arrayIds = productos.map(objeto => objeto.id);
     productos.forEach((producto, index) => {
       ProductoService.restarStockAlComprar(producto, cantidades[index]);
     });
-    vaciarCarrito(arrayIds)
     alert("Compra exitosa");
     navigate("/")
   };
@@ -60,7 +59,7 @@ export const CarritoScreen = () => {
 
   return (
     <div className='text-black p-5'>
-      <PageTitle text="Carrito de Compras"/>
+      <h1>Carrito de compras</h1>
       <div className='grid grid-cols-2 gap-2 h-full'>
         <div className='flex flex-col w-full h-full gap-3 justify-center py-5'>
           {productos.map((nodo, index) => (
