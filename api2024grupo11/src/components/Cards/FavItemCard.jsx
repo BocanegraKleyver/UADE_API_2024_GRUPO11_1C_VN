@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const FavItemCard = ({
   producto,
@@ -21,12 +22,12 @@ export const FavItemCard = ({
           src={producto.imagen_1}
           alt={producto.titulo}
         ></img>
-        <a
-          href={`/producto/${producto.id}`}
+        <Link
+          to={`/producto/${producto.id}`}
           className="font-light text-center mx-2 overflow-hidden"
         >
           {producto.titulo}
-        </a>
+        </Link>
         {/* col 2 */}
         <div className="w-full text-right">
           {/* Utiliza una función de flecha para envolver la llamada a handleEliminarItem */}
