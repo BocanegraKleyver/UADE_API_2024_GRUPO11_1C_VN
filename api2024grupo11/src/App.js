@@ -10,7 +10,6 @@ import { AdministrarScreen } from "./screens/AdministrarScreen.jsx";
 import { CategoriaScreen } from "./screens/CategoriaScreen.jsx";
 import { DescuentoScreen } from "./screens/DescuentoScreen.jsx";
 import { ProductoScreen } from "./screens/ProductoScreen.jsx";
-import { CatalogoProductosScreen } from "./screens/CatalogoProductosScreen.jsx";
 import { DescuentoProvider } from "./context/DescuentoContext.jsx";
 import { CategoriaProvider } from "./context/CategoriaContext.jsx";
 import { ProductoProvider } from "./context/ProductoContext.jsx";
@@ -37,8 +36,6 @@ function App() {
                 path="/administrar/producto"
                 element={<ProductoScreen />}
               />
-              <Route path="/catalogo" element={<CatalogoProductosScreen />} />
-
               <Route path="/" element={<ComprarScreen />} exact></Route>
 
               <Route path="/carrito">

@@ -353,9 +353,16 @@ main{
   box-shadow: 0 1rem 2rem black;
 }
 
-.producto-imagen{
+/* .producto-imagen{
   width:20rem;
   height: 20rem;
+  border-radius: 1rem;
+  object-fit: cover;
+} */
+
+.producto-imagen {
+  width: 90%;
+  height: 60%;
   border-radius: 1rem;
   object-fit: cover;
 }

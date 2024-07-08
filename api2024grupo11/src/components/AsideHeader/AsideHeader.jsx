@@ -28,11 +28,6 @@ export const AsideHeader = () => {
 
 
           <li>
-            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeclassname="active">
-              Catalogo
-            </NavLink>
-          </li>
-          <li>
             <NavLink
               className="boton-menu boton-vender-tus-productos active"
               to="/usuarios"
