@@ -9,6 +9,7 @@ import { UsuariosScreen } from "./screens/UsuariosScreen.jsx";
 import { AdministrarScreen } from "./screens/AdministrarScreen.jsx";
 import { CategoriaScreen } from "./screens/CategoriaScreen.jsx";
 import { DescuentoScreen } from "./screens/DescuentoScreen.jsx";
+import { DetalleScreen } from "./screens/DetalleScreen.jsx";
 import { ProductoScreen } from "./screens/ProductoScreen.jsx";
 import { DescuentoProvider } from "./context/DescuentoContext.jsx";
 import { CategoriaProvider } from "./context/CategoriaContext.jsx";
@@ -52,6 +53,10 @@ function App() {
 
               <Route path="/favoritos/">
                 <Route path="" element={<FavoritosScreen />} exact />
+              </Route>
+
+              <Route path="/producto/:id">
+                <Route path="" element={<DetalleScreen />} exact />
               </Route>
             </Routes>
           </div>

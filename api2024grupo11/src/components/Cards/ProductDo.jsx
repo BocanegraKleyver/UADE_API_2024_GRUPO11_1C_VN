@@ -16,7 +16,9 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
   return (
     <div className="producto" onClick={onSelect}> 
       <div className="imagen-container">
+      <Link to={`/producto/${value.id}`}>
         <img className="producto-imagen" src={images[currentImageIndex]} alt={value.titulo} />
+        </Link>
         {images.length > 1 && (
           <div className="navegacion-imagen">
             <button className="flecha-izquierda" onClick={handlePrevImage}>&#9664;</button>
@@ -24,15 +26,16 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
           </div>
         )}
       </div>
-      <Link to={`/producto/${value.id}`}>
         <div className="producto-detalles">
+      <Link to={`/producto/${value.id}`}>
           <h3 className="producto-titulo">{value.titulo}</h3>
+          </Link>
           <header className="paralelo">
             <p className="producto-precio">$ {value.precio}</p>
             <p className="producto-cantidad">Stock: {value.cantidad}</p>
           </header>
           <p className="producto-descripcion">{value.descripcion}</p>
-          <div>
+          <div>  
             <button
               className="producto-agregar"
               onClick={() => agregarAlCarrito(value)}
@@ -47,7 +50,7 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
             </button>
           </div>
         </div>
-      </Link>
+      
     </div>
   );
 }

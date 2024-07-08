@@ -36,7 +36,6 @@ export const ProductoProvider = ({ children }) => {
     }
   };
 
-
   const actualizarProducto = async (id, productoActualizado) => {
     try {
       await ProductoService.updateProducto(id, productoActualizado);
