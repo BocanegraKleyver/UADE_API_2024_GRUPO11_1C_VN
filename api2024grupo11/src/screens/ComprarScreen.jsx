@@ -58,7 +58,10 @@ export const ComprarScreen = () => {
       alert("No hay stock del producto. Intente más tarde o con otro producto.");
       return;
     }
-    agregarItemAlCarrito(producto);
+    // agregarItemAlCarrito(producto, idCarrito);
+    // TODO: implementar en redux
+    agregarItemAlCarrito(producto, 1);
+
     alert("Item agregado al carrito");
   };
 
