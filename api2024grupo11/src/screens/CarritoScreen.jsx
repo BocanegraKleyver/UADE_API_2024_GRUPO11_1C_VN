@@ -58,7 +58,7 @@ export const CarritoScreen = () => {
 
 
   return (
-    <div className='text-black p-5'>
+    <div className='text-black p-5 bg-[#f3f4f6]'>
       <h1>Carrito de compras</h1>
       <div className='grid grid-cols-2 gap-2 h-full'>
         <div className='flex flex-col w-full h-full gap-3 justify-center py-5'>
@@ -73,8 +73,8 @@ export const CarritoScreen = () => {
           ))}
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
-          <span className='font-bold'>Información del carrito</span>
-          <span className='font-normal'>Total estimado: <span className='text-black'>${totalGlobal}</span></span>
+          <span className='font-bold text-black'>Información del carrito</span>
+          <span className='font-normal text-black'>Total estimado: <span className='text-black'>${totalGlobal}</span></span>
           <button onClick={handleComprar} disabled={comprarDeshabilitado} className='p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center'>Comprar</button>
         </div>
       </div>

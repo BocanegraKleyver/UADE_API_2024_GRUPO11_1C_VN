@@ -15,6 +15,7 @@ import { DescuentoProvider } from "./context/DescuentoContext.jsx";
 import { CategoriaProvider } from "./context/CategoriaContext.jsx";
 import { ProductoProvider } from "./context/ProductoContext.jsx";
 import { CarritoScreen } from "./screens/CarritoScreen.jsx";
+import { ComprasScreen } from "./screens/ComprasScreen.jsx";
 
 function App() {
   return (
@@ -37,7 +38,12 @@ function App() {
                 path="/administrar/producto"
                 element={<ProductoScreen />}
               />
-              <Route path="/catalogo" element={<CatalogoProductosScreen />} />
+
+              <Route
+                path="/producto/:id" element={<ProductoScreen />}
+              />
+              
+              {/* <Route path="/catalogo" element={<CatalogoProductosScreen />} exact /> */}
 
               <Route path="/" element={<ComprarScreen />} exact></Route>
 
@@ -56,6 +62,9 @@ function App() {
               <Route path="/favoritos/">
                 <Route path="" element={<FavoritosScreen />} exact />
               </Route>
+
+              <Route path="/mis-compras" element={<ComprasScreen />} exact></Route>
+             
             </Routes>
           </div>
         </ProductoProvider>
