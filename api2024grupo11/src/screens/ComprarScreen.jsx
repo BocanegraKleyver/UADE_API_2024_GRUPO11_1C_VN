@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import ProductDo from "../components/Cards/ProductDo";
-import { Filters } from "../components/Filters/Filters";
-import { SearchBar } from "../components/SearchBar/SearchBar";
 import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
@@ -12,10 +9,13 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 
   export const ComprarScreen = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const productos = useSelector((state) => state.producto.productos);
     const categorias = useSelector((state) => state.categoria.categorias);
     const descuentos = useSelector((state) => state.descuento.descuentos);
     const carrito = useSelector((state) => state.carrito.carrito);
+    const usuario = useSelector((state) => state.usuario.usuario);
+
     
     
     const [filteredProductos, setFilteredProductos] = useState([]);
@@ -28,8 +28,10 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
       dispatch(fetchProductos());
       dispatch(fetchCategorias());
       dispatch(fetchDescuentos());
-      dispatch(fetchCarritoByUserId());
-    }, [dispatch]);
+      if (usuario) {
+        dispatch(fetchCarritoByUserId(usuario.id));
+      }
+    }, [dispatch, usuario]);
   
     useEffect(() => {
       setFilteredProductos(productos);
@@ -46,47 +48,64 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 
 
 
- const handleAgregarAlCarrito = (producto) => {
-    if (!carrito || !carrito.id) {
-      alert("No se pudo agregar el producto al carrito. Intente nuevamente.");
-      return;
-    }
+    const handleAgregarAlCarrito = (producto) => {
+      console.log("Agregar al carrito clicked", producto);
+    
+      if (!usuario) {
+        navigate('/usuarios');
+        return;
+      }
+      
+      if (!carrito || !carrito.id) {
+        alert("No se pudo agregar el producto al carrito. Intente nuevamente.");
+        return;
+      }
+      
+      if (producto.cantidad === 0) {
+        alert("No hay stock del producto. Intente más tarde o con otro producto.");
+        return;
+      }
+      
+      const item = { productoId: producto.id, cantidad: 1 };
+      console.log("Datos enviados al carrito:", { carritoId: carrito.id, item });
+    
+      dispatch(addToCarrito({ carritoId: carrito.id, item }))
+        .then((response) => {
+          console.log("Respuesta del servidor:", response);
+          alert("Item agregado al carrito");
+        })
+        .catch((error) => {
+          console.error('Error al agregar producto al carrito:', error);
+          alert("Hubo un error al agregar el producto al carrito. Intente nuevamente.");
+        });
+    };
+    
 
-    if (producto.cantidad === 0) {
-      alert("No hay stock del producto. Intente más tarde o con otro producto.");
-      return;
-    }
-
-    dispatch(addToCarrito({ item: { productoId: producto.id } }))
-      .then(() => {
-        alert("Item agregado al carrito");
-      })
-      .catch((error) => {
-        console.error('Error al agregar producto al carrito:', error);
-        alert("Hubo un error al agregar el producto al carrito. Intente nuevamente.");
-      });
-  };
+    const handleAgregarAFavoritos = (producto) => {
+      if (!usuario) {
+        navigate('/usuarios');
+        return;
+      }
   
-  const handleAgregarAFavoritos = (producto) => {
-    dispatch(agregarItemAFavoritosLocalmente(producto));
-    alert("Producto agregado a favoritos");
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
-
-  const handleFilterChange = (filtro, value) => {
-    if (filtro === 'categoria') {
-      setFiltroCategoria(value);
-    } else if (filtro === 'descuento') {
-      setFiltroDescuento(value);
-    }
-  };
-
-  const handleSelectProduct = (producto) => {
-    setSelectedProduct(producto);
-  };
+      dispatch(agregarItemAFavoritosLocalmente(producto));
+      alert("Producto agregado a favoritos");
+    };
+  
+    const handleSearch = (term) => {
+      setSearchTerm(term);
+    };
+  
+    const handleFilterChange = (filtro, value) => {
+      if (filtro === 'categoria') {
+        setFiltroCategoria(value);
+      } else if (filtro === 'descuento') {
+        setFiltroDescuento(value);
+      }
+    };
+  
+    const handleSelectProduct = (producto) => {
+      setSelectedProduct(producto);
+    };
 
   
   return (
@@ -94,23 +113,6 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
       <div className="text-black bold p-5">
         <h1>¿Qué desea comprar?</h1>
       </div>
-      <SearchBar onSearch={handleSearch} />
-      <Filters
-        categorias={categorias}
-        descuentos={descuentos}
-        onFilter={handleFilterChange}
-      />
-      <div className="contenedor-productos">
-        {filteredProductos.map((producto, index) => (
-          <div key={index} onClick={() => handleSelectProduct(producto)}>
-            <ProductDo
-              value={producto}
-              agregarAlCarrito={() => handleAgregarAlCarrito(producto)}
-              agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
-            />
-          </div>
-        ))}
-      </div>
     </div>
-  );
-};
+    );
+  };

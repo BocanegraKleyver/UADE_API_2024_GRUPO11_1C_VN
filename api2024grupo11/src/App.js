@@ -13,6 +13,7 @@ import { DetalleScreen } from "./screens/DetalleScreen.jsx";
 import { ProductoScreen } from "./screens/ProductoScreen.jsx";
 import { CarritoScreen } from "./screens/CarritoScreen.jsx";
 import { ComprasScreen } from "./screens/ComprasScreen.jsx";
+import { VenderProductoScreen } from "./screens/VenderProductoScreen.jsx";
 
 function App() {
   return (
@@ -40,6 +41,8 @@ function App() {
         <Route path="/favoritos/">
           <Route path="" element={<FavoritosScreen />} exact />
         </Route>
+
+        <Route path="/VenderProducto" element={<VenderProductoScreen />} />
 
         <Route path="/producto/:id">
           <Route path="" element={<DetalleScreen />} exact />

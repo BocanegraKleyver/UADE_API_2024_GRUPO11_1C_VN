@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { LoggearUsuario } from "../Services/usuarioService";
 
 export const UsuariosScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const usuario = useSelector((state) => state.usuario.usuario);
+  const status = useSelector((state) => state.usuario.status);
+  const error = useSelector((state) => state.usuario.error);
 
-  const handleSetUsername = (event) => {
-    setUsername(event.target.value);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+
+
+
+  const handleSetEmail = (event) => {
+    setEmail(event.target.value);
   };
 
   const handleSetPassword = (event) => {
@@ -15,10 +22,16 @@ export const UsuariosScreen = () => {
   };
 
   const handleIngresar = async (e) => {
-    e.preventDefault()
-    const token = await LoggearUsuario(password, username);
-
+    e.preventDefault();
+    dispatch(loginUsuario({ email, password })).then(() => {
+      setLoggedIn(true);
+    });
   };
+
+  
+  if (loggedIn) {
+    return <Link to="/" />;
+  }
 
   return (
     <div className="Usuario_Screen">
@@ -31,24 +44,24 @@ export const UsuariosScreen = () => {
       <div className="pages navbar-fixed toolbar-fixed">
         <div data-page="Usuario" className="page">
           <div className="page-content">
-            <div class="nice-header header-fix-top small">
+            <div className="nice-header header-fix-top small">
               <div className="logo">
-                <h3 class="font-bold text-2xl">Iniciar Sesion</h3>
+                <h3 className="font-bold text-2xl">Iniciar Sesion</h3>
               </div>
             </div>
             <hr></hr>
 
             <div className="Usuario_form">
-              <form onSubmit={(e) => handleIngresar(e)}>
+              <form onSubmit={handleIngresar}>
                 <br></br>
                 <div>
                   <label className="Usuario_form_label"> Email </label>
                   <br></br>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={handleSetUsername}
+                    id="email"
+                    value={email}
+                    onChange={handleSetEmail}
                   ></input>
                 </div>
                 <br></br>
@@ -57,7 +70,7 @@ export const UsuariosScreen = () => {
                   <label className="Usuario_form_label"> Password </label>
                   <br></br>
                   <input
-                    type="text"
+                    type="password"
                     id="password"
                     value={password}
                     onChange={handleSetPassword}
@@ -80,6 +93,9 @@ export const UsuariosScreen = () => {
                 </div>
               </form>
             </div>
+            {status === "loading" && <p>Cargando...</p>}
+            {status === "failed" && <p>Error: {error}</p>}
+            {usuario && <p>Usuario autenticado: {usuario.username}</p>}
           </div>
         </div>
       </div>
