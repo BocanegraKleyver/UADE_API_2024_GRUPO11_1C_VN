@@ -16,7 +16,7 @@ export const createUsuario = createAsyncThunk('usuario/createUsuario', async ({ 
     lastname: apellido,
     email,
     password,
-    roles: 2,
+    roles: 1,
   };
 
   const response = await axios.post(`${API_URL}/register`, req, {

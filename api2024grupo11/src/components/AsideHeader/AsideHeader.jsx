@@ -49,6 +49,11 @@ export const AsideHeader = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/VenderProducto" className="boton-menu boton-vender-producto" activeClassName="active">
+                  Vender tus Productos
+                </Link>
+              </li>
+              <li>
                 <button onClick={handleLogout} className="boton-menu boton-logout">
                   Logout
                 </button>
