@@ -51,34 +51,6 @@ export const ProductoScreen = () => {
     dispatch(deleteProducto(id));
   };
 
-const handleImagen1Change = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setNuevoProducto({
-        ...nuevoProducto,
-        imagen_1_URL: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
-const handleImagen2Change = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setNuevoProducto({
-        ...nuevoProducto,
-        imagen_2_URL: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
 const resetNuevoProducto = () => {
   setNuevoProducto({
     titulo: '',

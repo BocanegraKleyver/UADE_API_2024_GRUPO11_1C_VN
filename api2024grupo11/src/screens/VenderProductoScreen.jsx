@@ -33,33 +33,6 @@ export const VenderProductoScreen = () => {
     }
   };
 
-  const handleImagen1Change = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNuevoProducto({
-          ...nuevoProducto,
-          imagen_1_URL: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImagen2Change = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNuevoProducto({
-          ...nuevoProducto,
-          imagen_2_URL: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const resetNuevoProducto = () => {
     setNuevoProducto({
@@ -193,20 +166,6 @@ export const VenderProductoScreen = () => {
             required
           />
         </div>
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Subir Imagen 1:</label>
-        <input
-          type="file"
-          onChange={handleImagen1Change}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Subir Imagen 2:</label>
-        <input
-          type="file"
-          onChange={handleImagen2Change}
-        />
       </div>
       <button
         className="px-4 py-2 bg-green-500 text-white rounded-md"
