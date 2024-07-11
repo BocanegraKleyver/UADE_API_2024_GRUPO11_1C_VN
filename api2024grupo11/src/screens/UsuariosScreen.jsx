@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LoggearUsuario } from "../Services/usuarioService";
+import { Link } from "react-router-dom";
 
 export const UsuariosScreen = () => {
   const [username, setUsername] = useState("");
@@ -13,8 +14,10 @@ export const UsuariosScreen = () => {
     setPassword(event.target.value);
   };
 
-  const handleIngresar = async () => {
-    await LoggearUsuario(password, username);
+  const handleIngresar = async (e) => {
+    e.preventDefault()
+    const token = await LoggearUsuario(password, username);
+
   };
 
   return (
@@ -36,10 +39,10 @@ export const UsuariosScreen = () => {
             <hr></hr>
 
             <div className="Usuario_form">
-              <form>
+              <form onSubmit={(e) => handleIngresar(e)}>
                 <br></br>
                 <div>
-                  <label className="Usuario_form_label"> Usuario </label>
+                  <label className="Usuario_form_label"> Email </label>
                   <br></br>
                   <input
                     type="text"
@@ -61,19 +64,19 @@ export const UsuariosScreen = () => {
                   ></input>
                 </div>
                 <button
+                  type="submit"
                   className="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center"
-                  onClick={handleIngresar}
                 >
                   Ingresar
                 </button>
 
                 <div>
-                  <a
+                  <Link
                     className="boton-menu boton-crear-usuario active"
-                    href="/crearUsuario"
+                    to="/crearUsuario"
                   >
                     Crear usuario
-                  </a>
+                  </Link>
                 </div>
               </form>
             </div>

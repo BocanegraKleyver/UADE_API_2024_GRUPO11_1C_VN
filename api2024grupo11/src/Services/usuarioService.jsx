@@ -14,9 +14,10 @@ export const CrearUsuarios = async (
     roles: 1,
   });
 
+  console.log(req)
+
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Access-Control-Allow-Origin", "http://localhost");
 
   var requestOptions = {
     method: "POST",
@@ -25,7 +26,7 @@ export const CrearUsuarios = async (
   };
 
   const response = await fetch(
-    "http://localhost:8000/api/v1/auth/register",
+    "http://localhost:8080/api/v1/auth/register",
     requestOptions
   )
     .then((Response) => Response.json())
@@ -42,7 +43,6 @@ export const LoggearUsuario = async (password, email) => {
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Access-Control-Allow-Origin", "http://localhost");
 
   var requestOptions = {
     method: "POST",
@@ -51,10 +51,10 @@ export const LoggearUsuario = async (password, email) => {
   };
 
   const response = await fetch(
-    "http://localhost:8000/api/v1/auth/authenticate",
+    "http://localhost:8080/api/v1/auth/authenticate",
     requestOptions
   )
-    .then((Response) => Response.json())
+    .then((response) => response.json())
     .catch((error) => console.log("error", error));
 
   return response;

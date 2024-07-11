@@ -1,52 +1,116 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ProductDo from "../components/Cards/ProductDo";
-import { useState, useEffect } from "react";
-import { PageTitle } from "../components/Titles/PageTitle";
-import { agregarItemAlCarrito } from "../Services/carritoService";
-import { agregarItemAFavoritos } from "../Services/favoritosService";
+import { SearchBar } from "../components/SearchBar/SearchBar";
+import { Filters } from "../components/Filters/Filters";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
+import { fetchCategorias } from '../Redux/CategoriaSlice';
+import { fetchDescuentos } from '../Redux/DescuentoSlice';
+import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
+import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
 
-const ComprarScreen = () => {
-  const [productos, setProdoductos] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:8000/productos")
-      .then((response) => response.json())
-      .then((data) => setProdoductos(data));
-  }, []);
+  export const ComprarScreen = () => {
+    const dispatch = useDispatch();
+    const productos = useSelector((state) => state.producto.productos);
+    const categorias = useSelector((state) => state.categoria.categorias);
+    const descuentos = useSelector((state) => state.descuento.descuentos);
+    const carrito = useSelector((state) => state.carrito.carrito);
+    
+    
+    const [filteredProductos, setFilteredProductos] = useState([]);
+    const [filtroCategoria, setFiltroCategoria] = useState('');
+    const [filtroDescuento, setFiltroDescuento] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleAgregarAlCarrito = (producto) => {
-    if (producto.cantidad === 0) {
-      alert(
-        "No hay stock del producto. Intente más tarde o con otro producto."
-      );
+    useEffect(() => {
+      dispatch(fetchProductos());
+      dispatch(fetchCategorias());
+      dispatch(fetchDescuentos());
+      dispatch(fetchCarritoByUserId());
+    }, [dispatch]);
+  
+    useEffect(() => {
+      setFilteredProductos(productos);
+    }, [productos]);
+
+    useEffect(() => {
+      const fetchFilteredProductos = async () => {
+        const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
+        setFilteredProductos(response.payload);
+      };
+  
+      fetchFilteredProductos();
+    }, [searchTerm, filtroCategoria, filtroDescuento, dispatch]);
+
+
+
+ const handleAgregarAlCarrito = (producto) => {
+    if (!carrito || !carrito.id) {
+      alert("No se pudo agregar el producto al carrito. Intente nuevamente.");
       return;
     }
-    agregarItemAlCarrito(producto);
-    alert("Item agregado al carrito");
-  };
 
+    if (producto.cantidad === 0) {
+      alert("No hay stock del producto. Intente más tarde o con otro producto.");
+      return;
+    }
+
+    dispatch(addToCarrito({ item: { productoId: producto.id } }))
+      .then(() => {
+        alert("Item agregado al carrito");
+      })
+      .catch((error) => {
+        console.error('Error al agregar producto al carrito:', error);
+        alert("Hubo un error al agregar el producto al carrito. Intente nuevamente.");
+      });
+  };
+  
   const handleAgregarAFavoritos = (producto) => {
-    agregarItemAFavoritos(producto);
+    dispatch(agregarItemAFavoritosLocalmente(producto));
     alert("Producto agregado a favoritos");
   };
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const handleFilterChange = (filtro, value) => {
+    if (filtro === 'categoria') {
+      setFiltroCategoria(value);
+    } else if (filtro === 'descuento') {
+      setFiltroDescuento(value);
+    }
+  };
+
+  const handleSelectProduct = (producto) => {
+    setSelectedProduct(producto);
+  };
+
+  
   return (
     <div>
       <div className="text-black bold p-5">
-        <PageTitle text="¿Que desea comprar?" />
+        <h1>¿Qué desea comprar?</h1>
       </div>
+      <SearchBar onSearch={handleSearch} />
+      <Filters
+        categorias={categorias}
+        descuentos={descuentos}
+        onFilter={handleFilterChange}
+      />
       <div className="contenedor-productos">
-        {productos.map((value, index) => (
-          <ProductDo
-            value={value}
-            key={index}
-            agregarAlCarrito={() => handleAgregarAlCarrito(value)}
-            agregarAFavoritos={() => handleAgregarAFavoritos(value)}
-          />
+        {filteredProductos.map((producto, index) => (
+          <div key={index} onClick={() => handleSelectProduct(producto)}>
+            <ProductDo
+              value={producto}
+              agregarAlCarrito={() => handleAgregarAlCarrito(producto)}
+              agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
+            />
+          </div>
         ))}
       </div>
     </div>
   );
 };
-
-export default ComprarScreen;

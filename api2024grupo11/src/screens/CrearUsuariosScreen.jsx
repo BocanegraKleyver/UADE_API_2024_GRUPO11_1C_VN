@@ -32,7 +32,7 @@ export const CrearUsuariosScreen = () => {
 
   const handleCrearUsuario = async () => {
     await CrearUsuarios(username, password, nombre, apellido, email);
-    navigate("/");
+    // navigate("/");
   };
 
   return (
@@ -54,7 +54,7 @@ export const CrearUsuariosScreen = () => {
             <hr></hr>
 
             <div className="Crear_Usuario_form">
-              <form>
+              <form onSubmit={handleCrearUsuario}>
                 <br></br>
                 <div>
                   <label className="Crear_Usuario_form_label"> Usuario </label>
@@ -118,8 +118,8 @@ export const CrearUsuariosScreen = () => {
                 <br></br>
                 <div>
                   <button
+                    type="submit"
                     className="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center"
-                    onClick={handleCrearUsuario}
                   >
                     Crear
                   </button>
