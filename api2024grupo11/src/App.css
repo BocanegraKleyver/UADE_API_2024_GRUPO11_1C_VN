@@ -114,7 +114,7 @@ main{
 }
 
 .producto {
-  background-color: #f1f5f9;
+  background-color: #9fbddb;
 }
 
 .contenedor-productos-fav {
@@ -181,6 +181,10 @@ main{
 .producto-favoritos:hover {
   background-color: #24078a;
   color: white;
+}
+
+.dividir{
+  display: flex;
 }
 
 /*Carrito*/
@@ -345,7 +349,7 @@ main{
 }
 
 .producto {
-  background-color: #f1f5f9;
+  background-color: #72a3d4;
   border-radius: 2rem;
 }
 
@@ -469,7 +473,7 @@ main{
 
 .paralelo2{
   display:grid;
-  grid-template-columns: repeat(2, 1fr);
+  /*grid-template-columns: repeat(2, 1fr);*/
   gap:1rem;
 }
 

@@ -15,7 +15,18 @@ function ProductSelect({ value, agregarAlCarrito }) {
                     <p className="producto-cantidad2">Stock: {value.cantidad}</p>
                 </header>
                 <p className="producto-descripcion">{value.descripcion}</p>
-                <button className="producto-agregar" onClick={() => agregarAlCarrito(value)}>Agregar</button>
+                <div className="dividir">
+                    <button className="producto-agregar" onClick={() => agregarAlCarrito(value)}>Agregar</button>
+                    <div className="flex justify-between">
+                        <button
+                            onClick={() => window.history.back()}
+                            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+                        >
+                        ATRAS
+                        </button>
+                    </div>
+                </div>
+                
             </div>
         </div>
     )
