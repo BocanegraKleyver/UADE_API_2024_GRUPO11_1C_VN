@@ -40,7 +40,7 @@
 .wrapper{
   display: grid;
   grid-template-columns: 1fr 4fr;
-  background-color:rgb(210, 153, 30);
+  background-color:rgb(230, 225, 225);
 }
 
 aside{
@@ -152,7 +152,7 @@ main{
 }
 
 .producto-agregar{
-  background-color: black;
+  background-color: rgb(78, 24, 228);
   padding: .25rem;
   color: white;
   text-transform: uppercase;
@@ -163,12 +163,12 @@ main{
 }
 
 .producto-agregar:hover{
-  background-color: #1f1f1f;
+  background-color: #3d0fe0;
   color:white;
 }
 
 .producto-favoritos {
-  background-color: black;
+  background-color: rgb(37, 10, 134);
   padding: .25rem;
   color: white;
   text-transform: uppercase;
@@ -179,7 +179,7 @@ main{
 }
 
 .producto-favoritos:hover {
-  background-color: #1f1f1f;
+  background-color: #24078a;
   color: white;
 }
 
@@ -361,8 +361,8 @@ main{
 } */
 
 .producto-imagen {
-  width: 90%;
-  height: 60%;
+  width: 20rem;
+  height: 20rem;
   border-radius: 1rem;
   object-fit: cover;
 }
@@ -471,4 +471,26 @@ main{
   display:grid;
   grid-template-columns: repeat(2, 1fr);
   gap:1rem;
+}
+
+/*Usuario*/
+
+.Usuario_Screen{
+  display: flex;
+  gap: 2rem;
+
+}
+
+.botoncrear{
+  background-color: #24078a;
+}
+
+.Usuario_form{
+  display: flex;
+  margin-top:2 rem;
+}
+
+.comprarscreen{
+
+  gap:2rem;
 }

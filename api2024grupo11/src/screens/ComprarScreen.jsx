@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import ProductDo from "../components/Cards/ProductDo";
-import { SearchBar } from "../components/SearchBar/SearchBar";
-import { Filters } from "../components/Filters/Filters";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
+import ProductDo from "../components/Cards/ProductDo";
+import { Filters } from "../components/Filters/Filters";
+import { SearchBar } from "../components/SearchBar/SearchBar";
+import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
-import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
+import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 
 
   export const ComprarScreen = () => {
@@ -90,7 +90,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
 
   
   return (
-    <div>
+    <div className="comprarscreen">
       <div className="text-black bold p-5">
         <h1>¿Qué desea comprar?</h1>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { LoggearUsuario } from "../Services/usuarioService";
 import { Link } from "react-router-dom";
+import { LoggearUsuario } from "../Services/usuarioService";
 
 export const UsuariosScreen = () => {
   const [username, setUsername] = useState("");
@@ -72,7 +72,7 @@ export const UsuariosScreen = () => {
 
                 <div>
                   <Link
-                    className="boton-menu boton-crear-usuario active"
+                    className="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center boton-menu boton-crear-usuario active"
                     to="/crearUsuario"
                   >
                     Crear usuario
