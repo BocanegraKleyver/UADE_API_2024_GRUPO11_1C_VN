@@ -1,49 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FavItemCard } from "../components/Cards/FavItemCard";
-import {
-  getFavoritos,
-  eliminarItemDeFavoritos,
-} from "../Services/favoritosService";
+import { eliminarItemDeFavoritosLocalmente } from "../Redux/FavoritoSlice"; 
+import { fetchProductos } from "../Redux/ProductoSlice";
 import { useNavigate } from "react-router-dom";
 
 export const FavoritosScreen = () => {
-  const [productos, setProductos] = useState([]);
-  const navigate = useNavigate;
+  const dispatch = useDispatch();
+  const productosFavoritos = useSelector((state) => state.favoritos.favoritos);
+  const status = useSelector((state) => state.favoritos.status); 
+  const error = useSelector((state) => state.favoritos.error);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getFavoritos().then((data) => {
-      setProductos(data);
-    });
-  }, []);
+    dispatch(fetchProductos());
+  }, [dispatch]);
 
   const handleEliminarDeFavoritos = (id) => {
-    eliminarItemDeFavoritos(id);
-    const productosNoEliminados = productos.filter(
-      (producto) => producto.id !== id
-    );
-    setProductos(productosNoEliminados);
+    dispatch(eliminarItemDeFavoritosLocalmente(id));
     alert("Has eliminado el producto seleccionado.");
   };
 
-  const handleVerDescription = (id) => {
+  const handleVerDescripcion = (id) => {
     navigate(`/producto/${id}`);
   };
 
+  if (status === "loading") {
+    return <div>Cargando favoritos...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="text-black p-5">
-      <h1>
-        Mis Favoritos
-      </h1>
+      <h1>Mis Favoritos</h1>
       <div className="grid grid-cols-2 gap-2 h-full">
         <div className="contenedor-productos">
-          {productos.map((producto) => (
-            <FavItemCard
-              key={producto.id}
-              producto={producto}
-              onEliminarDeFavoritos={(key) => handleEliminarDeFavoritos(key)}
-              onVerDescripcion={(key) => handleVerDescription(key)}
-            />
-          ))}
+          {productosFavoritos.length === 0 ? (
+            <p>No tienes productos favoritos.</p>
+          ) : (
+            productosFavoritos.map((producto) => (
+              <FavItemCard
+                key={producto.id}
+                producto={producto}
+                onEliminarDeFavoritos={() => handleEliminarDeFavoritos(producto.id)}
+                onVerDescripcion={() => handleVerDescripcion(producto.id)}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

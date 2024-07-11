@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
-import { getCarrito, eliminarItemDelCarrito } from '../Services/carritoService';
 import { useNavigate } from 'react-router-dom';
-import { ProductoService } from '../Services/ProductoService';
+import { removeFromCarrito } from '../Redux/CarritoSlice';
+import { updateProducto } from '../Redux/ProductoSlice';
+import { fetchCarritoByUserId } from '../Redux/CarritoSlice';
+
 
 export const CarritoScreen = () => {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [productos, setProductos] = useState([]);
+  
+  const carrito = useSelector((state) => state.carrito.carrito);
+  const productos = carrito?.productos || [];
   const [cantidades, setCantidades] = useState([]);
+  const [totalGlobal, setTotalGlobal] = useState(0);
 
-  const [totalGlobal, setTotalGlobal] = useState(0)
 
   useEffect(() => {
-    getCarrito()
-      .then((data) => {
-        if (data) {
-          setProductos(data.carrito.productos);
-          setCantidades(data.carrito.productos.map(d => d.cantidad));
-          setTotalGlobal(data.carrito.total)
-        }
-      });
-  }, []);
-
+    if (carrito && carrito.productos) {
+      setCantidades(carrito.productos.map((producto) => producto.cantidad));
+      setTotalGlobal(carrito.total);
+    }
+  }, [carrito]);
 
   const comprarDeshabilitado = productos.length === 0;
 
@@ -32,29 +32,33 @@ export const CarritoScreen = () => {
     setCantidades(nuevasCantidades);
   };
 
-  // chequear stock elimina mal
-  const handleComprar = () => {
-    productos.forEach((producto, index) => {
-      ProductoService.restarStockAlComprar(producto, cantidades[index]);
+
+  const handleComprar = async () => {
+    productos.forEach(async (producto, index) => {
+      const newStock = producto.producto.stock - cantidades[index];
+      await dispatch(updateProducto({ id: producto.producto.id, producto: { ...producto.producto, stock: newStock } }));
     });
     alert("Compra exitosa");
-    navigate("/")
+    navigate("/");
   };
 
+
   const handleEliminarDelCarrito = async (id) => {
-    await eliminarItemDelCarrito(id)
-    const productosNoEliminados = productos.filter(producto => producto.id !== id);
-    setProductos(productosNoEliminados);
-    alert("Has eliminado el producto seleccionado.")
-  }
+    dispatch(removeFromCarrito({ carritoId: carrito.id, item: { id } }));
+    alert("Has eliminado el producto seleccionado.");
+  };
 
   useEffect(() => {
-    // Recalcular el total global cuando cambien las cantidades
     const nuevoTotal = productos.reduce((acc, producto, index) => {
       return acc + (producto.producto.precio * cantidades[index]);
     }, 0);
     setTotalGlobal(nuevoTotal);
   }, [cantidades, productos]);
+
+  useEffect(() => {
+    dispatch(fetchCarritoByUserId(1)); 
+  }, [dispatch]); 
+
 
 
   return (
@@ -62,15 +66,19 @@ export const CarritoScreen = () => {
       <h1>Carrito de compras</h1>
       <div className='grid grid-cols-2 gap-2 h-full'>
         <div className='flex flex-col w-full h-full gap-3 justify-center py-5'>
-          {productos.map((nodo, index) => (
-            <CartItemCard
-              key={nodo.producto.idProductos}
-              producto={nodo.producto}
-              cantidad={cantidades[index]}
-              onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
-              onEliminarDelCarrito={(key) => handleEliminarDelCarrito(key)}
-            />
-          ))}
+          {productos.length > 0 ? (
+            productos.map((nodo, index) => (
+              <CartItemCard
+                key={nodo.producto.idProductos}
+                producto={nodo.producto}
+                cantidad={cantidades[index]}
+                onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
+                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.id)}
+              />
+            ))
+          ) : (
+            <p>No hay productos en el carrito.</p>
+          )}
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
           <span className='font-bold text-black'>Información del carrito</span>
