@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createUsuario } from "../Redux/UsuarioSlice";
 import { useNavigate } from "react-router-dom";
 
-import { CrearUsuarios } from "../Services/usuarioService";
-
 export const CrearUsuariosScreen = () => {
+  const dispatch = useDispatch();
+  const usuario = useSelector((state) => state.usuario.usuario);
+  const status = useSelector((state) => state.usuario.status);
+  const error = useSelector((state) => state.usuario.error);
+
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
@@ -14,6 +20,7 @@ export const CrearUsuariosScreen = () => {
   const handleSetUsername = (event) => {
     setUsername(event.target.value);
   };
+
 
   const handleSetPassword = (event) => {
     setPassword(event.target.value);
@@ -26,13 +33,15 @@ export const CrearUsuariosScreen = () => {
   const handleSetApellido = (event) => {
     setApellido(event.target.value);
   };
+
   const handleSetEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  const handleCrearUsuario = async () => {
-    await CrearUsuarios(username, password, nombre, apellido, email);
-    // navigate("/");
+  const handleCrearUsuario = async (e) => {
+    e.preventDefault();
+    dispatch(createUsuario({ username, password, nombre, apellido, email }));
+    navigate("/");
   };
 
   return (
@@ -126,6 +135,9 @@ export const CrearUsuariosScreen = () => {
                 </div>
               </form>
             </div>
+            {status === 'loading' && <p>Cargando...</p>}
+            {status === 'failed' && <p>Error: {error}</p>}
+            {usuario && <p>Usuario creado: {usuario.username}</p>}
           </div>
         </div>
       </div>

@@ -22,9 +22,9 @@ export const ComprasScreen = () => {
         <>
             <div className='p-5 bg-[#f3f4f6] flex gap-2 flex-col'>
                 <h2 className='text-2xl font-bold'>Mis compras</h2>
-                <div className='flex flex-col justify-center'>
+                {/* <div className='flex flex-col justify-center'>
                     {compras && compras.map(c => (<CompraCard compra={c} key={c.id} />))}
-                </div>
+                </div> */}
             </div>
         </>
     );
