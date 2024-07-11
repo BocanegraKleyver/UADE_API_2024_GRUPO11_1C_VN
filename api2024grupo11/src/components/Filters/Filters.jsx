@@ -1,14 +1,17 @@
 import React from 'react';
-import { useCategoriaContext } from '../../context/CategoriaContext';
-import { useDescuentoContext } from '../../context/DescuentoContext';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { filterProductos } from '../../Redux/ProductoSlice.jsx';
 
 export const Filters = ({ onFilter }) => {
-  const { categorias } = useCategoriaContext();
-  const { descuentos } = useDescuentoContext();
+  const dispatch = useDispatch();
+  const categorias = useSelector((state) => state.categoria.categorias);
+  const descuentos = useSelector((state) => state.descuento.descuentos);
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     onFilter(name, value);
+    dispatch(filterProductos({ searchTerm: '', filtroCategoria: name === 'categoria' ? parseInt(value) : null, filtroDescuento: name === 'descuento' ? parseInt(value) : null }));
   };
 
   return (

@@ -11,16 +11,10 @@ import { CategoriaScreen } from "./screens/CategoriaScreen.jsx";
 import { DescuentoScreen } from "./screens/DescuentoScreen.jsx";
 import { DetalleScreen } from "./screens/DetalleScreen.jsx";
 import { ProductoScreen } from "./screens/ProductoScreen.jsx";
-import { DescuentoProvider } from "./context/DescuentoContext.jsx";
-import { CategoriaProvider } from "./context/CategoriaContext.jsx";
-import { ProductoProvider } from "./context/ProductoContext.jsx";
 import { CarritoScreen } from "./screens/CarritoScreen.jsx";
 
 function App() {
   return (
-    <DescuentoProvider>
-      <CategoriaProvider>
-        <ProductoProvider>
           <div className="wrapper">
             <AsideHeader />
             <Routes>
@@ -60,9 +54,6 @@ function App() {
               </Route>
             </Routes>
           </div>
-        </ProductoProvider>
-      </CategoriaProvider>
-    </DescuentoProvider>
   );
 }
 

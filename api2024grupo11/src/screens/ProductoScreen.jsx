@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useProductoContext } from '../context/ProductoContext';
-import { CategoriaService } from '../Services/categoriaService';
-import { DescuentoService } from '../Services/descuentoService';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductos, createProducto, updateProducto, deleteProducto } from '../Redux/ProductoSlice';
+import { fetchCategorias } from '../Redux/CategoriaSlice';
+import { fetchDescuentos } from '../Redux/DescuentoSlice';
 
 export const ProductoScreen = () => {
-  const { productos, crearProducto, actualizarProducto, eliminarProducto } = useProductoContext();
-  const [productosFiltrados, setProductosFiltrados] = useState([]);
+  const dispatch = useDispatch();
+  const productos = useSelector((state) => state.producto.productos);
+  const categorias = useSelector((state) => state.categoria.categorias);
+  const descuentos = useSelector((state) => state.descuento.descuentos);
   const [nuevoProducto, setNuevoProducto] = useState({
     titulo: '',
     descripcion: '',
@@ -17,200 +21,142 @@ export const ProductoScreen = () => {
     idDescuento: null
   });
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [categorias, setCategorias] = useState([]);
-  const [descuentos, setDescuentos] = useState([]);
+  const [filtroProducto, setFiltroProducto] = useState('')
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    setCategorias([]);
-    setDescuentos([]);
-    fetchCategorias();
-    fetchDescuentos();
-  }, [])
-
-  useEffect(() => {
-    filtrarProductos();
-  }, [query, productos]);
-
-  useEffect(() => {
-    setProductosFiltrados([...productos]);
-  }, [productos]);
-
-  const fetchCategorias = async () => {
-    try {
-      const data = await CategoriaService.getAllCategorias();
-      setCategorias(data);
-    } catch (error) {
-      console.error('Error fetching categorías:', error);
-    }
-  };
-
-  const fetchDescuentos = async () => {
-    try {
-      const data = await DescuentoService.getAllDescuentos();
-      setDescuentos(data);
-    } catch (error) {
-      console.error('Error fetching descuentos:', error);
-    }
-  };
+    dispatch(fetchProductos());
+    dispatch(fetchCategorias());
+    dispatch(fetchDescuentos());
+  }, [dispatch]);
 
 
-  const handleCrearProducto = async () => {
-    try {
-      if (!validateNuevoProducto()) {
-        return;
-      }
-      console.log('Datos del nuevo producto:', nuevoProducto);
-      const nuevo = await crearProducto(nuevoProducto);
+  const handleCrearProducto = () => {
+    if (validateNuevoProducto()) {
+      dispatch(createProducto(nuevoProducto));
       resetNuevoProducto();
-      setError('');
-    } catch (error) {
-      console.error('Error creando producto:', error);
-      setError('Hubo un problema al crear el producto. Por favor inténtelo nuevamente.');
     }
   };
 
-
-
-  const handleActualizarProducto = async () => {
-    try {
-      if (!validateProductoSeleccionado()) {
-        return;
-      }
-
-      await actualizarProducto(productoSeleccionado.id, productoSeleccionado);
+  const handleActualizarProducto = () => {
+    if (validateProductoSeleccionado()) {
+      dispatch(updateProducto({ id: productoSeleccionado.id, producto: productoSeleccionado }));
       setProductoSeleccionado(null);
-      setError('');
-    } catch (error) {
-      console.error(`Error actualizando producto con ID ${productoSeleccionado.id}:`, error);
-      setError('Hubo un problema al actualizar el producto. Por favor inténtelo nuevamente.');
-    }
-  };
-
-  const handleEliminarProducto = async (id) => {
-    try {
-      await eliminarProducto(id);
-    } catch (error) {
-      console.error(`Error eliminando producto con ID ${id}:`, error);
-    }
-  };
-
-  const handleImagen1Change = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNuevoProducto({
-          ...nuevoProducto,
-          imagen_1: file,
-          imagen_1_URL: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImagen2Change = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNuevoProducto({
-          ...nuevoProducto,
-          imagen_2: file,
-          imagen_2_URL: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
     }
   };
 
 
-  const validateNuevoProducto = () => {
-    if (nuevoProducto.titulo.trim() === '') {
-      setError('Por favor ingrese un título.');
-      return false;
-    }
-    if (nuevoProducto.descripcion.trim() === '') {
-      setError('Por favor ingrese una descripción.');
-      return false;
-    }
-    if (isNaN(parseFloat(nuevoProducto.precio))) {
-      setError('Por favor ingrese un precio válido.');
-      return false;
-    }
-    if (isNaN(parseInt(nuevoProducto.cantidad))) {
-      setError('Por favor ingrese una cantidad válida.');
-      return false;
-    }
-    if (nuevoProducto.idCategoria === null) {
-      setError('Por favor seleccione una categoría.');
-      return false;
-    }
-    if (nuevoProducto.idDescuento === null) {
-      setError('Por favor seleccione un descuento.');
-      return false;
-    }
-    return true;
+  const handleEliminarProducto = (id) => {
+    dispatch(deleteProducto(id));
   };
 
-  const validateProductoSeleccionado = () => {
-    if (!productoSeleccionado) return false;
+const handleImagen1Change = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNuevoProducto({
+        ...nuevoProducto,
+        imagen_1_URL: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
-    if (productoSeleccionado.titulo.trim() === '') {
-      setError('Por favor ingrese un título.');
-      return false;
-    }
-    if (productoSeleccionado.descripcion.trim() === '') {
-      setError('Por favor ingrese una descripción.');
-      return false;
-    }
-    if (isNaN(parseFloat(productoSeleccionado.precio))) {
-      setError('Por favor ingrese un precio válido.');
-      return false;
-    }
-    if (isNaN(parseInt(productoSeleccionado.cantidad))) {
-      setError('Por favor ingrese una cantidad válida.');
-      return false;
-    }
-    if (productoSeleccionado.idCategoria === null) {
-      setError('Por favor seleccione una categoría.');
-      return false;
-    }
-    if (productoSeleccionado.idDescuento === null) {
-      setError('Por favor seleccione un descuento.');
-      return false;
-    }
-    return true;
-  };
+const handleImagen2Change = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNuevoProducto({
+        ...nuevoProducto,
+        imagen_2_URL: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
+const resetNuevoProducto = () => {
+  setNuevoProducto({
+    titulo: '',
+    descripcion: '',
+    precio: 0,
+    cantidad: 0,
+    imagen_1_URL: '',
+    imagen_2_URL: '',
+    idCategoria: null,
+    idDescuento: null,
+  });
+};
 
+const validateNuevoProducto = () => {
+  if (nuevoProducto.titulo.trim() === '') {
+    setError('Por favor ingrese un título.');
+    return false;
+  }
+  if (nuevoProducto.descripcion.trim() === '') {
+    setError('Por favor ingrese una descripción.');
+    return false;
+  }
+  if (isNaN(parseFloat(nuevoProducto.precio))) {
+    setError('Por favor ingrese un precio válido.');
+    return false;
+  }
+  if (isNaN(parseInt(nuevoProducto.cantidad))) {
+    setError('Por favor ingrese una cantidad válida.');
+    return false;
+  }
+  if (nuevoProducto.idCategoria === null) {
+    setError('Por favor seleccione una categoría.');
+    return false;
+  }
+  if (nuevoProducto.idDescuento === null) {
+    setError('Por favor seleccione un descuento.');
+    return false;
+  }
+  return true;
+};
 
-  const resetNuevoProducto = () => {
-    setNuevoProducto({
-      titulo: '',
-      descripcion: '',
-      precio: 0,
-      cantidad: 0,
-      imagen_1_URL: '',
-      imagen_2_URL: '',
-      idCategoria: null,
-      idDescuento: null
-    });
-  };
+const validateProductoSeleccionado = () => {
+  if (!productoSeleccionado) return false;
 
-  const filtrarProductos = () => {
-    if (query.trim() === '') {
-      setProductosFiltrados([...productos]);
-    } else {
-      const filtered = productos.filter(producto =>
-        producto.titulo.toLowerCase().includes(query.toLowerCase())
-      );
-      setProductosFiltrados(filtered);
-    }
-  };
+  if (productoSeleccionado.titulo.trim() === '') {
+    setError('Por favor ingrese un título.');
+    return false;
+  }
+  if (productoSeleccionado.descripcion.trim() === '') {
+    setError('Por favor ingrese una descripción.');
+    return false;
+  }
+  if (isNaN(parseFloat(productoSeleccionado.precio))) {
+    setError('Por favor ingrese un precio válido.');
+    return false;
+  }
+  if (isNaN(parseInt(productoSeleccionado.cantidad))) {
+    setError('Por favor ingrese una cantidad válida.');
+    return false;
+  }
+  if (productoSeleccionado.idCategoria === null) {
+    setError('Por favor seleccione una categoría.');
+    return false;
+  }
+  if (productoSeleccionado.idDescuento === null) {
+    setError('Por favor seleccione un descuento.');
+    return false;
+  }
+  return true;
+};
 
+const handleFiltroChange = (e) => {
+  setFiltroProducto(e.target.value);
+};
+
+const productosFiltrados = productos.filter((producto) =>
+  producto.titulo.toLowerCase().includes(filtroProducto.toLowerCase())
+);
 
 
   return (
@@ -473,6 +419,18 @@ export const ProductoScreen = () => {
           </button>
         </div>
       )}
+            <div className="flex justify-between">
+        <button
+          onClick={() => window.history.back()}
+          className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+        >
+          ATRAS
+        </button>
+      </div>
+
+      <Link to="/" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
+        Volver a la pantalla principal
+      </Link>
     </div>
   );
 };

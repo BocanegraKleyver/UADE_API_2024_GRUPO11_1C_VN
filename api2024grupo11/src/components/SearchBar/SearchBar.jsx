@@ -5,6 +5,7 @@ export const SearchBar = ({ onSearch }) => {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
+    onSearch(event.target.value); 
   };
 
   const handleSubmit = (event) => {
@@ -24,4 +25,3 @@ export const SearchBar = ({ onSearch }) => {
     </form>
   );
 };
-
