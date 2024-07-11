@@ -26,13 +26,26 @@ export const AsideHeader = () => {
             </NavLink>
           </li>
 
-
+{/* 
+          <li>
+            <NavLink to="/catalogo" className="boton-menu boton-catalogo" activeclassname="active">
+              Catalogo
+            </NavLink>
+          </li> */}
           <li>
             <NavLink
               className="boton-menu boton-vender-tus-productos active"
               to="/usuarios"
             >
               Iniciar sesion
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className="boton-menu boton-vender-tus-productos active"
+              to="/mis-compras"
+            >
+              Mis compras
             </NavLink>
           </li>
           <li>
