@@ -469,7 +469,8 @@ main{
 
 .paralelo{
   display: flex;
-  gap: 5rem;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .paralelo2{

@@ -14,7 +14,6 @@ export const CrearUsuarios = async (
     roles: 1,
   });
 
-  console.log(req)
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

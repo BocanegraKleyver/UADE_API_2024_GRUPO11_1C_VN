@@ -139,7 +139,7 @@ const filterByPriceRange = (producto) => {
 };
 
 const applyAllFilters = (productos) => {
-  return productos.filter(producto => 
+  return productos && productos.filter(producto => 
       filterByCategory(producto) && 
       filterByDiscount(producto) &&
       filterByPriceRange(producto)

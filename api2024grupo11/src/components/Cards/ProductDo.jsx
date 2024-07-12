@@ -31,10 +31,13 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
           <h3 className="producto-titulo">{value.titulo}</h3>
           </Link>
           <header className="paralelo">
-            <p className="producto-precio">$ {value.precio}</p>
+            <p className="producto-precio">Precio ${value.precio}</p>
+            {(value.precio !== value.precioConDescuento) && (
+              <p className="producto-precio">Con dto. $ {value.precioConDescuento.toFixed(2)}</p>
+            )}
             <p className="producto-cantidad">Stock: {value.cantidad}</p>
           </header>
-          <p className="producto-descripcion">{value.descripcion}</p>
+          <p className="producto-descripcion">Descripcion: {value.descripcion}</p>
           <div className="paralelo">
             <button
               className="producto-agregar"
