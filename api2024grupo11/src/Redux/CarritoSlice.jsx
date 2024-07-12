@@ -10,6 +10,7 @@ const initialState = {
   },
   status: 'idle',
   error: null,
+  carritoId: JSON.parse(localStorage.getItem("carritoId")) || null,
 };
 
 
@@ -24,9 +25,42 @@ export const fetchCarritoByUserId = createAsyncThunk('carrito/fetchCarritoByUser
 });
 
 
+export const fetchCarritoByUserEmail = createAsyncThunk('carrito/fetchCarritoByUserEmail', async (email) => {
+  const response = await axios.get(`${API_URL}/user/email/${email}`);
+  return response.data;
+});
+
+
+// export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, item }) => {
+//   const response = await axios.post(
+//     `${API_URL}/restar/${carritoId}`,
+//     item,
+//     {
+//       headers: {
+//         'Content-Type': 'application/json'
+//       }
+//     }
+//   );
+//   return response.data;
+// });
+
+export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, productoId, cantidad }) => {
+  try {
+    const response = await axios.post(`${API_URL}/restar/${carritoId}`, { productoId, cantidad }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
+    throw error;
+  }
+});
+
 export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ carritoId, item }) => {
   try {
-    const { productoId, cantidad } = item; 
+    const { productoId, cantidad } = item;
     const response = await axios.post(`${API_URL}/agregar/${carritoId}`, { productoId, cantidad }, {
       headers: {
         'Content-Type': 'application/json'
@@ -34,49 +68,62 @@ export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ ca
     });
     return response.data;
   } catch (error) {
-    console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message); 
+    console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
     throw error;
   }
 });
 
-export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, item }) => {
-  const response = await axios.post(
-    `${API_URL}/restar/${carritoId}`,
-    item,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  );
-  return response.data;
-});
-
-export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({ carritoId, item }) => {
+export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({ carritoId, productoId }) => {
   try {
-    const response = await axios.delete(`${API_URL}/quitar/${carritoId}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: item
-    });
-    console.log("Respuesta del servidor:", response.data);
+    const response = await axios.delete(`${API_URL}/quitar/${carritoId}/${productoId}`);
     return response.data;
   } catch (error) {
-    console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message); 
+    console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
     throw error;
   }
 });
+// TODO: NOT WORKING!!!!!!!!!!!
+// export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({carritoId, item}) => {
+
+//   const {productoId} = item;
+
+//   try {
+    
+//     const response = await axios.delete(`${API_URL}/quitar/${carritoId}`, { productoId }, {
+//       headers: {
+//         'Content-Type': 'application/json'
+//       }
+//     });
+//     return response.data;
+
+//   } catch (error) {
+//     console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
+//     throw error;
+//   }
+// });
 
 export const emptyCarrito = createAsyncThunk('carrito/emptyCarrito', async (carritoId) => {
   const response = await axios.put(`${API_URL}/vaciar/${carritoId}`);
   return response.data;
 });
-  
+
 const carritoSlice = createSlice({
   name: 'carrito',
   initialState,
-  reducers: {},
+  reducers: {
+    setCarritoId: (state, action) => {
+      state.carritoId = action.payload;
+      localStorage.setItem('carritoId', action.payload);
+    },
+    clearCarritoId: (state) => {
+      state.carritoId = null;
+      localStorage.removeItem('carritoId'); 
+      state.carrito = {
+        productos: [],
+        total: 0,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCarrito.pending, (state) => {
@@ -104,11 +151,22 @@ const carritoSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(fetchCarritoByUserEmail.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCarritoByUserEmail.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.carrito = action.payload;
+      })
+      .addCase(fetchCarritoByUserEmail.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
       .addCase(addToCarrito.fulfilled, (state, action) => {
         state.carrito = action.payload.carrito;
       })
       .addCase(addToCarrito.rejected, (state, action) => {
-        state.error = action.error.message; 
+        state.error = action.error.message;
       })
       .addCase(substractFromCarrito.fulfilled, (state, action) => {
         state.carrito = action.payload;

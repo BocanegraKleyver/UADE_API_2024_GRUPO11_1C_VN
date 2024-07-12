@@ -2,36 +2,54 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { useNavigate } from 'react-router-dom';
-import { removeFromCarrito } from '../Redux/CarritoSlice';
+import { fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
-import { fetchCarritoByUserId } from '../Redux/CarritoSlice';
 
 
 export const CarritoScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
   
   const carrito = useSelector((state) => state.carrito.carrito);
-  const productos = carrito?.productos || [];
+  const productos = carrito.carrito.productos || [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
-
+  const carritoId = carrito?.id || JSON.parse(localStorage.getItem("carritoId"));
 
   useEffect(() => {
-    if (carrito && carrito.productos) {
-      setCantidades(carrito.productos.map((producto) => producto.cantidad));
-      setTotalGlobal(carrito.total);
+    if (carrito && carrito.carrito.productos) {
+      setCantidades(carrito.carrito.productos.map((producto) => producto.cantidad));
+      setTotalGlobal(carrito.carrito.total);
     }
   }, [carrito]);
 
+
   const comprarDeshabilitado = productos.length === 0;
 
-  const handleCantidadChange = (index, nuevaCantidad) => {
+  // const handleCantidadChange = (index, nuevaCantidad) => {
+  //   const nuevasCantidades = [...cantidades];
+  //   nuevasCantidades[index] = nuevaCantidad;
+  //   setCantidades(nuevasCantidades);
+  // };
+
+  const handleCantidadChange = async (index, nuevaCantidad) => {
     const nuevasCantidades = [...cantidades];
     nuevasCantidades[index] = nuevaCantidad;
     setCantidades(nuevasCantidades);
-  };
 
+    const producto = productos[index];
+    const cantidadDiff = nuevaCantidad - producto.cantidad;
+
+    if (cantidadDiff !== 0) {
+      await dispatch(substractFromCarrito({
+        carritoId: carritoId,
+        productoId: producto.producto.id,
+        cantidad: cantidadDiff
+      }));
+    }
+  };
 
   const handleComprar = async () => {
     productos.forEach(async (producto, index) => {
@@ -42,10 +60,13 @@ export const CarritoScreen = () => {
     navigate("/");
   };
 
-
-  const handleEliminarDelCarrito = async (id) => {
-    dispatch(removeFromCarrito({ carritoId: carrito.id, item: { id } }));
-    alert("Has eliminado el producto seleccionado.");
+  const handleEliminarDelCarrito = async (idProducto) => {
+    if (carritoId) { 
+      dispatch(removeFromCarrito({ carritoId: carritoId, productoId: idProducto }));
+      alert("Has eliminado el producto seleccionado.");
+    } else {
+      console.error("El ID del carrito no está definido correctamente.");
+    }
   };
 
   useEffect(() => {
@@ -56,9 +77,15 @@ export const CarritoScreen = () => {
   }, [cantidades, productos]);
 
   useEffect(() => {
-    dispatch(fetchCarritoByUserId(1)); 
-  }, [dispatch]); 
+    dispatch(fetchCarritoByUserEmail(email)); 
+  }, [dispatch, email])
 
+
+  useEffect(() => {
+    if (carritoId) {
+      localStorage.setItem("carritoId", JSON.stringify(carritoId));
+    }
+  }, [carritoId]);
 
 
   return (
@@ -69,11 +96,11 @@ export const CarritoScreen = () => {
           {productos.length > 0 ? (
             productos.map((nodo, index) => (
               <CartItemCard
-                key={nodo.producto.idProductos}
+                key={nodo.producto.id}
                 producto={nodo.producto}
                 cantidad={cantidades[index]}
                 onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
-                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.id)}
+                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.producto.id)}
               />
             ))
           ) : (

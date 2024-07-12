@@ -15,6 +15,7 @@ export const CrearUsuariosScreen = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
+  const [isVendedor, setIsVendedor] = useState(false);
   const navigate = useNavigate();
 
   const handleSetUsername = (event) => {
@@ -40,7 +41,9 @@ export const CrearUsuariosScreen = () => {
 
   const handleCrearUsuario = async (e) => {
     e.preventDefault();
-    dispatch(createUsuario({ username, password, nombre, apellido, email }));
+    const usuarioData = { username, password, nombre, apellido, email, isVendedor };
+    console.log("Datos del usuario a enviar:", usuarioData);
+    dispatch(createUsuario(usuarioData));
     navigate("/");
   };
 
@@ -55,9 +58,9 @@ export const CrearUsuariosScreen = () => {
       <div className="pages navbar-fixed toolbar-fixed">
         <div data-page="Crear Usuario" className="page">
           <div className="page-content">
-            <div class="nice-header header-fix-top small">
+            <div className="nice-header header-fix-top small">
               <div className="logo">
-                <h3 class="font-bold text-2xl">Nuevo usuario</h3>
+                <h3 className="font-bold text-2xl">Nuevo usuario</h3>
               </div>
             </div>
             <hr></hr>
@@ -121,6 +124,18 @@ export const CrearUsuariosScreen = () => {
                     id="email"
                     value={email}
                     onChange={handleSetEmail}
+                  ></input>
+                </div>
+                <br></br>
+                <div>
+                  <label className="Crear_Usuario_form_label"> Soy vendedor </label>
+                  <br></br>
+                  <input
+                    type="checkbox"
+                    id="isVendedor"
+                    onChange={() => { 
+                      setIsVendedor(!isVendedor)
+                    }}
                   ></input>
                 </div>
 

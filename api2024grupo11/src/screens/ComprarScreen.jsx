@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Filters } from "../components/Filters/Filters";
 import { SearchBar } from "../components/SearchBar/SearchBar";
-import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
+import { addToCarrito } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
@@ -17,9 +17,12 @@ export const ComprarScreen = () => {
     const descuentos = useSelector((state) => state.descuento.descuentos);
     const carrito = useSelector((state) => state.carrito.carrito);
     const usuario = useSelector((state) => state.usuario.usuario);
+    // const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
+    const usuarioLocalStorage = JSON.parse(localStorage.getItem("usuario"));
+    const email = usuarioLocalStorage ? usuarioLocalStorage.registered_email : null;
+   
 
-    
-    
+
     const [filteredProductos, setFilteredProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState('');
     const [filtroDescuento, setFiltroDescuento] = useState('');
@@ -30,10 +33,10 @@ export const ComprarScreen = () => {
       dispatch(fetchProductos());
       dispatch(fetchCategorias());
       dispatch(fetchDescuentos());
-      if (usuario) {
-        dispatch(fetchCarritoByUserId(usuario.id));
+      if (email) {
+        dispatch(fetchCarritoByUserEmail(email));
       }
-    }, [dispatch, usuario]);
+    }, [dispatch, usuario, email]);
   
     useEffect(() => {
       setFilteredProductos(productos);
@@ -52,14 +55,13 @@ export const ComprarScreen = () => {
 
 
     const handleAgregarAlCarrito = (producto) => {
-      console.log("Agregar al carrito clicked", producto);
-    
-      if (!usuario) {
+
+      if (!email) {
         navigate('/usuarios');
         return;
       }
       
-      if (!carrito || !carrito.id) {
+      if (!carrito || !carrito.carrito.id) {
         alert("No se pudo agregar el producto al carrito. Intente nuevamente.");
         return;
       }
@@ -70,9 +72,7 @@ export const ComprarScreen = () => {
       }
       
       const item = { productoId: producto.id, cantidad: 1 };
-      console.log("Datos enviados al carrito:", { carritoId: carrito.id, item });
-    
-      dispatch(addToCarrito({ carritoId: carrito.id, item }))
+      dispatch(addToCarrito({ carritoId: carrito.carrito.id, item }))
         .then((response) => {
           console.log("Respuesta del servidor:", response);
           alert("Item agregado al carrito");
@@ -128,7 +128,6 @@ export const ComprarScreen = () => {
               <ProductDo
                 value={producto}
                 agregarAlCarrito={() => {
-                  console.log("Agregar al carrito clicked", producto);
                   handleAgregarAlCarrito(producto);
                 }}
                 agregarAFavoritos={() => handleAgregarAFavoritos(producto)}

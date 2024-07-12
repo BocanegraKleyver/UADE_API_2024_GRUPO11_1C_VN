@@ -11,7 +11,9 @@ export const AsideHeader = () => {
     dispatch(logoutUsuario());
   };
 
-  const isAdmin = usuario?.authorities?.some(auth => auth.authority === 'Admin');
+  const role = usuario ? usuario.role : "";
+
+  // para persistir la sesion sino, usar localstorage y obtener el usuario autenticado en vez de obtenerlo del store.
 
   return (
     <aside className="h-[100vh] bg-yellow-600">
@@ -31,7 +33,7 @@ export const AsideHeader = () => {
                   Carrito
                 </Link>
               </li>
-              {isAdmin && (
+              {role === "Admin" && (
                 <li>
                   <Link to="/administrar" className="boton-menu boton-administrar" activeClassName="active">
                     Administrar
@@ -43,16 +45,19 @@ export const AsideHeader = () => {
                   Mis compras
                 </Link>
               </li>
+              {}
               <li>
                 <Link to="/favoritos" className="boton-menu boton-carrito" activeClassName="active">
                   Mis favoritos
                 </Link>
               </li>
+              {role === "Vendedor" && (
               <li>
                 <Link to="/VenderProducto" className="boton-menu boton-vender-producto" activeClassName="active">
                   Vender tus Productos
                 </Link>
               </li>
+              )}
               <li>
                 <button onClick={handleLogout} className="boton-menu boton-logout">
                   Logout
