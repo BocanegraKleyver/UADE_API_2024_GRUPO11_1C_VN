@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FavItemCard } from "../components/Cards/FavItemCard";
 import { eliminarItemDeFavoritosLocalmente } from "../Redux/FavoritoSlice"; 
 import { fetchProductos } from "../Redux/ProductoSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 export const FavoritosScreen = () => {
   const dispatch = useDispatch();
@@ -50,6 +50,23 @@ export const FavoritosScreen = () => {
               />
             ))
           )}
+        </div>
+        <div>
+        <div className="flex justify-between">
+          <button
+            onClick={() => window.history.back()}
+            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+          >
+            ATRAS
+          </button>
+        </div>
+  
+        <Link
+          to="/"
+          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+        >
+          Volver a la pantalla principal
+        </Link>
         </div>
       </div>
     </div>
