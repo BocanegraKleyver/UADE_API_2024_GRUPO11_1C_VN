@@ -13,47 +13,26 @@ export const CarritoScreen = () => {
   const userEmail = JSON.parse(localStorage.getItem("usuario")).registered_email;
   
   const carrito = useSelector((state) => state.carrito.carrito);
-  const productos = carrito.carrito.productos || [];
+  const productos = carrito.carrito ? carrito.carrito.productos : [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
-  const carritoId = carrito.carrito.id || JSON.stringify(localStorage.getItem("carritoId"));
+  const carritoId = carrito.carrito ? carrito.carrito.id : JSON.stringify(localStorage.getItem("carritoId"));
 
   useEffect(() => {
     dispatch(fetchCarritoByUserEmail(userEmail)); 
   }, [dispatch, userEmail])
 
   useEffect(() => {
-    if (carrito && carrito.carrito.productos) {
-      setCantidades(carrito.carrito.productos.map((producto) => producto.cantidad));
-      setTotalGlobal(carrito.carrito.total);
+    if (carrito.carrito) {
+      if (carrito.carrito.productos) {
+        setCantidades(carrito.carrito.productos.map((producto) => producto.cantidad));
+        setTotalGlobal(carrito.carrito.total);
+      }
     }
   }, [carrito]);
 
 
   const comprarDeshabilitado = productos.length === 0;
-
-  // const handleCantidadChange = (index, nuevaCantidad) => {
-  //   const nuevasCantidades = [...cantidades];
-  //   nuevasCantidades[index] = nuevaCantidad;
-  //   setCantidades(nuevasCantidades);
-  // };
-
-  const handleCantidadChange = async (index, nuevaCantidad) => {
-    const nuevasCantidades = [...cantidades];
-    nuevasCantidades[index] = nuevaCantidad;
-    setCantidades(nuevasCantidades);
-
-    const producto = productos[index];
-    const cantidadDiff = nuevaCantidad - producto.cantidad;
-
-    if (cantidadDiff !== 0) {
-      await dispatch(substractFromCarrito({
-        carritoId: carritoId,
-        productoId: producto.producto.id,
-        cantidad: cantidadDiff
-      }));
-    }
-  };
 
   const handleComprar = async () => {
     const arrayProductos = []
@@ -61,6 +40,11 @@ export const CarritoScreen = () => {
       arrayProductos.push({productoId: nodo.producto.id, cantidad: nodo.cantidad, precio: nodo.producto.precioConDescuento})
     })
     dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
+    
+    productos.forEach(nodo => {
+      dispatch(updateProducto({prodId: nodo.producto.id, prod: nodo.producto}))
+    })
+    
     dispatch(emptyCarrito(carrito.carrito.id));
     alert("Compra exitosa");
     navigate("/");
@@ -69,11 +53,12 @@ export const CarritoScreen = () => {
   const handleEliminarDelCarrito = async (idProducto) => {
     dispatch(removeFromCarrito({ carritoId: carrito.carrito.id, productoId: idProducto }));
     window.location.reload();
+
   };
 
   useEffect(() => {
     const nuevoTotal = productos.reduce((acc, producto, index) => {
-      return acc + (producto.producto.precio * cantidades[index]);
+      return acc + (producto.producto.precioConDescuento * cantidades[index]);
     }, 0);
     setTotalGlobal(nuevoTotal);
   }, [cantidades, productos]);
@@ -99,7 +84,7 @@ export const CarritoScreen = () => {
                 key={nodo.producto.id}
                 producto={nodo.producto}
                 cantidad={cantidades[index]}
-                onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
+                idCarrito={carrito.carrito.id}
                 onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.producto.id)}
               />
             ))

@@ -20,7 +20,7 @@ export const fetchProductos = createAsyncThunk('producto/fetchProductos', async 
 });
 
 export const fetchProductoById = createAsyncThunk('producto/fetchProductos', async (id) => {
-  const response = await axios.get(API_URL+`/${id}`, {
+  const response = await axios.get(API_URL + `/${id}`, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -38,19 +38,22 @@ export const createProducto = createAsyncThunk('producto/createProducto', async 
   return response.data;
 });
 
-export const updateProducto = createAsyncThunk('producto/updateProducto', async ({ id, producto }) => {
-    try {
-      const response = await axios.put(`${API_URL}/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`
-        }
-      }, producto);
-      return response.data;  
-    } catch (error) {
-      throw Error('Error al actualizar el producto');
-    }
-  });
+export const updateProducto = createAsyncThunk('producto/updateProducto', async ({ prodId, prod }) => {
+
+  const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.idCategoria, idDescuento: prod.idDescuento })
+  try {
+    const response = await axios.put(`${API_URL}/${prodId}`, req,
+      {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw Error('Error al actualizar el producto');
+  }
+});
 
 
 export const deleteProducto = createAsyncThunk('producto/deleteProducto', async (id) => {
@@ -66,19 +69,19 @@ export const deleteProducto = createAsyncThunk('producto/deleteProducto', async 
 
 // TODO: esto esta mal
 export const filterProductos = createAsyncThunk('producto/filterProductos', async ({ searchTerm, filtroCategoria, filtroDescuento }) => {
-    let url = `${API_URL}?searchTerm=${searchTerm}`;
-    
-    if (filtroCategoria) {
-      url += `&idCategoria=${filtroCategoria}`;
-    }
-    
-    if (filtroDescuento) {
-      url += `&idDescuento=${filtroDescuento}`;
-    }
-  
-    const response = await axios.get(url);
-    return response.data;
-  });
+  let url = `${API_URL}?searchTerm=${searchTerm}`;
+
+  if (filtroCategoria) {
+    url += `&idCategoria=${filtroCategoria}`;
+  }
+
+  if (filtroDescuento) {
+    url += `&idDescuento=${filtroDescuento}`;
+  }
+
+  const response = await axios.get(url);
+  return response.data;
+});
 
 
 const productoSlice = createSlice({
