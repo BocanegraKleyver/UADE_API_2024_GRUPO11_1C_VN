@@ -1,9 +1,10 @@
 import { default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { ProductDo } from "../components/Cards/ProductDo";
 import { Filters } from "../components/Filters/Filters";
 import { SearchBar } from "../components/SearchBar/SearchBar";
-import { addToCarrito } from '../Redux/CarritoSlice';
+import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
@@ -122,7 +123,7 @@ export const ComprarScreen = () => {
           descuentos={descuentos}
           onFilter={handleFilterChange}
         />
-        {/* <div className="contenedor-productos">
+         <div className="contenedor-productos">
           {filterProductos.length>0 && filteredProductos.map((producto, index) => (
             <div key={index} onClick={() => handleSelectProduct(producto)}>
               <ProductDo
@@ -134,7 +135,7 @@ export const ComprarScreen = () => {
               />
             </div>
           ))}
-        </div> */}
+        </div> 
       </div>
     );
   };
