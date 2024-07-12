@@ -42,7 +42,6 @@ export const CrearUsuariosScreen = () => {
   const handleCrearUsuario = async (e) => {
     e.preventDefault();
     const usuarioData = { username, password, nombre, apellido, email, isVendedor };
-    console.log("Datos del usuario a enviar:", usuarioData);
     dispatch(createUsuario(usuarioData));
     navigate("/");
   };

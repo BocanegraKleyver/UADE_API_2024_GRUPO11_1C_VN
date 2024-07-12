@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/producto';
+const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   productos: [],
@@ -10,18 +11,32 @@ const initialState = {
 };
 
 export const fetchProductos = createAsyncThunk('producto/fetchProductos', async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
   return response.data;
 });
 
 export const createProducto = createAsyncThunk('producto/createProducto', async (nuevoProducto) => {
-  const response = await axios.post(API_URL, nuevoProducto);
+  const response = await axios.post(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }, nuevoProducto);
   return response.data;
 });
 
 export const updateProducto = createAsyncThunk('producto/updateProducto', async ({ id, producto }) => {
     try {
-      const response = await axios.put(`${API_URL}/${id}`, producto);
+      const response = await axios.put(`${API_URL}/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
+        }
+      }, producto);
       return response.data;  
     } catch (error) {
       throw Error('Error al actualizar el producto');
@@ -30,11 +45,17 @@ export const updateProducto = createAsyncThunk('producto/updateProducto', async 
 
 
 export const deleteProducto = createAsyncThunk('producto/deleteProducto', async (id) => {
-  await axios.delete(`${API_URL}/${id}`);
+  await axios.delete(`${API_URL}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  });
   return id;
 });
 
 
+// TODO: esto esta mal
 export const filterProductos = createAsyncThunk('producto/filterProductos', async ({ searchTerm, filtroCategoria, filtroDescuento }) => {
     let url = `${API_URL}?searchTerm=${searchTerm}`;
     

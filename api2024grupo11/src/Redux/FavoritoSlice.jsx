@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/favoritos';
+const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   favoritos: [],
@@ -11,7 +12,12 @@ const initialState = {
 
 export const fetchFavoritos = createAsyncThunk('favoritos/fetchFavoritos', async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(API_URL, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     throw Error('Error al obtener los favoritos');

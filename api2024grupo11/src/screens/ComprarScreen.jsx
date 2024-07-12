@@ -37,7 +37,7 @@ export const ComprarScreen = () => {
       if (email) {
         dispatch(fetchCarritoByUserEmail(email));
       }
-    }, [dispatch, usuario, email]);
+    }, [dispatch, email]);
   
     useEffect(() => {
       setFilteredProductos(productos);
@@ -46,7 +46,6 @@ export const ComprarScreen = () => {
     useEffect(() => {
       const fetchFilteredProductos = async () => {
         const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
-        console.log(response);
         setFilteredProductos(response.payload);
       };
   
@@ -75,7 +74,6 @@ export const ComprarScreen = () => {
       const item = { productoId: producto.id, cantidad: 1 };
       dispatch(addToCarrito({ carritoId: carrito.carrito.id, item }))
         .then((response) => {
-          console.log("Respuesta del servidor:", response);
           alert("Item agregado al carrito");
         })
         .catch((error) => {
