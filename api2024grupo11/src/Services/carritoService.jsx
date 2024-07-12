@@ -20,18 +20,16 @@ export const getCarrito = async () => {
 };
 
 
-export const agregarItemAlCarrito = async (item) => {
+export const agregarItemAlCarrito = async (item, idCarrito) => {
     try {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "id": item.id,
-            "titulo": item.titulo,
-            "precio": item.precio,
+            "productoId": item.id,
             "cantidad": 1
         });
-        
+
         var requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -39,9 +37,8 @@ export const agregarItemAlCarrito = async (item) => {
             redirect: 'follow'
         };
 
-        const response = await fetch("http://localhost:8000/carrito", requestOptions);
+        const response = await fetch("http://localhost:8080/api/v1/carrito/agregar/" + idCarrito, requestOptions);
         const result = await response.text();
-        console.log(result);
     } catch (error) {
         console.log('error', error);
     }
@@ -126,7 +123,6 @@ export const actualizarCarrito = async (cantidad, item) => {
 
         const response = await fetch("http://localhost:8000/carrito/" + item.id, requestOptions);
         const result = await response.text();
-        console.log(result);
     } catch (error) {
         console.log('error', error);
     }

@@ -1,50 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDescuentoContext } from '../context/DescuentoContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDescuentos, createDescuento, updateDescuento, deleteDescuento } from '../Redux/DescuentoSlice';
 
 
 export const DescuentoScreen = () => {
-  const { descuentos, agregarDescuento, actualizarDescuento, eliminarDescuento } = useDescuentoContext();
+  const dispatch = useDispatch();
+  const descuentos = useSelector((state) => state.descuento.descuentos);
   const [nuevoDescuento, setNuevoDescuento] = useState({ porcentaje: '' });
   const [descuentoSeleccionado, setDescuentoSeleccionado] = useState(null);
   const [filtroDescuento, setFiltroDescuento] = useState('');
 
-  const handleCrearDescuento = async () => {
-    try {
-      await agregarDescuento(nuevoDescuento);
-      setNuevoDescuento({ porcentaje: '' });
-    } catch (error) {
-      console.error('Error al crear descuento:', error.message);
-    }
+
+  useEffect(() => {
+    dispatch(fetchDescuentos());
+  }, [dispatch]);
+
+
+  const handleCrearDescuento = () => {
+    dispatch(createDescuento(nuevoDescuento));
+    setNuevoDescuento({ porcentaje: '' });
   };
 
-  const handleActualizarDescuento = async () => {
-    if (!descuentoSeleccionado) return;
-
-    try {
-      await actualizarDescuento(descuentoSeleccionado.id, descuentoSeleccionado);
-      setDescuentoSeleccionado(null);
-    } catch (error) {
-      console.error(`Error al actualizar descuento con ID ${descuentoSeleccionado.id}:`, error.message);
-    }
+  const handleActualizarDescuento = () => {
+    dispatch(updateDescuento({ id: descuentoSeleccionado.id, descuento: descuentoSeleccionado }));
+    setDescuentoSeleccionado(null);
   };
 
-  const handleEliminarDescuento = async (id) => {
-    try {
-      await eliminarDescuento(id);
-    } catch (error) {
-      console.error(`Error al eliminar descuento con ID ${id}:`, error.message);
-    }
+  const handleEliminarDescuento = (id) => {
+    dispatch(deleteDescuento(id));
   };
 
   const descuentosFiltrados = descuentos.filter(descuento =>
     descuento.porcentaje.toString().includes(filtroDescuento)
   );
 
+
+  
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Descuentos</h2>
-
 
       <div className="mb-4">
         <input
@@ -123,7 +118,7 @@ export const DescuentoScreen = () => {
         </button>
       </div>
 
-      <Link to="/home" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
+      <Link to="/" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
         Volver a la pantalla principal
       </Link>
     </div>

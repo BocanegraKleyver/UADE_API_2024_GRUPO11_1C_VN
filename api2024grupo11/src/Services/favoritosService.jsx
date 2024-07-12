@@ -50,6 +50,5 @@ export const eliminarItemDeFavoritos = (id) => {
 
   fetch("http://localhost:8000/favoritos/" + id, requestOptions)
     .then((Response) => Response.text())
-    .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
 };

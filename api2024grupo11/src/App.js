@@ -9,67 +9,47 @@ import { UsuariosScreen } from "./screens/UsuariosScreen.jsx";
 import { AdministrarScreen } from "./screens/AdministrarScreen.jsx";
 import { CategoriaScreen } from "./screens/CategoriaScreen.jsx";
 import { DescuentoScreen } from "./screens/DescuentoScreen.jsx";
+import { DetalleScreen } from "./screens/DetalleScreen.jsx";
 import { ProductoScreen } from "./screens/ProductoScreen.jsx";
-import { CatalogoProductosScreen } from "./screens/CatalogoProductosScreen.jsx";
-import { DescuentoProvider } from "./context/DescuentoContext.jsx";
-import { CategoriaProvider } from "./context/CategoriaContext.jsx";
-import { ProductoProvider } from "./context/ProductoContext.jsx";
 import { CarritoScreen } from "./screens/CarritoScreen.jsx";
 import { ComprasScreen } from "./screens/ComprasScreen.jsx";
+import { VenderProductoScreen } from "./screens/VenderProductoScreen.jsx";
 
 function App() {
   return (
-    <DescuentoProvider>
-      <CategoriaProvider>
-        <ProductoProvider>
-          <div className="wrapper">
-            <AsideHeader />
-            <Routes>
-              <Route path="/administrar" element={<AdministrarScreen />} />
-              <Route
-                path="/administrar/categoria"
-                element={<CategoriaScreen />}
-              />
-              <Route
-                path="/administrar/descuento"
-                element={<DescuentoScreen />}
-              />
-              <Route
-                path="/administrar/producto"
-                element={<ProductoScreen />}
-              />
+    <div className="wrapper">
+      <AsideHeader />
+      <Routes>
+        <Route path="/administrar" element={<AdministrarScreen />} />
+        <Route path="/administrar/categoria" element={<CategoriaScreen />} />
+        <Route path="/administrar/descuento" element={<DescuentoScreen />} />
+        <Route path="/administrar/producto" element={<ProductoScreen />} />
+        <Route path="/" element={<ComprarScreen />} exact></Route>
 
-              <Route
-                path="/producto/:id" element={<ProductoScreen />}
-              />
-              
-              {/* <Route path="/catalogo" element={<CatalogoProductosScreen />} exact /> */}
+        <Route path="/carrito">
+          <Route path="" element={<CarritoScreen />} exact />
+        </Route>
 
-              <Route path="/" element={<ComprarScreen />} exact></Route>
+        <Route path="/usuarios">
+          <Route path="" element={<UsuariosScreen />} exact />
+        </Route>
 
-              <Route path="/carrito">
-                <Route path="" element={<CarritoScreen />} exact />
-              </Route>
+        <Route path="/crearUsuario">
+          <Route path="" element={<CrearUsuariosScreen />} exact />
+        </Route>
 
-              <Route path="/usuarios">
-                <Route path="" element={<UsuariosScreen />} exact />
-              </Route>
+        <Route path="/favoritos/">
+          <Route path="" element={<FavoritosScreen />} exact />
+        </Route>
 
-              <Route path="/crearUsuario">
-                <Route path="" element={<CrearUsuariosScreen />} exact />
-              </Route>
+        <Route path="/VenderProducto" element={<VenderProductoScreen />} />
 
-              <Route path="/favoritos/">
-                <Route path="" element={<FavoritosScreen />} exact />
-              </Route>
-
-              <Route path="/mis-compras" element={<ComprasScreen />} exact></Route>
-             
-            </Routes>
-          </div>
-        </ProductoProvider>
-      </CategoriaProvider>
-    </DescuentoProvider>
+        <Route path="/producto/:id">
+          <Route path="" element={<DetalleScreen />} exact />
+        </Route>
+        <Route path="/mis-compras" element={<ComprasScreen />} exact></Route>
+      </Routes>
+    </div>
   );
 }
 

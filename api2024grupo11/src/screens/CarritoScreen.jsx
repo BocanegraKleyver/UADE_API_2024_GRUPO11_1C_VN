@@ -1,55 +1,88 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
-import { getCarrito, eliminarItemDelCarrito } from '../Services/carritoService';
 import { useNavigate } from 'react-router-dom';
-import { ProductoService } from '../Services/ProductoService';
+import { comprar, emptyCarrito, fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
+import { updateProducto } from '../Redux/ProductoSlice';
+
 
 export const CarritoScreen = () => {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [productos, setProductos] = useState([]);
-  const [cantidades, setCantidades] = useState([]);
 
-  const [totalGlobal, setTotalGlobal] = useState(0)
+  const userEmail = JSON.parse(localStorage.getItem("usuario")).registered_email;
+  
+  const carrito = useSelector((state) => state.carrito.carrito);
+  const productos = carrito.carrito.productos || [];
+  const [cantidades, setCantidades] = useState([]);
+  const [totalGlobal, setTotalGlobal] = useState(0);
+  const carritoId = carrito?.id || JSON.parse(localStorage.getItem("carritoId"));
 
   useEffect(() => {
-    getCarrito()
-      .then((data) => {
-        if (data) {
-          setProductos(data.carrito.productos);
-          setCantidades(data.carrito.productos.map(d => d.cantidad));
-          setTotalGlobal(data.carrito.total)
-        }
-      });
-  }, []);
+    dispatch(fetchCarritoByUserEmail(userEmail)); 
+  }, [dispatch, userEmail])
+
+  useEffect(() => {
+    if (carrito && carrito.carrito.productos) {
+      setCantidades(carrito.carrito.productos.map((producto) => producto.cantidad));
+      setTotalGlobal(carrito.carrito.total);
+    }
+  }, [carrito]);
 
 
   const comprarDeshabilitado = productos.length === 0;
 
-  const handleCantidadChange = (index, nuevaCantidad) => {
+  // const handleCantidadChange = (index, nuevaCantidad) => {
+  //   const nuevasCantidades = [...cantidades];
+  //   nuevasCantidades[index] = nuevaCantidad;
+  //   setCantidades(nuevasCantidades);
+  // };
+
+  const handleCantidadChange = async (index, nuevaCantidad) => {
     const nuevasCantidades = [...cantidades];
     nuevasCantidades[index] = nuevaCantidad;
     setCantidades(nuevasCantidades);
+
+    const producto = productos[index];
+    const cantidadDiff = nuevaCantidad - producto.cantidad;
+
+    if (cantidadDiff !== 0) {
+      await dispatch(substractFromCarrito({
+        carritoId: carritoId,
+        productoId: producto.producto.id,
+        cantidad: cantidadDiff
+      }));
+    }
   };
 
-  // chequear stock elimina mal
-  const handleComprar = () => {
-    productos.forEach((producto, index) => {
-      ProductoService.restarStockAlComprar(producto, cantidades[index]);
-    });
-    alert("Compra exitosa");
-    navigate("/")
+  const handleComprar = async () => {
+    const arrayProductos = []
+    productos.forEach(nodo => {
+      arrayProductos.push({cantidad: nodo.cantidad, productoId: nodo.producto.id, precio: nodo.producto.precioConDescuento})
+    })
+    
+    await dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
+
+    // productos.forEach(async (producto, index) => {
+    //   const newStock = producto.producto.stock - cantidades[index];
+    //   await dispatch(updateProducto({ id: producto.producto.id, producto: { ...producto.producto, stock: newStock } }));
+    // });
+
+    // await emptyCarrito(carrito.carrito.id);
+    // alert("Compra exitosa");
+    // navigate("/");
   };
 
-  const handleEliminarDelCarrito = async (id) => {
-    await eliminarItemDelCarrito(id)
-    const productosNoEliminados = productos.filter(producto => producto.id !== id);
-    setProductos(productosNoEliminados);
-    alert("Has eliminado el producto seleccionado.")
-  }
+  const handleEliminarDelCarrito = async (idProducto) => {
+    if (carritoId) { 
+      dispatch(removeFromCarrito({ carritoId: carritoId, productoId: idProducto }));
+      alert("Has eliminado el producto seleccionado.");
+    } else {
+      console.error("El ID del carrito no está definido correctamente.");
+    }
+  };
 
   useEffect(() => {
-    // Recalcular el total global cuando cambien las cantidades
     const nuevoTotal = productos.reduce((acc, producto, index) => {
       return acc + (producto.producto.precio * cantidades[index]);
     }, 0);
@@ -57,20 +90,33 @@ export const CarritoScreen = () => {
   }, [cantidades, productos]);
 
 
+
+
+  useEffect(() => {
+    if (carritoId) {
+      localStorage.setItem("carritoId", JSON.stringify(carritoId));
+    }
+  }, [carritoId]);
+
+
   return (
     <div className='text-black p-5 bg-[#f3f4f6]'>
       <h1>Carrito de compras</h1>
       <div className='grid grid-cols-2 gap-2 h-full'>
         <div className='flex flex-col w-full h-full gap-3 justify-center py-5'>
-          {productos.map((nodo, index) => (
-            <CartItemCard
-              key={nodo.producto.idProductos}
-              producto={nodo.producto}
-              cantidad={cantidades[index]}
-              onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
-              onEliminarDelCarrito={(key) => handleEliminarDelCarrito(key)}
-            />
-          ))}
+          {productos.length > 0 ? (
+            productos.map((nodo, index) => (
+              <CartItemCard
+                key={nodo.producto.id}
+                producto={nodo.producto}
+                cantidad={cantidades[index]}
+                onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
+                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.producto.id)}
+              />
+            ))
+          ) : (
+            <p>No hay productos en el carrito.</p>
+          )}
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
           <span className='font-bold text-black'>Información del carrito</span>

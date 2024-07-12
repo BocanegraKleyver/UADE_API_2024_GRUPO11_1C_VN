@@ -120,7 +120,6 @@ export const ProductoService = {
       }
 
       const result = await patchResponse.json();
-      console.log(result);
     } catch (error) {
       console.error('Error al disminuir la cantidad:', error);
     }
