@@ -27,8 +27,8 @@ export const ComprarScreen = () => {
     const [filteredProductos, setFilteredProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState('');
     const [filtroDescuento, setFiltroDescuento] = useState('');
+    const [filtroPrecio, setFiltroPrecio] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     useEffect(() => {
       dispatch(fetchProductos());
@@ -43,14 +43,15 @@ export const ComprarScreen = () => {
       setFilteredProductos(productos);
     }, [productos]);
 
+
     useEffect(() => {
-      const fetchFilteredProductos = async () => {
-        const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
-        setFilteredProductos(response.payload);
+      const applyFilters = async () => {
+          const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
+          setFilteredProductos(response.payload);
       };
-  
-      fetchFilteredProductos();
-    }, [searchTerm, filtroCategoria, filtroDescuento, dispatch]);
+
+      applyFilters();
+  }, [searchTerm, filtroCategoria, filtroDescuento, dispatch]);
 
 
 
@@ -95,45 +96,81 @@ export const ComprarScreen = () => {
   
     const handleSearch = (term) => {
       setSearchTerm(term);
-    };
+  };
   
-    const handleFilterChange = (filtro, value) => {
-      if (filtro === 'categoria') {
+  const handleFilterChange = (filtro, value) => {
+    if (filtro === 'categoria') {
         setFiltroCategoria(value);
-      } else if (filtro === 'descuento') {
+    } else if (filtro === 'descuento') {
         setFiltroDescuento(value);
-      }
-    };
-  
-    const handleSelectProduct = (producto) => {
-      setSelectedProduct(producto);
-    };
+    } else if (filtro === 'precio') {
+        setFiltroPrecio(value);
+    }
+};
+
+const filterByCategory = (producto) => {
+  if (!filtroCategoria) return true;
+  return producto.categoria === parseInt(filtroCategoria, 10);
+};
+
+
+const filterByDiscount = (producto) => {
+  if (!filtroDescuento) return true;
+  return producto.descuento === parseInt(filtroDescuento, 10);
+};
+
+const filterByPriceRange = (producto) => {
+  if (!filtroPrecio) return true;
+
+  const precio = producto.precio;
+  switch (filtroPrecio) {
+      case '0-24999':
+          return precio >= 0 && precio <= 24999;
+      case '25000-49999':
+          return precio > 25000 && precio <= 49999;
+      case '50000-74999':
+          return precio > 50000 && precio <= 74999;
+      case '75000-99999':
+          return precio > 75000 && precio <= 99999;
+      case '100000+':
+          return precio > 100000;
+      default:
+          return true;
+  }
+};
+
+const applyAllFilters = (productos) => {
+  return productos.filter(producto => 
+      filterByCategory(producto) && 
+      filterByDiscount(producto) &&
+      filterByPriceRange(producto)
+  );
+};
+
 
   
-  return (
-    <div className="comprarscreen">
-        <div className="text-black bold p-5">
+return (
+  <div className="comprarscreen">
+      <div className="text-black bold p-5">
           <h1>¿Qué desea comprar?</h1>
-        </div>
-        <SearchBar onSearch={handleSearch} />
-        <Filters
+      </div>
+      <SearchBar onSearch={handleSearch} />
+      <Filters
           categorias={categorias}
           descuentos={descuentos}
           onFilter={handleFilterChange}
-        />
-        <div className="contenedor-productos">
-          {filterProductos.length>0 && filteredProductos.map((producto, index) => (
-            <div key={index} onClick={() => handleSelectProduct(producto)}>
-              <ProductDo
-                value={producto}
-                agregarAlCarrito={() => {
-                  handleAgregarAlCarrito(producto);
-                }}
-                agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
-              />
-            </div>
+      />
+      <div className="contenedor-productos">
+          {applyAllFilters(filteredProductos).map((producto, index) => (
+              <div key={index}>
+                  <ProductDo
+                      value={producto}
+                      agregarAlCarrito={() => handleAgregarAlCarrito(producto)}
+                      agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
+                  />
+              </div>
           ))}
-        </div>
       </div>
-    );
-  };
+  </div>
+);
+};

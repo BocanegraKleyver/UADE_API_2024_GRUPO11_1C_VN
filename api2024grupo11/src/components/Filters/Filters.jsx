@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { filterProductos } from '../../Redux/ProductoSlice.jsx';
 
 export const Filters = ({ onFilter }) => {
@@ -32,6 +31,14 @@ export const Filters = ({ onFilter }) => {
             {descuento.porcentaje}%
           </option>
         ))}
+      </select>
+      <select name="precio" onChange={handleFilterChange}>
+        <option value="">Todos los precios</option>
+        <option value="0-24999">0 a 24,999</option>
+        <option value="25000-49999">25,000 a 49,999</option>
+        <option value="50000-74999">50,000 a 74,999</option>
+        <option value="75000-99999">75,000 a 99,999</option>
+        <option value="100000+">Más de 100,000</option>
       </select>
     </div>
   );

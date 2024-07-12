@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    onSearch(event.target.value); 
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
     onSearch(searchTerm);
-  };
+  }, [searchTerm, onSearch]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
         placeholder="Buscar producto..."
         value={searchTerm}
         onChange={handleChange}
       />
-      <button type="submit">Buscar</button>
     </form>
   );
 };
- 
