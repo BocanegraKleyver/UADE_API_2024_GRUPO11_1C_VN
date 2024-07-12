@@ -351,6 +351,7 @@ main{
 .producto {
   background-color: #72a3d4;
   border-radius: 2rem;
+  gap:2rem;
 }
 
 .producto:hover{
@@ -377,7 +378,7 @@ main{
 
 .producto-imagen2{
   width:40rem;
-  height: 40rem;
+  height: 30rem;
   border-radius: 1rem;
   object-fit: cover;
   
@@ -439,7 +440,7 @@ main{
   border-radius: .5rem;
   cursor: pointer;
   border: 2px solid black;
-  max-width:5rem;
+  max-width:10rem;
   justify-content:flex-end;
 }
 
@@ -468,12 +469,12 @@ main{
 
 .paralelo{
   display: flex;
-  justify-content: space-between;
+  gap: 5rem;
 }
 
 .paralelo2{
   display:grid;
-  /*grid-template-columns: repeat(2, 1fr);*/
+  grid-template-columns: repeat(2, 20rem);
   gap:1rem;
 }
 

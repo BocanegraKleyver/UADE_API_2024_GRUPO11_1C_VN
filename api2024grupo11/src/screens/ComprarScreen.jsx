@@ -1,7 +1,7 @@
 import { default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { ProductDo } from "../components/Cards/ProductDo";
+import ProductDo from "../components/Cards/ProductDo";
 import { Filters } from "../components/Filters/Filters";
 import { SearchBar } from "../components/SearchBar/SearchBar";
 import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
@@ -112,8 +112,9 @@ export const ComprarScreen = () => {
   
   return (
     <div className="comprarscreen">
-        <div className="text-black bold p-5">
-          <h1>¿Qué desea comprar?</h1>
+      <div className="paralelo2">
+        <div >
+          <h1 className="logo">¿Qué desea comprar?</h1>
         </div>
         <SearchBar onSearch={handleSearch} />
         <Filters
@@ -121,6 +122,8 @@ export const ComprarScreen = () => {
           descuentos={descuentos}
           onFilter={handleFilterChange}
         />
+      </div>
+        
          <div className="contenedor-productos">
           {filterProductos.length>0 && filteredProductos.map((producto, index) => (
             <div key={index} onClick={() => handleSelectProduct(producto)}>
