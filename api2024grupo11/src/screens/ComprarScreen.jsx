@@ -1,13 +1,15 @@
-import { default as React, default as React, useEffect, useState } from "react";
+import { default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { Filters } from "../components/Filters/Filters";
+import { SearchBar } from "../components/SearchBar/SearchBar";
 import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
 import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 
-  export const ComprarScreen = () => {
+export const ComprarScreen = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const productos = useSelector((state) => state.producto.productos);
@@ -40,6 +42,7 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
     useEffect(() => {
       const fetchFilteredProductos = async () => {
         const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
+        console.log(response);
         setFilteredProductos(response.payload);
       };
   
@@ -110,9 +113,29 @@ import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
   
   return (
     <div className="comprarscreen">
-      <div className="text-black bold p-5">
-        <h1>¿Qué desea comprar?</h1>
+        <div className="text-black bold p-5">
+          <h1>¿Qué desea comprar?</h1>
+        </div>
+        <SearchBar onSearch={handleSearch} />
+        <Filters
+          categorias={categorias}
+          descuentos={descuentos}
+          onFilter={handleFilterChange}
+        />
+        {/* <div className="contenedor-productos">
+          {filterProductos.length>0 && filteredProductos.map((producto, index) => (
+            <div key={index} onClick={() => handleSelectProduct(producto)}>
+              <ProductDo
+                value={producto}
+                agregarAlCarrito={() => {
+                  console.log("Agregar al carrito clicked", producto);
+                  handleAgregarAlCarrito(producto);
+                }}
+                agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
+              />
+            </div>
+          ))}
+        </div> */}
       </div>
-    </div>
     );
   };
