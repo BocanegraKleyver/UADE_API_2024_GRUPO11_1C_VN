@@ -11,8 +11,8 @@ export const CompraCard = ({compra}) => {
                 {compra.compraProductos.map(cp => (
                     <div className='flex flex-col bg-white p-2'>
                         <Link className='font-medium underline hover:opacity-80' to={`/producto/${cp.producto.id}`}>{cp.producto.titulo}</Link>
-                        <span>${cp.producto.precio}</span>
-                        <span>Cantidad: {cp.producto.cantidad}</span>
+                        <span>Pagado: ${cp.producto.precioConDescuento.toFixed(2)}</span>
+                        <span>Cantidad: {cp.cantidad}</span>
                     </div>
                 ))}
             </div>

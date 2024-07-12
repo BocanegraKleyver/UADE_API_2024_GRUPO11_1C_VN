@@ -20,21 +20,9 @@ export const fetchCarritoByUserEmail = createAsyncThunk('carrito/fetchCarritoByU
   return response.data;
 });
 
+export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, item }) => {
+  const { productoId, cantidad } = item;
 
-// export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, item }) => {
-//   const response = await axios.post(
-//     `${API_URL}/restar/${carritoId}`,
-//     item,
-//     {
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     }
-//   );
-//   return response.data;
-// });
-
-export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarrito', async ({ carritoId, productoId, cantidad }) => {
   try {
     const response = await axios.post(`${API_URL}/restar/${carritoId}`, { productoId, cantidad }, {
       headers: {
@@ -49,8 +37,8 @@ export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarri
 });
 
 export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ carritoId, item }) => {
+  const { productoId, cantidad } = item;
   try {
-    const { productoId, cantidad } = item;
     const response = await axios.post(`${API_URL}/agregar/${carritoId}`, { productoId, cantidad }, {
       headers: {
         'Content-Type': 'application/json',
@@ -83,15 +71,13 @@ export const comprar = createAsyncThunk('carrito/comprar', async ({email, total,
 
 export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({ carritoId, productoId }) => {
 
-  const req = {productoId}
-
   try {
-    const response = await axios.delete(`${API_URL}/quitar/${carritoId}`,
+    const response = await axios.put(`${API_URL}/quitar/${carritoId}`, {productoId},
        {
         headers: {
           'Content-Type': 'application/json',
         }
-       }, req);
+       });
     return response.data;
   } catch (error) {
     console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
@@ -99,25 +85,6 @@ export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', a
   }
 });
 
-// TODO: NOT WORKING!!!!!!!!!!!
-// export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({carritoId, item}) => {
-
-//   const {productoId} = item;
-
-//   try {
-    
-//     const response = await axios.delete(`${API_URL}/quitar/${carritoId}`, { productoId }, {
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     });
-//     return response.data;
-
-//   } catch (error) {
-//     console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
-//     throw error;
-//   }
-// });
 
 export const emptyCarrito = createAsyncThunk('carrito/emptyCarrito', async (carritoId) => {
   const response = await axios.put(`${API_URL}/vaciar/${carritoId}`, {
