@@ -83,15 +83,13 @@ export const comprar = createAsyncThunk('carrito/comprar', async ({email, total,
 
 export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({ carritoId, productoId }) => {
 
-  const req = {productoId}
-
   try {
-    const response = await axios.delete(`${API_URL}/quitar/${carritoId}`,
+    const response = await axios.put(`${API_URL}/quitar/${carritoId}`, {productoId},
        {
         headers: {
           'Content-Type': 'application/json',
         }
-       }, req);
+       });
     return response.data;
   } catch (error) {
     console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);

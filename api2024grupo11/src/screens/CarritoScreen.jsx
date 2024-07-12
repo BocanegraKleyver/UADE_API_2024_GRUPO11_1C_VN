@@ -60,19 +60,15 @@ export const CarritoScreen = () => {
     productos.forEach(nodo => {
       arrayProductos.push({productoId: nodo.producto.id, cantidad: nodo.cantidad, precio: nodo.producto.precioConDescuento})
     })
-    await dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
-    await dispatch(emptyCarrito(carrito.carrito.id));
+    dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
+    dispatch(emptyCarrito(carrito.carrito.id));
     alert("Compra exitosa");
     navigate("/");
   };
 
   const handleEliminarDelCarrito = async (idProducto) => {
-    if (carrito.carrito.id) { 
-      dispatch(removeFromCarrito({ carritoId: carrito.carrito.id, productoId: idProducto }));
-      alert("Has eliminado el producto seleccionado.");
-    } else {
-      console.error("El ID del carrito no está definido correctamente.");
-    }
+    dispatch(removeFromCarrito({ carritoId: carrito.carrito.id, productoId: idProducto }));
+    window.location.reload();
   };
 
   useEffect(() => {
