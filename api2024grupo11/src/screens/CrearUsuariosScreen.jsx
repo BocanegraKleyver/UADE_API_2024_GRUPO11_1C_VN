@@ -15,6 +15,7 @@ export const CrearUsuariosScreen = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
+  const [isVendedor, setIsVendedor] = useState(false)
   const navigate = useNavigate();
 
   const handleSetUsername = (event) => {
@@ -40,7 +41,7 @@ export const CrearUsuariosScreen = () => {
 
   const handleCrearUsuario = async (e) => {
     e.preventDefault();
-    dispatch(createUsuario({ username, password, nombre, apellido, email }));
+    dispatch(createUsuario({ username, password, nombre, apellido, email, isVendedor}));
     navigate("/");
   };
 
@@ -121,6 +122,18 @@ export const CrearUsuariosScreen = () => {
                     id="email"
                     value={email}
                     onChange={handleSetEmail}
+                  ></input>
+                </div>
+                <br></br>
+                <div>
+                  <label className="Crear_Usuario_form_label"> Soy vendedor </label>
+                  <br></br>
+                  <input
+                    type="checkbox"
+                    id="isVendedor"
+                    onChange={() => { 
+                      setIsVendedor(!isVendedor)
+                    }}
                   ></input>
                 </div>
 

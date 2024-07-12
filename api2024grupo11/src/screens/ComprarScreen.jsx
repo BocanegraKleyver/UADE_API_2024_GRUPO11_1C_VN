@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
-import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
+import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
+
 
 
   export const ComprarScreen = () => {
@@ -19,8 +20,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
     const descuentos = useSelector((state) => state.descuento.descuentos);
     const carrito = useSelector((state) => state.carrito.carrito);
     const usuario = useSelector((state) => state.usuario.usuario);
-
-    
+    const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
     
     const [filteredProductos, setFilteredProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState('');
@@ -32,8 +32,8 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
       dispatch(fetchProductos());
       dispatch(fetchCategorias());
       dispatch(fetchDescuentos());
-      if (usuario) {
-        dispatch(fetchCarritoByUserId(usuario.id));
+      if (email) {
+        dispatch(fetchCarritoByUserEmail(email));
       }
     }, [dispatch, usuario]);
   
@@ -53,14 +53,13 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
 
 
     const handleAgregarAlCarrito = (producto) => {
-      console.log("Agregar al carrito clicked", producto);
-    
-      if (!usuario) {
+
+      if (!email) {
         navigate('/usuarios');
         return;
       }
       
-      if (!carrito || !carrito.id) {
+      if (!carrito || !carrito.carrito.id) {
         alert("No se pudo agregar el producto al carrito. Intente nuevamente.");
         return;
       }
@@ -71,9 +70,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
       }
       
       const item = { productoId: producto.id, cantidad: 1 };
-      console.log("Datos enviados al carrito:", { carritoId: carrito.id, item });
-    
-      dispatch(addToCarrito({ carritoId: carrito.id, item }))
+      dispatch(addToCarrito({ carritoId: carrito.carrito.id, item }))
         .then((response) => {
           console.log("Respuesta del servidor:", response);
           alert("Item agregado al carrito");
@@ -129,7 +126,6 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
               <ProductDo
                 value={producto}
                 agregarAlCarrito={() => {
-                  console.log("Agregar al carrito clicked", producto);
                   handleAgregarAlCarrito(producto);
                 }}
                 agregarAFavoritos={() => handleAgregarAFavoritos(producto)}

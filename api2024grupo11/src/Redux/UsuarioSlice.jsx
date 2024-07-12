@@ -9,14 +9,14 @@ const initialState = {
   error: null,
 };
 
-export const createUsuario = createAsyncThunk('usuario/createUsuario', async ({ username, password, nombre, apellido, email }) => {
+export const createUsuario = createAsyncThunk('usuario/createUsuario', async ({ username, password, nombre, apellido, email, isVendedor }) => {
   const req = {
     username,
     firstname: nombre,
     lastname: apellido,
     email,
     password,
-    roles: 1,
+    roles: isVendedor ? "Vendedor" : "Comprador",
   };
 
   const response = await axios.post(`${API_URL}/register`, req, {
@@ -34,17 +34,20 @@ export const loginUsuario = createAsyncThunk('usuario/loginUsuario', async ({ em
     password,
   };
 
-  const response = await axios.post(`${API_URL}/authenticate`, req, {
+  const { data } = await axios.post(`${API_URL}/authenticate`, req, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
-  return response.data;
+  data.isAuthenticated = true;
+
+  localStorage.setItem("usuario", JSON.stringify(data))
+  return data;
 });
 
 export const logoutUsuario = createAsyncThunk('usuario/logoutUsuario', async () => {
-  return null;
+  localStorage.clear()
 });
 
 const usuarioSlice = createSlice({

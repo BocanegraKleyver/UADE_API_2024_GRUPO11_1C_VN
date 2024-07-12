@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { useNavigate } from 'react-router-dom';
-import { removeFromCarrito } from '../Redux/CarritoSlice';
+import { fetchCarritoByUserEmail, removeFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
-import { fetchCarritoByUserId } from '../Redux/CarritoSlice';
 
 
 export const CarritoScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
   
   const carrito = useSelector((state) => state.carrito.carrito);
-  const productos = carrito?.productos || [];
+  const productos = carrito.carrito.productos || [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
 
 
   useEffect(() => {
-    if (carrito && carrito.productos) {
-      setCantidades(carrito.productos.map((producto) => producto.cantidad));
-      setTotalGlobal(carrito.total);
+    if (carrito && carrito.carrito.productos) {
+      setCantidades(carrito.carrito.productos.map((producto) => producto.cantidad));
+      setTotalGlobal(carrito.carrito.total);
     }
   }, [carrito]);
 
@@ -43,8 +44,9 @@ export const CarritoScreen = () => {
   };
 
 
-  const handleEliminarDelCarrito = async (id) => {
-    dispatch(removeFromCarrito({ carritoId: carrito.id, item: { id } }));
+  const handleEliminarDelCarrito = async (idProducto) => {
+    const item = { productoId: idProducto };
+    dispatch(removeFromCarrito({carritoId: carrito.carrito.id, item}));
     alert("Has eliminado el producto seleccionado.");
   };
 
@@ -56,7 +58,7 @@ export const CarritoScreen = () => {
   }, [cantidades, productos]);
 
   useEffect(() => {
-    dispatch(fetchCarritoByUserId(1)); 
+    dispatch(fetchCarritoByUserEmail(email)); 
   }, [dispatch]); 
 
 
@@ -73,7 +75,7 @@ export const CarritoScreen = () => {
                 producto={nodo.producto}
                 cantidad={cantidades[index]}
                 onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}
-                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.id)}
+                onEliminarDelCarrito={() => handleEliminarDelCarrito(nodo.producto.id)}
               />
             ))
           ) : (

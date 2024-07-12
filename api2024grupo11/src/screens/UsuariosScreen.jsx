@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUsuario } from "../Redux/UsuarioSlice";
 
-
 export const UsuariosScreen = () => {
   const dispatch = useDispatch();
   const usuario = useSelector((state) => state.usuario.usuario);
@@ -13,7 +12,6 @@ export const UsuariosScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-
 
 
   const handleSetEmail = (event) => {
@@ -26,7 +24,8 @@ export const UsuariosScreen = () => {
 
   const handleIngresar = async (e) => {
     e.preventDefault();
-    dispatch(loginUsuario({ email, password })).then(() => {
+    dispatch(loginUsuario({ email, password })).then((data) => {
+      console.log(data)
       setLoggedIn(true);
     });
   };
@@ -98,7 +97,6 @@ export const UsuariosScreen = () => {
             </div>
             {status === "loading" && <p>Cargando...</p>}
             {status === "failed" && <p>Error: {error}</p>}
-            {usuario && <p>Usuario autenticado: {usuario.username}</p>}
           </div>
         </div>
       </div>
