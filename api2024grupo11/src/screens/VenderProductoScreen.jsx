@@ -3,17 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createProducto } from '../Redux/ProductoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
+import { Link } from "react-router-dom";
 
 export const VenderProductoScreen = () => {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categoria.categorias);
   const descuentos = useSelector((state) => state.descuento.descuentos);
-  const ultimoProductoCreado = useSelector((state) => state.producto.ultimoProductoCreado);
   const [nuevoProducto, setNuevoProducto] = useState({
     titulo: '',
     descripcion: '',
-    precio: 0,
-    cantidad: 0,
+    precio: '',
+    cantidad: '',
     imagen_1_URL: '',
     imagen_2_URL: '',
     idCategoria: null,
@@ -26,25 +26,38 @@ export const VenderProductoScreen = () => {
     dispatch(fetchDescuentos());
   }, [dispatch]);
 
+  // const handleCrearProducto = () => {
+  //   if (validateNuevoProducto()) {
+  //     dispatch(createProducto(nuevoProducto));
+  //     resetNuevoProducto();
+  //   }
+  // };
   const handleCrearProducto = () => {
     if (validateNuevoProducto()) {
-      dispatch(createProducto(nuevoProducto));
+      const productoAEnviar = {
+        ...nuevoProducto,
+        precio: parseFloat(nuevoProducto.precio),
+        cantidad: parseInt(nuevoProducto.cantidad),
+        idCategoria: parseInt(nuevoProducto.idCategoria),
+        idDescuento: parseInt(nuevoProducto.idDescuento),
+      };
+      dispatch(createProducto(productoAEnviar));
       resetNuevoProducto();
     }
   };
-
 
   const resetNuevoProducto = () => {
     setNuevoProducto({
       titulo: '',
       descripcion: '',
-      precio: 0,
-      cantidad: 0,
+      precio: '',
+      cantidad: '',
       imagen_1_URL: '',
       imagen_2_URL: '',
       idCategoria: null,
       idDescuento: null,
     });
+    setError('');
   };
 
   const validateNuevoProducto = () => {
@@ -64,11 +77,11 @@ export const VenderProductoScreen = () => {
       setError('Por favor ingrese una cantidad válida.');
       return false;
     }
-    if (nuevoProducto.idCategoria === null) {
+    if (nuevoProducto.idCategoria === '') {
       setError('Por favor seleccione una categoría.');
       return false;
     }
-    if (nuevoProducto.idDescuento === null) {
+    if (nuevoProducto.idDescuento === '') {
       setError('Por favor seleccione un descuento.');
       return false;
     }
@@ -173,22 +186,21 @@ export const VenderProductoScreen = () => {
       >
         Crear Producto
       </button>
-
-      {ultimoProductoCreado && (
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-2">Último Producto Creado:</h3>
-          <p><strong>Título:</strong> {ultimoProductoCreado.titulo}</p>
-          <p><strong>Descripción:</strong> {ultimoProductoCreado.descripcion}</p>
-          <p><strong>Precio:</strong> ${ultimoProductoCreado.precio}</p>
-          <p><strong>Cantidad:</strong> {ultimoProductoCreado.cantidad}</p>
-          <p><strong>Categoría:</strong> {categorias.find(cat => cat.id === ultimoProductoCreado.idCategoria)?.descripcion}</p>
-          <p><strong>Descuento:</strong> {descuentos.find(desc => desc.id === ultimoProductoCreado.idDescuento)?.porcentaje}%</p>
-          <div className="flex space-x-4 mt-2">
-            <img src={ultimoProductoCreado.imagen_1_URL} alt="Imagen 1" className="w-32 h-32 object-cover" />
-            <img src={ultimoProductoCreado.imagen_2_URL} alt="Imagen 2" className="w-32 h-32 object-cover" />
-          </div>
+      <div className="flex justify-between">
+          <button
+            onClick={() => window.history.back()}
+            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+          >
+            ATRAS
+          </button>
         </div>
-      )}
+  
+        <Link
+          to="/"
+          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+        >
+          Volver a la pantalla principal
+        </Link>
     </div>
   );
 };

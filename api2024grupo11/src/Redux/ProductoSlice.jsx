@@ -29,6 +29,7 @@ export const fetchProductoById = createAsyncThunk('producto/fetchProductos', asy
 });
 
 export const createProducto = createAsyncThunk('producto/createProducto', async (nuevoProducto) => {
+  console.log('Enviando solicitud de creación de producto:', nuevoProducto);
   const response = await axios.post(API_URL, {
     headers: {
       'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
-import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
+import { fetchProductos } from '../Redux/ProductoSlice';
 
 export const ComprarScreen = () => {
     const dispatch = useDispatch();
@@ -40,17 +40,55 @@ export const ComprarScreen = () => {
   
     useEffect(() => {
       setFilteredProductos(productos);
-    }, [productos]);
+  }, [productos]);
 
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = productos;
 
-    useEffect(() => {
-      const applyFilters = async () => {
-          const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
-          setFilteredProductos(response.payload);
-      };
+      if (searchTerm) {
+        filtered = filtered.filter(producto =>
+          producto.nombre && producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
 
-      applyFilters();
-  }, [searchTerm, filtroCategoria, filtroDescuento, dispatch]);
+      if (filtroCategoria) {
+        filtered = filtered.filter(producto =>
+          producto.idCategoria === parseInt(filtroCategoria, 10)
+        );
+      }
+
+      if (filtroDescuento) {
+        filtered = filtered.filter(producto =>
+          producto.idDescuento === parseInt(filtroDescuento, 10)
+        );
+      }
+
+      if (filtroPrecio) {
+        filtered = filtered.filter(producto => {
+          const precio = producto.precio;
+          switch (filtroPrecio) {
+            case '0-24999':
+              return precio >= 0 && precio <= 24999;
+            case '25000-49999':
+              return precio > 25000 && precio <= 49999;
+            case '50000-74999':
+              return precio > 50000 && precio <= 74999;
+            case '75000-99999':
+              return precio > 75000 && precio <= 99999;
+            case '100000+':
+              return precio > 100000;
+            default:
+              return true;
+          }
+        });
+      }
+
+      setFilteredProductos(filtered);
+    };
+
+    applyFilters();
+  }, [productos, searchTerm, filtroCategoria, filtroDescuento, filtroPrecio]);
 
 
 
@@ -138,39 +176,31 @@ const filterByPriceRange = (producto) => {
   }
 };
 
-const applyAllFilters = (productos) => {
-  return productos && productos.filter(producto => 
-      filterByCategory(producto) && 
-      filterByDiscount(producto) &&
-      filterByPriceRange(producto)
-  );
-};
 
-  
 return (
   <div className="comprarscreen">
     <div className="paralelo2">
-      <div >
+      <div>
         <h1 className="logo">¿Qué desea comprar?</h1>
       </div>
       <SearchBar onSearch={handleSearch} />
       <Filters
-          categorias={categorias}
-          descuentos={descuentos}
-          onFilter={handleFilterChange}
+        categorias={categorias}
+        descuentos={descuentos}
+        onFilter={handleFilterChange}
       />
-      </div>
-      <div className="contenedor-productos">
-          {applyAllFilters(filteredProductos).map((producto, index) => (
-              <div key={index}>
-                  <ProductDo
-                      value={producto}
-                      agregarAlCarrito={() => handleAgregarAlCarrito(producto)}
-                      agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
-                  />
-              </div>
-          ))}
-      </div>
+    </div>
+    <div className="contenedor-productos">
+      {filteredProductos.map((producto, index) => (
+        <div key={index}>
+          <ProductDo
+            value={producto}
+            agregarAlCarrito={() => handleAgregarAlCarrito(producto)}
+            agregarAFavoritos={() => handleAgregarAFavoritos(producto)}
+          />
+        </div>
+      ))}
+    </div>
   </div>
 );
 };

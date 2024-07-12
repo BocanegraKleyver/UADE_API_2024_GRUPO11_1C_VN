@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link} from 'react-router-dom';
 import { comprar, emptyCarrito, fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
 
@@ -91,13 +91,30 @@ export const CarritoScreen = () => {
           ) : (
             <p>No hay productos en el carrito.</p>
           )}
+                
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
           <span className='font-bold text-black'>Información del carrito</span>
           <span className='font-normal text-black'>Total estimado: <span className='text-black'>${totalGlobal.toFixed(2)}</span></span>
           <button onClick={handleComprar} disabled={comprarDeshabilitado} className='p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center'>Comprar</button>
+          <div className="flex justify-between">
+          <button
+            onClick={() => window.history.back()}
+            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+          >
+            ATRAS
+          </button>
+        </div>
+  
+        <Link
+          to="/"
+          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+        >
+          Volver a la pantalla principal
+        </Link>
         </div>
       </div>
+      
     </div>
   );
 };
