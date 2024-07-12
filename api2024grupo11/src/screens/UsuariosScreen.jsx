@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { loginUsuario } from "../Redux/UsuarioSlice";
 
 export const UsuariosScreen = () => {
   const dispatch = useDispatch();
@@ -85,7 +87,7 @@ export const UsuariosScreen = () => {
 
                 <div>
                   <Link
-                    className="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center boton-menu boton-crear-usuario active"
+                    className="p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 hover:text-white text-center  active"
                     to="/crearUsuario"
                   >
                     Crear usuario
