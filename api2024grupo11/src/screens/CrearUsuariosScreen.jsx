@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUsuario } from "../Redux/UsuarioSlice";
+import { createUsuario, logoutUsuario } from "../Redux/UsuarioSlice";
 import { useNavigate } from "react-router-dom";
 
 export const CrearUsuariosScreen = () => {

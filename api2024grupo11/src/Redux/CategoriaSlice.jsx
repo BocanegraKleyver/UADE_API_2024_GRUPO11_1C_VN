@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/categoria';
-const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
+const token = localStorage.getItem('usuario') &&JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   categorias: [],

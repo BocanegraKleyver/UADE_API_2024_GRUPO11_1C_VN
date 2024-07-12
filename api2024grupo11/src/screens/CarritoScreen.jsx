@@ -16,7 +16,7 @@ export const CarritoScreen = () => {
   const productos = carrito.carrito.productos || [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
-  const carritoId = carrito?.id || JSON.parse(localStorage.getItem("carritoId"));
+  const carritoId = carrito.carrito.id || JSON.stringify(localStorage.getItem("carritoId"));
 
   useEffect(() => {
     dispatch(fetchCarritoByUserEmail(userEmail)); 
@@ -60,24 +60,15 @@ export const CarritoScreen = () => {
     productos.forEach(nodo => {
       arrayProductos.push({productoId: nodo.producto.id, cantidad: nodo.cantidad, precio: nodo.producto.precioConDescuento})
     })
-
-    const req = { email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}
-    console.log("antes: " + JSON.stringify(req))
     await dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
-
-    // productos.forEach(async (producto, index) => {
-    //   const newStock = producto.producto.stock - cantidades[index];
-    //   await dispatch(updateProducto({ id: producto.producto.id, producto: { ...producto.producto, stock: newStock } }));
-    // });
-
-    // await emptyCarrito(carrito.carrito.id);
-    // alert("Compra exitosa");
-    // navigate("/");
+    await dispatch(emptyCarrito(carrito.carrito.id));
+    alert("Compra exitosa");
+    navigate("/");
   };
 
   const handleEliminarDelCarrito = async (idProducto) => {
-    if (carritoId) { 
-      dispatch(removeFromCarrito({ carritoId: carritoId, productoId: idProducto }));
+    if (carrito.carrito.id) { 
+      dispatch(removeFromCarrito({ carritoId: carrito.carrito.id, productoId: idProducto }));
       alert("Has eliminado el producto seleccionado.");
     } else {
       console.error("El ID del carrito no está definido correctamente.");
@@ -122,7 +113,7 @@ export const CarritoScreen = () => {
         </div>
         <div className='py-5 text-white flex flex-col px-2 border-l border-slate-300 h-full'>
           <span className='font-bold text-black'>Información del carrito</span>
-          <span className='font-normal text-black'>Total estimado: <span className='text-black'>${totalGlobal}</span></span>
+          <span className='font-normal text-black'>Total estimado: <span className='text-black'>${totalGlobal.toFixed(2)}</span></span>
           <button onClick={handleComprar} disabled={comprarDeshabilitado} className='p-2 my-3 rounded-md bg-black text-white font-semibold text-sm hover:bg-slate-900 text-center'>Comprar</button>
         </div>
       </div>

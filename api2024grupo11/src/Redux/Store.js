@@ -5,6 +5,8 @@ import productoReducer from "./ProductoSlice.jsx";
 import carritoReducer from "./CarritoSlice.jsx";
 import favoritosReducer from "./FavoritoSlice.jsx";
 import usuarioReducer from "./UsuarioSlice.jsx";
+import comprasReducer from "./ComprasSlice.jsx";
+
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,7 @@ const store = configureStore({
     carrito: carritoReducer,
     favoritos: favoritosReducer,
     usuario: usuarioReducer,
+    compras: comprasReducer
   },
 });
 

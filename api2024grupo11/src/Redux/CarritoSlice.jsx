@@ -4,8 +4,6 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/v1/carrito';
 const COMPRA_API_URL = 'http://localhost:8080/api/v1/compra/create'
 
-const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
-
 const initialState = {
   carrito: {
     productos: [],
@@ -41,7 +39,6 @@ export const substractFromCarrito = createAsyncThunk('carrito/substractFromCarri
     const response = await axios.post(`${API_URL}/restar/${carritoId}`, { productoId, cantidad }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${token}`
       }
     });
     return response.data;
@@ -57,7 +54,6 @@ export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ ca
     const response = await axios.post(`${API_URL}/agregar/${carritoId}`, { productoId, cantidad }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${token}`
       }
     });
     return response.data;
@@ -69,14 +65,13 @@ export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ ca
 
 export const comprar = createAsyncThunk('carrito/comprar', async ({email, total, compraProductos}) => {
 
-  const req = JSON.parse({"email": email, "total": total, "productos": compraProductos})
+  const req = JSON.stringify({email: email, total: total, productos: compraProductos})
 
   try {
 
-    const response = await axios.post(`${COMPRA_API_URL}`, {req}, {
+    const response = await axios.post(`${COMPRA_API_URL}`, req, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${token}`
       }
     });
     return response.data;
@@ -87,14 +82,16 @@ export const comprar = createAsyncThunk('carrito/comprar', async ({email, total,
 });
 
 export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', async ({ carritoId, productoId }) => {
+
+  const req = {productoId}
+
   try {
-    const response = await axios.delete(`${API_URL}/quitar/${carritoId}/${productoId}`,
+    const response = await axios.delete(`${API_URL}/quitar/${carritoId}`,
        {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': ` ${token}`
         }
-       });
+       }, req);
     return response.data;
   } catch (error) {
     console.error("Error en la solicitud al servidor:", error.response ? error.response.data : error.message);
@@ -126,7 +123,6 @@ export const emptyCarrito = createAsyncThunk('carrito/emptyCarrito', async (carr
   const response = await axios.put(`${API_URL}/vaciar/${carritoId}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`
     }
   });
   return response.data;
@@ -163,9 +159,11 @@ const carritoSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addToCarrito.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         state.carrito = action.payload;
       })
       .addCase(addToCarrito.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.error.message;
       })
       .addCase(substractFromCarrito.fulfilled, (state, action) => {
@@ -175,7 +173,21 @@ const carritoSlice = createSlice({
         state.carrito = action.payload;
       })
       .addCase(emptyCarrito.fulfilled, (state, action) => {
-        state.carrito = action.payload;
+        state.status = 'succeeded';
+        state.carrito.productos = [];
+        state.carrito.total = 0;
+      })
+      .addCase(comprar.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(comprar.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.carrito.productos = [];
+        state.carrito.total = 0;
+      })
+      .addCase(comprar.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   },
 });

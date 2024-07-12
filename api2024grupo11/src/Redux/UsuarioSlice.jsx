@@ -69,7 +69,7 @@ const usuarioSlice = createSlice({
       })
       .addCase(createUsuario.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.usuario = action.payload;
+        state.usuario = null;
       })
       .addCase(createUsuario.rejected, (state, action) => {
         state.status = 'failed';
