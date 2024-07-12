@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUsuario } from "../../Redux/UsuarioSlice";
 
 export const AsideHeader = () => {
   const dispatch = useDispatch();
   const usuario = useSelector((state) => state.usuario.usuario);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logoutUsuario());
+    navigate("/");
   };
 
   const role = usuario ? usuario.role : "";

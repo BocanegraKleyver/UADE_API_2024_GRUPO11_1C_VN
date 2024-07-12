@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/descuento';
+const token = JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   descuentos: [],
@@ -10,22 +11,42 @@ const initialState = {
 };
 
 export const fetchDescuentos = createAsyncThunk('descuento/fetchDescuentos', async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  });
   return response.data;
 });
 
 export const createDescuento = createAsyncThunk('descuento/createDescuento', async (nuevoDescuento) => {
-  const response = await axios.post(API_URL, nuevoDescuento);
+  const response = await axios.post(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }, nuevoDescuento);
   return response.data;
 });
 
 export const updateDescuento = createAsyncThunk('descuento/updateDescuento', async ({ id, descuento }) => {
-  const response = await axios.put(`${API_URL}/${id}`, descuento);
+  const response = await axios.put(`${API_URL}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }, descuento);
   return response.data;
 });
 
 export const deleteDescuento = createAsyncThunk('descuento/deleteDescuento', async (id) => {
-  await axios.delete(`${API_URL}/${id}`);
+  await axios.delete(`${API_URL}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  });
   return id;
 });
 

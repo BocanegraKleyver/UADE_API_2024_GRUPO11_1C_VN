@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/categoria';
+const token = JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   categorias: [],
@@ -10,22 +11,42 @@ const initialState = {
 };
 
 export const fetchCategorias = createAsyncThunk('categoria/fetchCategorias', async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  });
   return response.data;
 });
 
 export const createCategoria = createAsyncThunk('categoria/createCategoria', async (nuevaCategoria) => {
-  const response = await axios.post(API_URL, nuevaCategoria);
+  const response = await axios.post(API_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }, nuevaCategoria);
   return response.data;
 });
 
 export const updateCategoria = createAsyncThunk('categoria/updateCategoria', async ({ id, categoria }) => {
-  const response = await axios.put(`${API_URL}/${id}`, categoria);
+  const response = await axios.put(`${API_URL}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }, categoria);
   return response.data;
 });
 
 export const deleteCategoria = createAsyncThunk('categoria/deleteCategoria', async (id) => {
-  await axios.delete(`${API_URL}/${id}`);
+  await axios.delete(`${API_URL}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  });
   return id;
 });
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { useNavigate } from 'react-router-dom';
-import { fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
+import { comprar, emptyCarrito, fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
 
 
@@ -10,13 +10,17 @@ export const CarritoScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
+  const userEmail = JSON.parse(localStorage.getItem("usuario")).registered_email;
   
   const carrito = useSelector((state) => state.carrito.carrito);
   const productos = carrito.carrito.productos || [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
   const carritoId = carrito?.id || JSON.parse(localStorage.getItem("carritoId"));
+
+  useEffect(() => {
+    dispatch(fetchCarritoByUserEmail(userEmail)); 
+  }, [dispatch, userEmail])
 
   useEffect(() => {
     if (carrito && carrito.carrito.productos) {
@@ -52,12 +56,21 @@ export const CarritoScreen = () => {
   };
 
   const handleComprar = async () => {
-    productos.forEach(async (producto, index) => {
-      const newStock = producto.producto.stock - cantidades[index];
-      await dispatch(updateProducto({ id: producto.producto.id, producto: { ...producto.producto, stock: newStock } }));
-    });
-    alert("Compra exitosa");
-    navigate("/");
+    const arrayProductos = []
+    productos.forEach(nodo => {
+      arrayProductos.push({cantidad: nodo.cantidad, productoId: nodo.producto.id, precio: nodo.producto.precioConDescuento})
+    })
+    
+    await dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
+
+    // productos.forEach(async (producto, index) => {
+    //   const newStock = producto.producto.stock - cantidades[index];
+    //   await dispatch(updateProducto({ id: producto.producto.id, producto: { ...producto.producto, stock: newStock } }));
+    // });
+
+    // await emptyCarrito(carrito.carrito.id);
+    // alert("Compra exitosa");
+    // navigate("/");
   };
 
   const handleEliminarDelCarrito = async (idProducto) => {
@@ -76,9 +89,7 @@ export const CarritoScreen = () => {
     setTotalGlobal(nuevoTotal);
   }, [cantidades, productos]);
 
-  useEffect(() => {
-    dispatch(fetchCarritoByUserEmail(email)); 
-  }, [dispatch, email])
+
 
 
   useEffect(() => {

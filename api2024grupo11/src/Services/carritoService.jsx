@@ -30,8 +30,6 @@ export const agregarItemAlCarrito = async (item, idCarrito) => {
             "cantidad": 1
         });
 
-        console.log(raw)
-        
         var requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -41,7 +39,6 @@ export const agregarItemAlCarrito = async (item, idCarrito) => {
 
         const response = await fetch("http://localhost:8080/api/v1/carrito/agregar/" + idCarrito, requestOptions);
         const result = await response.text();
-        console.log(result);
     } catch (error) {
         console.log('error', error);
     }
@@ -126,7 +123,6 @@ export const actualizarCarrito = async (cantidad, item) => {
 
         const response = await fetch("http://localhost:8000/carrito/" + item.id, requestOptions);
         const result = await response.text();
-        console.log(result);
     } catch (error) {
         console.log('error', error);
     }

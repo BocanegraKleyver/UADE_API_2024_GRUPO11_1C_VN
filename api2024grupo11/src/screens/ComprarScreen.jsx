@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Filters } from "../components/Filters/Filters";
 import { SearchBar } from "../components/SearchBar/SearchBar";
-import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
 import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
+import ProductDo from '../components/Cards/ProductDo'
 
 export const ComprarScreen = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const ComprarScreen = () => {
       if (email) {
         dispatch(fetchCarritoByUserEmail(email));
       }
-    }, [dispatch, usuario, email]);
+    }, [dispatch, email]);
   
     useEffect(() => {
       setFilteredProductos(productos);
@@ -46,7 +46,6 @@ export const ComprarScreen = () => {
     useEffect(() => {
       const fetchFilteredProductos = async () => {
         const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
-        console.log(response);
         setFilteredProductos(response.payload);
       };
   
@@ -75,7 +74,6 @@ export const ComprarScreen = () => {
       const item = { productoId: producto.id, cantidad: 1 };
       dispatch(addToCarrito({ carritoId: carrito.carrito.id, item }))
         .then((response) => {
-          console.log("Respuesta del servidor:", response);
           alert("Item agregado al carrito");
         })
         .catch((error) => {
@@ -123,7 +121,7 @@ export const ComprarScreen = () => {
           descuentos={descuentos}
           onFilter={handleFilterChange}
         />
-        {/* <div className="contenedor-productos">
+        <div className="contenedor-productos">
           {filterProductos.length>0 && filteredProductos.map((producto, index) => (
             <div key={index} onClick={() => handleSelectProduct(producto)}>
               <ProductDo
@@ -135,7 +133,7 @@ export const ComprarScreen = () => {
               />
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
     );
   };

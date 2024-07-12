@@ -33,12 +33,6 @@ import { fetchCategorias, createCategoria, updateCategoria, deleteCategoria } fr
     const categoriasFiltradas = categorias.filter((categoria) =>
       categoria.descripcion.toLowerCase().includes(filtroCategoria.toLowerCase())
     );
-
-    console.log('Estado actual de categorías:', categorias);
-    console.log('Estado de carga:', status);
-    console.log('Error:', error);
-
-
     return (
       <div className="p-6 bg-gray-100 min-h-screen">
         <h2 className="text-2xl font-bold mb-4">Categorías</h2>
