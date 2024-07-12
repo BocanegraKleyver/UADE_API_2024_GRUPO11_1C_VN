@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemCard } from '../components/Cards/CartItemCard';
 import { useNavigate } from 'react-router-dom';
-import { fetchCarritoByUserEmail, removeFromCarrito } from '../Redux/CarritoSlice';
+import { fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
 
 
@@ -16,7 +16,7 @@ export const CarritoScreen = () => {
   const productos = carrito.carrito.productos || [];
   const [cantidades, setCantidades] = useState([]);
   const [totalGlobal, setTotalGlobal] = useState(0);
-
+  const carritoId = carrito?.id || JSON.parse(localStorage.getItem("carritoId"));
 
   useEffect(() => {
     if (carrito && carrito.carrito.productos) {
@@ -25,14 +25,31 @@ export const CarritoScreen = () => {
     }
   }, [carrito]);
 
+
   const comprarDeshabilitado = productos.length === 0;
 
-  const handleCantidadChange = (index, nuevaCantidad) => {
+  // const handleCantidadChange = (index, nuevaCantidad) => {
+  //   const nuevasCantidades = [...cantidades];
+  //   nuevasCantidades[index] = nuevaCantidad;
+  //   setCantidades(nuevasCantidades);
+  // };
+
+  const handleCantidadChange = async (index, nuevaCantidad) => {
     const nuevasCantidades = [...cantidades];
     nuevasCantidades[index] = nuevaCantidad;
     setCantidades(nuevasCantidades);
-  };
 
+    const producto = productos[index];
+    const cantidadDiff = nuevaCantidad - producto.cantidad;
+
+    if (cantidadDiff !== 0) {
+      await dispatch(substractFromCarrito({
+        carritoId: carritoId,
+        productoId: producto.producto.id,
+        cantidad: cantidadDiff
+      }));
+    }
+  };
 
   const handleComprar = async () => {
     productos.forEach(async (producto, index) => {
@@ -43,11 +60,13 @@ export const CarritoScreen = () => {
     navigate("/");
   };
 
-
   const handleEliminarDelCarrito = async (idProducto) => {
-    const item = { productoId: idProducto };
-    dispatch(removeFromCarrito({carritoId: carrito.carrito.id, item}));
-    alert("Has eliminado el producto seleccionado.");
+    if (carritoId) { 
+      dispatch(removeFromCarrito({ carritoId: carritoId, productoId: idProducto }));
+      alert("Has eliminado el producto seleccionado.");
+    } else {
+      console.error("El ID del carrito no está definido correctamente.");
+    }
   };
 
   useEffect(() => {
@@ -59,8 +78,14 @@ export const CarritoScreen = () => {
 
   useEffect(() => {
     dispatch(fetchCarritoByUserEmail(email)); 
-  }, [dispatch]); 
+  }, [dispatch, email])
 
+
+  useEffect(() => {
+    if (carritoId) {
+      localStorage.setItem("carritoId", JSON.stringify(carritoId));
+    }
+  }, [carritoId]);
 
 
   return (
@@ -71,7 +96,7 @@ export const CarritoScreen = () => {
           {productos.length > 0 ? (
             productos.map((nodo, index) => (
               <CartItemCard
-                key={nodo.producto.idProductos}
+                key={nodo.producto.id}
                 producto={nodo.producto}
                 cantidad={cantidades[index]}
                 onCantidadChange={(cantidad) => handleCantidadChange(index, cantidad)}

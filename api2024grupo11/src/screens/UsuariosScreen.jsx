@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate  } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUsuario } from "../Redux/UsuarioSlice";
 
@@ -11,8 +11,7 @@ export const UsuariosScreen = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-
+  const navigate = useNavigate();
 
   const handleSetEmail = (event) => {
     setEmail(event.target.value);
@@ -22,18 +21,18 @@ export const UsuariosScreen = () => {
     setPassword(event.target.value);
   };
 
+
   const handleIngresar = async (e) => {
     e.preventDefault();
-    dispatch(loginUsuario({ email, password })).then((data) => {
-      console.log(data)
-      setLoggedIn(true);
-    });
+    dispatch(loginUsuario({ email, password }));
   };
-
   
-  if (loggedIn) {
-    return <Link to="/" />;
-  }
+
+  useEffect(() => {
+    if (usuario) {
+      navigate("/");
+    }
+  }, [usuario, navigate]);
 
   return (
     <div className="Usuario_Screen">

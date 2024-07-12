@@ -20,8 +20,12 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
     const descuentos = useSelector((state) => state.descuento.descuentos);
     const carrito = useSelector((state) => state.carrito.carrito);
     const usuario = useSelector((state) => state.usuario.usuario);
-    const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
-    
+    // const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
+    const usuarioLocalStorage = JSON.parse(localStorage.getItem("usuario"));
+    const email = usuarioLocalStorage ? usuarioLocalStorage.registered_email : null;
+   
+
+
     const [filteredProductos, setFilteredProductos] = useState([]);
     const [filtroCategoria, setFiltroCategoria] = useState('');
     const [filtroDescuento, setFiltroDescuento] = useState('');
@@ -35,7 +39,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
       if (email) {
         dispatch(fetchCarritoByUserEmail(email));
       }
-    }, [dispatch, usuario]);
+    }, [dispatch, usuario, email]);
   
     useEffect(() => {
       setFilteredProductos(productos);

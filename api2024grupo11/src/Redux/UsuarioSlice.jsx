@@ -4,28 +4,36 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/v1/auth';
 
 const initialState = {
-  usuario: null,
+  usuario: JSON.parse(localStorage.getItem("usuario")) || null,
   status: 'idle',
   error: null,
 };
 
-export const createUsuario = createAsyncThunk('usuario/createUsuario', async ({ username, password, nombre, apellido, email, isVendedor }) => {
+
+export const createUsuario = createAsyncThunk('usuario/createUsuario', async ({ username, password, nombre, apellido, email, isVendedor }, { rejectWithValue }) => {
   const req = {
     username,
     firstname: nombre,
     lastname: apellido,
     email,
     password,
-    roles: isVendedor ? "Vendedor" : "Comprador",
+    roles: isVendedor ? 3 : 2,//"Vendedor" : "Comprador",
   };
 
-  const response = await axios.post(`${API_URL}/register`, req, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    const response = await axios.post(`${API_URL}/register`, req, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data) {
+      return rejectWithValue(error.response.data);
+    }
+    return rejectWithValue(error.message);
+  }
 });
 
 export const loginUsuario = createAsyncThunk('usuario/loginUsuario', async ({ email, password }) => {
@@ -47,7 +55,7 @@ export const loginUsuario = createAsyncThunk('usuario/loginUsuario', async ({ em
 });
 
 export const logoutUsuario = createAsyncThunk('usuario/logoutUsuario', async () => {
-  localStorage.clear()
+  localStorage.removeItem("usuario"); 
 });
 
 const usuarioSlice = createSlice({
