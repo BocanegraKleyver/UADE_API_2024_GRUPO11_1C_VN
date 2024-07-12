@@ -1,14 +1,14 @@
 import { default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import ProductDo from "../components/Cards/ProductDo";
 import { Filters } from "../components/Filters/Filters";
 import { SearchBar } from "../components/SearchBar/SearchBar";
+import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
-import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
-import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
+import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
 import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
-import ProductDo from '../components/Cards/ProductDo'
 
 export const ComprarScreen = () => {
     const dispatch = useDispatch();
@@ -18,7 +18,6 @@ export const ComprarScreen = () => {
     const descuentos = useSelector((state) => state.descuento.descuentos);
     const carrito = useSelector((state) => state.carrito.carrito);
     const usuario = useSelector((state) => state.usuario.usuario);
-    // const email = JSON.parse(localStorage.getItem("usuario")).registered_email;
     const usuarioLocalStorage = JSON.parse(localStorage.getItem("usuario"));
     const email = usuarioLocalStorage ? usuarioLocalStorage.registered_email : null;
    
@@ -147,12 +146,12 @@ const applyAllFilters = (productos) => {
   );
 };
 
-
   
 return (
   <div className="comprarscreen">
-      <div className="text-black bold p-5">
-          <h1>¿Qué desea comprar?</h1>
+    <div className="paralelo2">
+      <div >
+        <h1 className="logo">¿Qué desea comprar?</h1>
       </div>
       <SearchBar onSearch={handleSearch} />
       <Filters
@@ -160,6 +159,7 @@ return (
           descuentos={descuentos}
           onFilter={handleFilterChange}
       />
+      </div>
       <div className="contenedor-productos">
           {applyAllFilters(filteredProductos).map((producto, index) => (
               <div key={index}>

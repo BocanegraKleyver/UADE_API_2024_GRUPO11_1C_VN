@@ -35,7 +35,7 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
             <p className="producto-cantidad">Stock: {value.cantidad}</p>
           </header>
           <p className="producto-descripcion">{value.descripcion}</p>
-          <div className="dividir">  
+          <div className="paralelo">
             <button
               className="producto-agregar"
               onClick={() => agregarAlCarrito(value)}
@@ -43,7 +43,7 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
               Agregar
             </button>
             <button
-              className="producto-favoritos"
+              className="producto-agregar"
               onClick={() => agregarAFavoritos(value)}
             >
               Favoritos

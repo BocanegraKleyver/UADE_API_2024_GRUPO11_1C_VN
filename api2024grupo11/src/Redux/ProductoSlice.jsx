@@ -19,6 +19,15 @@ export const fetchProductos = createAsyncThunk('producto/fetchProductos', async 
   return response.data;
 });
 
+export const fetchProductoById = createAsyncThunk('producto/fetchProductos', async (id) => {
+  const response = await axios.get(API_URL+`/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  return response.data;
+});
+
 export const createProducto = createAsyncThunk('producto/createProducto', async (nuevoProducto) => {
   const response = await axios.post(API_URL, {
     headers: {
