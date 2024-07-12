@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/v1/producto';
-const token = JSON.parse(localStorage.getItem('usuario')).access_token;
+const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   productos: [],
@@ -14,7 +14,6 @@ export const fetchProductos = createAsyncThunk('producto/fetchProductos', async 
   const response = await axios.get(API_URL, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`
     }
   });
   return response.data;

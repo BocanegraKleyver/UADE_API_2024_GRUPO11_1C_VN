@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/v1/carrito';
 const COMPRA_API_URL = 'http://localhost:8080/api/v1/compra/create'
 
-const token = JSON.parse(localStorage.getItem('usuario')).access_token;
+const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
 
 const initialState = {
   carrito: {
@@ -69,12 +69,11 @@ export const addToCarrito = createAsyncThunk('carrito/addToCarrito', async ({ ca
 
 export const comprar = createAsyncThunk('carrito/comprar', async ({email, total, compraProductos}) => {
 
-  const req = {"email": email, "total": total, "productos": compraProductos}
+  const req = JSON.parse({"email": email, "total": total, "productos": compraProductos})
 
-  console.log(JSON.stringify(req))
   try {
 
-    const response = await axios.post(`${COMPRA_API_URL}`, {email, total, compraProductos}, {
+    const response = await axios.post(`${COMPRA_API_URL}`, {req}, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `${token}`
@@ -93,7 +92,7 @@ export const removeFromCarrito = createAsyncThunk('carrito/removeFromCarrito', a
        {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${token}`
+          'Authorization': ` ${token}`
         }
        });
     return response.data;

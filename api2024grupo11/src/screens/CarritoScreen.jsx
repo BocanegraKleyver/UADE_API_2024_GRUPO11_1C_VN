@@ -58,9 +58,11 @@ export const CarritoScreen = () => {
   const handleComprar = async () => {
     const arrayProductos = []
     productos.forEach(nodo => {
-      arrayProductos.push({cantidad: nodo.cantidad, productoId: nodo.producto.id, precio: nodo.producto.precioConDescuento})
+      arrayProductos.push({productoId: nodo.producto.id, cantidad: nodo.cantidad, precio: nodo.producto.precioConDescuento})
     })
-    
+
+    const req = { email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}
+    console.log("antes: " + JSON.stringify(req))
     await dispatch(comprar({ email: userEmail, total: carrito.carrito.total, compraProductos: arrayProductos}))
 
     // productos.forEach(async (producto, index) => {
