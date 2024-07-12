@@ -24,7 +24,7 @@ export const AdministrarScreen = () => {
       </ul>
       <Link
         to="/home"
-        className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+        className="producto-agregar"
       >
         Volver a la pantalla principal
       </Link>
