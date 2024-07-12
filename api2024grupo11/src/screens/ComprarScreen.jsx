@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { default as React, default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice";
 import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
-
 
   export const ComprarScreen = () => {
     const dispatch = useDispatch();
