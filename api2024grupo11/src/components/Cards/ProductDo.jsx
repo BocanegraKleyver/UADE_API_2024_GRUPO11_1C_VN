@@ -35,7 +35,7 @@ function ProductDo({ value, agregarAlCarrito, agregarAFavoritos,onSelect  }) {
             <p className="producto-cantidad">Stock: {value.cantidad}</p>
           </header>
           <p className="producto-descripcion">{value.descripcion}</p>
-          <div>  
+          <div className="dividir">  
             <button
               className="producto-agregar"
               onClick={() => agregarAlCarrito(value)}

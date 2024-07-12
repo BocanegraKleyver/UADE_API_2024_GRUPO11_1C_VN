@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import ProductDo from "../components/Cards/ProductDo";
-import { SearchBar } from "../components/SearchBar/SearchBar";
-import { Filters } from "../components/Filters/Filters";
+import { default as React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
+import { useNavigate } from "react-router-dom";
+import { Filters } from "../components/Filters/Filters";
+import { SearchBar } from "../components/SearchBar/SearchBar";
+import { addToCarrito, fetchCarritoByUserId } from '../Redux/CarritoSlice';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
 import { addToCarrito, fetchCarritoByUserEmail } from '../Redux/CarritoSlice';
 import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
+import { fetchProductos, filterProductos } from '../Redux/ProductoSlice';
 
-
-
-  export const ComprarScreen = () => {
+export const ComprarScreen = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const productos = useSelector((state) => state.producto.productos);
@@ -48,6 +46,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
     useEffect(() => {
       const fetchFilteredProductos = async () => {
         const response = await dispatch(filterProductos({ searchTerm, filtroCategoria, filtroDescuento }));
+        console.log(response);
         setFilteredProductos(response.payload);
       };
   
@@ -113,8 +112,8 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
     };
 
   
-    return (
-      <div>
+  return (
+    <div className="comprarscreen">
         <div className="text-black bold p-5">
           <h1>¿Qué desea comprar?</h1>
         </div>
@@ -124,8 +123,8 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
           descuentos={descuentos}
           onFilter={handleFilterChange}
         />
-        <div className="contenedor-productos">
-          {filteredProductos.map((producto, index) => (
+        {/* <div className="contenedor-productos">
+          {filterProductos.length>0 && filteredProductos.map((producto, index) => (
             <div key={index} onClick={() => handleSelectProduct(producto)}>
               <ProductDo
                 value={producto}
@@ -136,7 +135,7 @@ import { agregarItemAFavoritosLocalmente } from "../Redux/FavoritoSlice"
               />
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     );
   };
