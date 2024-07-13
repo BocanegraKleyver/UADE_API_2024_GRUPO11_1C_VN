@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+//API 2024 TEAM 11
 const API_URL = 'http://localhost:8080/api/v1/descuento';
 const token = localStorage.getItem('usuario') && JSON.parse(localStorage.getItem('usuario')).access_token;
 
