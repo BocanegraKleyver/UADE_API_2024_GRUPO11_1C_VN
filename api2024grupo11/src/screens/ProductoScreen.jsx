@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductos, createProducto, updateProducto, deleteProducto } from '../Redux/ProductoSlice';
+import { Link } from 'react-router-dom';
 import { fetchCategorias } from '../Redux/CategoriaSlice';
 import { fetchDescuentos } from '../Redux/DescuentoSlice';
+import { createProducto, deleteProducto, fetchProductos, updateProducto } from '../Redux/ProductoSlice';
 
 export const ProductoScreen = () => {
   const dispatch = useDispatch();
@@ -391,18 +391,22 @@ const productosFiltrados = productos.filter((producto) =>
           </button>
         </div>
       )}
-            <div className="flex justify-between">
-        <button
-          onClick={() => window.history.back()}
-          className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+      <div className="paralelo">
+          <button
+            onClick={() => window.history.back()}
+            className="producto-agregar"
+          >
+            ATRAS
+          </button>
+        
+  
+        <Link
+          to="/"
+          className="producto-agregar"
         >
-          ATRAS
-        </button>
+          Volver a la pantalla principal
+        </Link>
       </div>
-
-      <Link to="/" className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4">
-        Volver a la pantalla principal
-      </Link>
     </div>
   );
 };

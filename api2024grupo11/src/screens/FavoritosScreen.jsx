@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { FavItemCard } from "../components/Cards/FavItemCard";
-import { eliminarItemDeFavoritosLocalmente } from "../Redux/FavoritoSlice"; 
+import { eliminarItemDeFavoritosLocalmente } from "../Redux/FavoritoSlice";
 import { fetchProductos } from "../Redux/ProductoSlice";
-import { useNavigate,Link } from "react-router-dom";
 
 export const FavoritosScreen = () => {
   const dispatch = useDispatch();
@@ -51,19 +51,18 @@ export const FavoritosScreen = () => {
             ))
           )}
         </div>
-        <div>
-        <div className="flex justify-between">
+        <div className="paralelo">
           <button
             onClick={() => window.history.back()}
-            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+            className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"
-          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+          className="producto-agregar"
         >
           Volver a la pantalla principal
         </Link>

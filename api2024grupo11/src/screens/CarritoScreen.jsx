@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartItemCard } from '../components/Cards/CartItemCard';
-import { useNavigate , Link} from 'react-router-dom';
-import { comprar, emptyCarrito, fetchCarritoByUserEmail, removeFromCarrito, substractFromCarrito } from '../Redux/CarritoSlice';
+import { comprar, emptyCarrito, fetchCarritoByUserEmail, removeFromCarrito } from '../Redux/CarritoSlice';
 import { updateProducto } from '../Redux/ProductoSlice';
 
 
@@ -100,18 +100,19 @@ export const CarritoScreen = () => {
           <div className="flex justify-between">
           <button
             onClick={() => window.history.back()}
-            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+            className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"
-          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
+          className="producto-agregar"
         >
           Volver a la pantalla principal
         </Link>
+        </div>
         </div>
       </div>
       

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUsuario, logoutUsuario } from "../Redux/UsuarioSlice";
-import { useNavigate,Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { createUsuario } from "../Redux/UsuarioSlice";
 
 export const CrearUsuariosScreen = () => {
   const dispatch = useDispatch();
@@ -154,21 +154,22 @@ export const CrearUsuariosScreen = () => {
             {usuario && <p>Usuario creado: {usuario.username}</p>}
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="paralelo">
           <button
             onClick={() => window.history.back()}
-            className="block bg-gray-500 text-white py-2 px-4 rounded-md text-center mt-4"
+            className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
-        <Link
-          to="/"
-          className="block w-full max-w-xs mx-auto bg-blue-500 text-white py-2 px-4 rounded-md text-center mt-4"
-        >
-          Volver a la pantalla principal
-        </Link>
+          <Link
+            to="/"
+            className="producto-agregar"
+          >
+            Volver a la pantalla principal
+          </Link>
+        </div>
       </div>
     </div>
   );
