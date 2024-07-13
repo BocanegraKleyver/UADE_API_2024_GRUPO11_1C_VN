@@ -391,18 +391,22 @@ const productosFiltrados = productos.filter((producto) =>
           </button>
         </div>
       )}
-            <div className="flex justify-between">
-        <button
-          onClick={() => window.history.back()}
+      <div className="paralelo">
+          <button
+            onClick={() => window.history.back()}
+            className="producto-agregar"
+          >
+            ATRAS
+          </button>
+        
+  
+        <Link
+          to="/"
           className="producto-agregar"
         >
-          ATRAS
-        </button>
+          Volver a la pantalla principal
+        </Link>
       </div>
-
-      <Link to="/" className="producto-agregar">
-        Volver a la pantalla principal
-      </Link>
     </div>
   );
 };

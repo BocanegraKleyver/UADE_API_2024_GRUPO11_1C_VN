@@ -22,14 +22,14 @@ export const ComprasScreen = () => {
                 <div className='flex flex-col justify-center gap-2'>
                     {compras && compras.compras.map(c => (<CompraCard compra={c} key={c.id} />))}
                 </div>
-                <div className="flex justify-between">
+          <div className="paralelo">
           <button
             onClick={() => window.history.back()}
             className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"
@@ -37,6 +37,7 @@ export const ComprasScreen = () => {
         >
           Volver a la pantalla principal
         </Link>
+        </div>
             </div>
         </>
     );

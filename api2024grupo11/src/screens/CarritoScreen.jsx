@@ -104,7 +104,7 @@ export const CarritoScreen = () => {
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"
@@ -112,6 +112,7 @@ export const CarritoScreen = () => {
         >
           Volver a la pantalla principal
         </Link>
+        </div>
         </div>
       </div>
       

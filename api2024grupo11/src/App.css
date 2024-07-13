@@ -440,7 +440,7 @@ main{
   border-radius: .5rem;
   cursor: pointer;
   border: 2px solid black;
-  max-width:10rem;
+  max-width:20rem;
   justify-content:flex-end;
 }
 

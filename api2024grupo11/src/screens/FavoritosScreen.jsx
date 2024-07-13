@@ -51,15 +51,14 @@ export const FavoritosScreen = () => {
             ))
           )}
         </div>
-        <div>
-        <div className="flex justify-between">
+        <div className="paralelo">
           <button
             onClick={() => window.history.back()}
             className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"

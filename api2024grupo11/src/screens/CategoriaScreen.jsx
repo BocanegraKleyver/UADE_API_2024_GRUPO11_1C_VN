@@ -111,14 +111,14 @@ import { createCategoria, deleteCategoria, fetchCategorias, updateCategoria } fr
           </div>
         )}
   
-        <div className="flex justify-between">
+        <div className="paralelo">
           <button
             onClick={() => window.history.back()}
             className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
         <Link
           to="/"
@@ -126,6 +126,7 @@ import { createCategoria, deleteCategoria, fetchCategorias, updateCategoria } fr
         >
           Volver a la pantalla principal
         </Link>
+        </div>
       </div>
     );
   };

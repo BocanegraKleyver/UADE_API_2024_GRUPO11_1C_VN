@@ -154,21 +154,22 @@ export const CrearUsuariosScreen = () => {
             {usuario && <p>Usuario creado: {usuario.username}</p>}
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="paralelo">
           <button
             onClick={() => window.history.back()}
             className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
-        <Link
-          to="/"
-          className="producto-agregar"
-        >
-          Volver a la pantalla principal
-        </Link>
+          <Link
+            to="/"
+            className="producto-agregar"
+          >
+            Volver a la pantalla principal
+          </Link>
+        </div>
       </div>
     </div>
   );

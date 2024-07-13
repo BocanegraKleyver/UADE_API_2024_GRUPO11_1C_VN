@@ -180,27 +180,29 @@ export const VenderProductoScreen = () => {
           />
         </div>
       </div>
-      <button
-        className="px-4 py-2 bg-green-500 text-white rounded-md"
-        onClick={handleCrearProducto}
-      >
-        Crear Producto
-      </button>
-      <div className="flex justify-between">
+      <div className="paralelo">
+        <button
+          className="px-4 py-2 bg-green-500 text-white rounded-md"
+          onClick={handleCrearProducto}
+        >
+          Crear Producto
+        </button>
+      
           <button
             onClick={() => window.history.back()}
             className="producto-agregar"
           >
             ATRAS
           </button>
-        </div>
+        
   
-        <Link
-          to="/"
-          className="producto-agregar"
-        >
-          Volver a la pantalla principal
-        </Link>
+          <Link
+            to="/"
+            className="producto-agregar"
+          >
+            Volver a la pantalla principal
+          </Link>
+        </div>
     </div>
   );
 };
