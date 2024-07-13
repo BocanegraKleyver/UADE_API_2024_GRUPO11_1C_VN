@@ -41,7 +41,7 @@ export const createProducto = createAsyncThunk('producto/createProducto', async 
 
 export const updateProducto = createAsyncThunk('producto/updateProducto', async ({ prodId, prod }) => {
 
-  const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.idCategoria, idDescuento: prod.idDescuento })
+  const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.categoria.id, idDescuento: prod.descuento.id })
   try {
     const response = await axios.put(`${API_URL}/${prodId}`, req,
       {
