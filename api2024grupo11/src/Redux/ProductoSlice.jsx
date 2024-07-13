@@ -28,19 +28,21 @@ export const fetchProductoById = createAsyncThunk('producto/fetchProductos', asy
   return response.data;
 });
 
-export const createProducto = createAsyncThunk('producto/createProducto', async (nuevoProducto) => {
-  console.log('Enviando solicitud de creación de producto:', nuevoProducto);
-  const response = await axios.post(API_URL, {
+export const createProducto = createAsyncThunk('producto/createProducto', async ({prod}) => {
+
+  const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.categoria.id, idDescuento: prod.descuento.id })
+  const response = await axios.post(API_URL, req, 
+    {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     }
-  }, nuevoProducto);
+  });
   return response.data;
 });
 
 export const updateProducto = createAsyncThunk('producto/updateProducto', async ({ prodId, prod }) => {
-
+  console.log(prod)
   const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.categoria.id, idDescuento: prod.descuento.id })
   try {
     const response = await axios.put(`${API_URL}/${prodId}`, req,
@@ -68,7 +70,6 @@ export const deleteProducto = createAsyncThunk('producto/deleteProducto', async 
 });
 
 
-// TODO: esto esta mal
 export const filterProductos = createAsyncThunk('producto/filterProductos', async ({ searchTerm, filtroCategoria, filtroDescuento }) => {
   let url = `${API_URL}?searchTerm=${searchTerm}`;
 

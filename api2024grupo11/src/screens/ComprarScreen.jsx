@@ -191,7 +191,7 @@ return (
       />
     </div>
     <div className="contenedor-productos">
-      {filteredProductos.map((producto, index) => (
+      {filteredProductos && filteredProductos.map((producto, index) => (
         <div key={index}>
           <ProductDo
             value={producto}

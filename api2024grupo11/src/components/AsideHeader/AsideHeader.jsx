@@ -47,18 +47,25 @@ export const AsideHeader = () => {
                   Mis compras
                 </Link>
               </li>
-              {}
+              { }
               <li>
                 <Link to="/favoritos" className="boton-menu boton-carrito" activeClassName="active">
                   Mis favoritos
                 </Link>
               </li>
               {role === "Vendedor" && (
-              <li>
-                <Link to="/VenderProducto" className="boton-menu boton-vender-producto" activeClassName="active">
-                  Vender tus Productos
-                </Link>
-              </li>
+                <li>
+                  <Link to="/VenderProducto" className="boton-menu boton-vender-producto" activeClassName="active">
+                    Vender tus Productos
+                  </Link>
+                </li>
+              )}
+              {role === "Admin" && (
+                <li>
+                  <Link to="/Administrar" className="boton-menu boton-vender-producto" activeClassName="active">
+                    Vender tus Productos
+                  </Link>
+                </li>
               )}
               <li>
                 <button onClick={handleLogout} className="boton-menu boton-logout">
