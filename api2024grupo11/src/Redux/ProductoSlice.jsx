@@ -30,8 +30,7 @@ export const fetchProductoById = createAsyncThunk('producto/fetchProductos', asy
 
 export const createProducto = createAsyncThunk('producto/createProducto', async ({prod}) => {
 
-  const req = JSON.stringify({ titulo: prod.titulo, descripcion: prod.descripcion, imagen_1_URL: prod.imagen_1_URL, imagen_2_URL: prod.imagen_2_URL, precio: prod.precio, cantidad: prod.cantidad, idCategoria: prod.categoria.id, idDescuento: prod.descuento.id })
-  const response = await axios.post(API_URL, req, 
+  const response = await axios.post(API_URL, JSON.stringify(prod), 
     {
     headers: {
       'Content-Type': 'application/json',
