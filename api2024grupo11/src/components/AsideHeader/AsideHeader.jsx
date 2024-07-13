@@ -60,13 +60,6 @@ export const AsideHeader = () => {
                   </Link>
                 </li>
               )}
-              {role === "Admin" && (
-                <li>
-                  <Link to="/Administrar" className="boton-menu boton-vender-producto" activeClassName="active">
-                    Vender tus Productos
-                  </Link>
-                </li>
-              )}
               <li>
                 <button onClick={handleLogout} className="boton-menu boton-logout">
                   Logout

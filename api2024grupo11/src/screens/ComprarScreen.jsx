@@ -48,19 +48,19 @@ export const ComprarScreen = () => {
 
       if (searchTerm) {
         filtered = filtered.filter(producto =>
-          producto.nombre && producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+          producto.titulo && producto.titulo.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
 
       if (filtroCategoria) {
         filtered = filtered.filter(producto =>
-          producto.idCategoria === parseInt(filtroCategoria, 10)
+          producto.categoria.id === parseInt(filtroCategoria, 10)
         );
       }
 
       if (filtroDescuento) {
         filtered = filtered.filter(producto =>
-          producto.idDescuento === parseInt(filtroDescuento, 10)
+          producto.descuento.id === parseInt(filtroDescuento, 10)
         );
       }
 
